@@ -20,6 +20,12 @@ services:
     volumes:
       - ./back:/app
       - /app/node_modules
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: agriculteur
+      DB_PASSWORD: agriculteur
+      DB_DATABASE: agriculteur
     env_file:
       - ./back/.env
     depends_on:

@@ -7,6 +7,27 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
+export class AnnouncementSchema extends BaseModel {
+  static $columns = ['createdAt', 'eventDate', 'id', 'isActive', 'location', 'showLimitedQuantities', 'title', 'updatedAt'] as const
+  $columns = AnnouncementSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare eventDate: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isActive: boolean | null
+  @column()
+  declare location: string
+  @column()
+  declare showLimitedQuantities: boolean | null
+  @column()
+  declare title: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+}
+
 export class AuthAccessTokenSchema extends BaseModel {
   static $columns = ['abilities', 'createdAt', 'expiresAt', 'hash', 'id', 'lastUsedAt', 'name', 'tokenableId', 'type', 'updatedAt'] as const
   $columns = AuthAccessTokenSchema.$columns
@@ -30,6 +51,127 @@ export class AuthAccessTokenSchema extends BaseModel {
   declare type: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
+}
+
+export class CitySchema extends BaseModel {
+  static $columns = ['color', 'createdAt', 'id', 'name', 'updatedAt'] as const
+  $columns = CitySchema.$columns
+  @column()
+  declare color: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare name: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+}
+
+export class EventSchema extends BaseModel {
+  static $columns = ['createdAt', 'date', 'description', 'id', 'isRecurring', 'location', 'title', 'updatedAt'] as const
+  $columns = EventSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column.date()
+  declare date: DateTime
+  @column()
+  declare description: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isRecurring: boolean | null
+  @column()
+  declare location: string
+  @column()
+  declare title: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+}
+
+export class ProductSchema extends BaseModel {
+  static $columns = ['createdAt', 'description', 'id', 'imageUrl', 'name', 'price', 'updatedAt'] as const
+  $columns = ProductSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare description: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare imageUrl: string | null
+  @column()
+  declare name: string
+  @column()
+  declare price: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+}
+
+export class SellingPlaceSchema extends BaseModel {
+  static $columns = ['address', 'createdAt', 'id', 'name', 'schedule', 'updatedAt'] as const
+  $columns = SellingPlaceSchema.$columns
+  @column()
+  declare address: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare name: string
+  @column()
+  declare schedule: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+}
+
+export class SettingSchema extends BaseModel {
+  static $columns = ['createdAt', 'email', 'facebookUrl', 'id', 'instagramUrl', 'phones', 'updatedAt'] as const
+  $columns = SettingSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare email: string | null
+  @column()
+  declare facebookUrl: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare instagramUrl: string | null
+  @column()
+  declare phones: any | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+}
+
+export class SubscriberCitySchema extends BaseModel {
+  static $columns = ['cityId', 'createdAt', 'id', 'subscriberId', 'updatedAt'] as const
+  $columns = SubscriberCitySchema.$columns
+  @column()
+  declare cityId: number | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare subscriberId: number | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+}
+
+export class SubscriberSchema extends BaseModel {
+  static $columns = ['createdAt', 'email', 'id', 'phone', 'updatedAt'] as const
+  $columns = SubscriberSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare email: string
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare phone: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
 }
 
 export class UserSchema extends BaseModel {
