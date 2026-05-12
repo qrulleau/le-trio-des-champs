@@ -4,7 +4,10 @@
       <h2 class="text-2xl font-semibold">Gestion des Villes</h2>
       <p class="text-gray-500 text-sm">Gérez les villes et leurs couleurs pour le calendrier</p>
     </div>
-    <button (click)="openForm()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl flex items-center gap-2 transition">
+    <button
+      (click)="openForm()"
+      class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl flex items-center gap-2 transition"
+    >
       + Ajouter une ville
     </button>
   </div>
@@ -14,14 +17,39 @@
     <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
       <h3 class="font-semibold mb-4">{{ editingCity ? 'Modifier la ville' : 'Nouvelle ville' }}</h3>
       <div class="grid md:grid-cols-2 gap-4">
-        <div>
+        <div class="relative">
           <label class="text-sm text-gray-600 mb-1 block">Nom de la ville *</label>
-          <input [(ngModel)]="form.name" type="text" class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300" placeholder="Plessier-sur-Bulles, Compiègne..." />
+          <input
+            [(ngModel)]="form.name"
+            (ngModelChange)="onCitySearch($event)"
+            type="text"
+            class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+            placeholder="Plessier-sur-Bulles, Compiègne..."
+            autocomplete="off"
+          />
+          @if (suggestions.length > 0) {
+            <div
+              class="absolute z-10 w-full bg-white border rounded-xl shadow-lg mt-1 overflow-hidden"
+            >
+              @for (suggestion of suggestions; track suggestion) {
+                <button
+                  (click)="selectSuggestion(suggestion)"
+                  class="w-full text-left px-4 py-2 text-sm hover:bg-purple-50 hover:text-purple-600 transition"
+                >
+                  📍 {{ suggestion }}
+                </button>
+              }
+            </div>
+          }
         </div>
         <div>
           <label class="text-sm text-gray-600 mb-1 block">Couleur *</label>
           <div class="flex items-center gap-3">
-            <input [(ngModel)]="form.color" type="color" class="w-12 h-10 rounded-xl border cursor-pointer" />
+            <input
+              [(ngModel)]="form.color"
+              type="color"
+              class="w-12 h-10 rounded-xl border cursor-pointer"
+            />
             <div class="flex gap-2 flex-wrap">
               @for (color of suggestedColors; track color) {
                 <button
@@ -37,10 +65,16 @@
         </div>
       </div>
       <div class="flex gap-3 mt-4">
-        <button (click)="submit()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl text-sm transition">
+        <button
+          (click)="submit()"
+          class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl text-sm transition"
+        >
           {{ editingCity ? 'Modifier' : 'Ajouter' }}
         </button>
-        <button (click)="closeForm()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-6 py-2 rounded-xl text-sm transition">
+        <button
+          (click)="closeForm()"
+          class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-6 py-2 rounded-xl text-sm transition"
+        >
           Annuler
         </button>
       </div>
@@ -62,14 +96,34 @@
               <p class="text-gray-400 text-xs">{{ city.color }}</p>
             </div>
             <div class="flex gap-2 items-center">
-              <button (click)="openForm(city)" class="bg-blue-50 hover:bg-blue-100 text-blue-600 p-2 rounded-xl transition">✏️</button>
+              <button
+                (click)="openForm(city)"
+                class="bg-blue-50 hover:bg-blue-100 text-blue-600 p-2 rounded-xl transition"
+              >
+                ✏️
+              </button>
               @if (cityToDelete === city.id) {
                 <div class="flex gap-1 items-center">
-                  <button (click)="delete()" class="bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-medium">Confirmer</button>
-                  <button (click)="cancelDelete()" class="bg-gray-100 text-gray-600 px-3 py-1 rounded-lg text-xs">Annuler</button>
+                  <button
+                    (click)="delete()"
+                    class="bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-medium"
+                  >
+                    Confirmer
+                  </button>
+                  <button
+                    (click)="cancelDelete()"
+                    class="bg-gray-100 text-gray-600 px-3 py-1 rounded-lg text-xs"
+                  >
+                    Annuler
+                  </button>
                 </div>
               } @else {
-                <button (click)="confirmDelete(city.id)" class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition">🗑️</button>
+                <button
+                  (click)="confirmDelete(city.id)"
+                  class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition"
+                >
+                  🗑️
+                </button>
               }
             </div>
           </div>
@@ -84,7 +138,9 @@
     <ul class="text-sm text-gray-600 space-y-1">
       <li>• Les couleurs permettent de différencier visuellement les villes dans le calendrier</li>
       <li>• Choisissez des couleurs contrastées pour une meilleure lisibilité</li>
-      <li>• Les événements dans le calendrier afficheront automatiquement la couleur de leur ville</li>
+      <li>
+        • Les événements dans le calendrier afficheront automatiquement la couleur de leur ville
+      </li>
     </ul>
   </div>
 </div>

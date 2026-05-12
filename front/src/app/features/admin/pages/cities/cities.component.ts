@@ -1,8 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
+import { HttpClient } from '@angular/common/http'
 import { ApiService } from '../../../../core/services/api.service'
 import { ToastService } from '../../../../core/services/toast.service'
+import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs'
 
 @Component({
   selector: 'app-cities',
@@ -15,11 +17,20 @@ export class CitiesComponent implements OnInit {
   showForm = false
   editingCity: any = null
   cityToDelete: number | null = null
+  suggestions: string[] = []
+  searchSubject = new Subject<string>()
 
   suggestedColors = [
-    '#FF5733', '#33FF57', '#3357FF', '#FF33F5',
-    '#FFD700', '#00CED1', '#FF8C00', '#8A2BE2',
-    '#00FF7F', '#FF1493',
+    '#FF5733',
+    '#33FF57',
+    '#3357FF',
+    '#FF33F5',
+    '#FFD700',
+    '#00CED1',
+    '#FF8C00',
+    '#8A2BE2',
+    '#00FF7F',
+    '#FF1493',
   ]
 
   form = {
@@ -27,14 +38,37 @@ export class CitiesComponent implements OnInit {
     color: '#FF5733',
   }
 
-  constructor(
-    private api: ApiService,
-    private toast: ToastService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  private api = inject(ApiService)
+  private toast = inject(ToastService)
+  private http = inject(HttpClient)
+  private cdr = inject(ChangeDetectorRef)
 
   ngOnInit() {
     this.loadCities()
+    this.searchSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((query) => {
+          if (query.length < 2) return []
+          return this.http.get<any[]>(
+            `https://geo.api.gouv.fr/communes?nom=${query}&fields=nom&boost=population&limit=5`
+          )
+        })
+      )
+      .subscribe((results) => {
+        this.suggestions = results.map((r) => r.nom)
+        this.cdr.detectChanges()
+      })
+  }
+
+  onCitySearch(value: string) {
+    this.searchSubject.next(value)
+  }
+
+  selectSuggestion(name: string) {
+    this.form.name = name
+    this.suggestions = []
   }
 
   loadCities() {
@@ -52,12 +86,14 @@ export class CitiesComponent implements OnInit {
       this.editingCity = null
       this.form = { name: '', color: '#FF5733' }
     }
+    this.suggestions = []
     this.showForm = true
   }
 
   closeForm() {
     this.showForm = false
     this.editingCity = null
+    this.suggestions = []
   }
 
   submit() {
@@ -77,7 +113,7 @@ export class CitiesComponent implements OnInit {
           this.loadCities()
           this.closeForm()
         },
-        error: () => this.toast.error('Erreur lors de l\'ajout'),
+        error: () => this.toast.error("Erreur lors de l'ajout"),
       })
     }
   }
