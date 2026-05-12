@@ -1,0 +1,74 @@
+<div>
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h2 class="text-2xl font-semibold">Bannière d'annonce exceptionnelle</h2>
+      <p class="text-gray-500 text-sm">Gérez l'annonce affichée en haut de la page</p>
+    </div>
+    <button
+      (click)="toggleActive()"
+      class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm transition"
+      [class.bg-green-100]="form.isActive"
+      [class.text-green-700]="form.isActive"
+      [class.bg-gray-100]="!form.isActive"
+      [class.text-gray-600]="!form.isActive"
+    >
+      {{ form.isActive ? '✅ Active' : '🙈 Masquée' }}
+    </button>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <h3 class="font-semibold mb-4">Contenu de l'annonce</h3>
+    <div class="space-y-4">
+      <div>
+        <label class="text-sm text-gray-600 mb-1 block">Titre de l'annonce *</label>
+        <input
+          [(ngModel)]="form.title"
+          type="text"
+          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          placeholder="Ex: 🎉 Événement spécial ce vendredi 20 mars !"
+        />
+        <p class="text-xs text-green-600 mt-1">Conseil : Utilisez des emojis pour rendre l'annonce plus attractive 🎉</p>
+      </div>
+      <div>
+        <label class="text-sm text-gray-600 mb-1 block">Date de l'événement</label>
+        <input
+          [(ngModel)]="form.eventDate"
+          type="text"
+          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          placeholder="Ex: Vendredi 20 mars"
+        />
+      </div>
+      <div>
+        <label class="text-sm text-gray-600 mb-1 block">Lieu de l'événement *</label>
+        <input
+          [(ngModel)]="form.location"
+          type="text"
+          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          placeholder="Compiègne - Parking Point P / GIFI"
+        />
+      </div>
+      <label class="flex items-center gap-2 text-sm cursor-pointer">
+        <input [(ngModel)]="form.showLimitedQuantities" type="checkbox" class="rounded" />
+        Afficher "⚠️ Quantités limitées"
+      </label>
+    </div>
+
+    <button (click)="save()" class="mt-6 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl text-sm transition flex items-center gap-2">
+      💾 Enregistrer les modifications
+    </button>
+  </div>
+
+  <!-- Aperçu -->
+  @if (form.title || form.location) {
+    <div class="bg-orange-500 text-white rounded-2xl p-6">
+      <p class="font-semibold text-lg text-center">{{ form.title }}</p>
+      @if (form.eventDate) {
+        <p class="text-center text-sm mt-1">📅 {{ form.eventDate }}</p>
+      }
+      <p class="text-center text-sm mt-1">📍 {{ form.location }}</p>
+      @if (form.showLimitedQuantities) {
+        <p class="text-center text-sm mt-2">⚠️ Quantités limitées</p>
+      }
+    </div>
+  }
+</div>

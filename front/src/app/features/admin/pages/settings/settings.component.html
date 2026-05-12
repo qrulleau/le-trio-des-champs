@@ -1,0 +1,96 @@
+<div>
+  <div class="mb-6">
+    <h2 class="text-2xl font-semibold">Coordonnées de contact</h2>
+    <p class="text-gray-500 text-sm">Gérez votre email et vos numéros de téléphone</p>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+    <div class="space-y-4">
+      <div>
+        <label class="text-sm text-gray-600 mb-1 block">Adresse email *</label>
+        <input
+          [(ngModel)]="form.email"
+          type="email"
+          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          placeholder="letriodeschamps@gmail.com"
+        />
+        <p class="text-xs text-gray-400 mt-1">Cette adresse sera affichée sur votre page publique</p>
+      </div>
+
+      <div>
+        <label class="text-sm text-gray-600 mb-1 block">Numéros de téléphone *</label>
+        <div class="space-y-2 mb-3">
+          @for (phone of form.phones; track $index) {
+            <div class="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-2">
+              <div class="flex items-center gap-2">
+                <span>📱</span>
+                <span class="text-sm">{{ phone }}</span>
+              </div>
+              <button (click)="removePhone($index)" class="text-red-500 hover:text-red-700 transition">🗑️</button>
+            </div>
+          }
+        </div>
+        <div class="flex gap-2">
+          <input
+            [(ngModel)]="newPhone"
+            type="tel"
+            (keyup.enter)="addPhone()"
+            class="flex-1 border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+            placeholder="0612345678"
+          />
+          <button (click)="addPhone()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-4 py-2 rounded-xl text-sm transition">
+            + Ajouter
+          </button>
+        </div>
+        <p class="text-xs text-gray-400 mt-1">Appuyez sur Entrée ou cliquez sur "Ajouter" pour ajouter un numéro</p>
+      </div>
+
+      <div>
+        <label class="text-sm text-gray-600 mb-1 block">Instagram</label>
+        <input
+          [(ngModel)]="form.instagramUrl"
+          type="url"
+          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          placeholder="https://www.instagram.com/letriodeschamps/"
+        />
+      </div>
+
+      <div>
+        <label class="text-sm text-gray-600 mb-1 block">Facebook</label>
+        <input
+          [(ngModel)]="form.facebookUrl"
+          type="url"
+          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          placeholder="https://www.facebook.com/letriodeschamps/"
+        />
+      </div>
+    </div>
+
+    <button (click)="save()" class="mt-6 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl text-sm transition flex items-center gap-2">
+      💾 Enregistrer les modifications
+    </button>
+  </div>
+
+  <!-- Aperçu -->
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="bg-white rounded-2xl shadow-sm p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="bg-purple-100 p-2 rounded-xl text-xl">✉️</div>
+        <h3 class="font-semibold">Email</h3>
+      </div>
+      <p class="text-purple-600 text-sm">{{ form.email || 'Non renseigné' }}</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-sm p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="bg-purple-100 p-2 rounded-xl text-xl">📱</div>
+        <h3 class="font-semibold">Téléphone</h3>
+      </div>
+      @for (phone of form.phones; track $index) {
+        <p class="text-purple-600 text-sm">{{ phone }}</p>
+      }
+      @if (form.phones.length === 0) {
+        <p class="text-gray-400 text-sm">Aucun numéro renseigné</p>
+      }
+    </div>
+  </div>
+</div>
