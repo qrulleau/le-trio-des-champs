@@ -8,6 +8,7 @@
       Retour au site
     </a>
   </header>
+
   <div class="flex">
     <aside class="w-72 min-h-screen bg-white shadow-sm p-4 flex flex-col justify-between">
       <nav class="space-y-1">
@@ -18,11 +19,18 @@
           </a>
         }
       </nav>
-      <div class="text-center text-xs text-gray-400 border-t pt-4 mt-4">
-        <p>Sauvegarde automatique</p>
-        <p class="mt-1">Les modifications sont enregistrees automatiquement.</p>
+
+      <div class="border-t pt-4 mt-4 space-y-2">
+        <div class="text-center text-xs text-gray-400">
+          <p>💾 Sauvegarde automatique</p>
+          <p class="mt-1">Les modifications sont enregistrees automatiquement.</p>
+        </div>
+        <button (click)="logout()" class="w-full bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-xl text-sm transition">
+          🚪 Se déconnecter
+        </button>
       </div>
     </aside>
+
     <main class="flex-1 p-8">
       <router-outlet />
     </main>

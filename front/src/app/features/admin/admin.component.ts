@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { RouterModule, RouterOutlet } from '@angular/router'
+import { AuthService } from '../../core/services/auth.service'
 
 @Component({
   selector: 'app-admin',
@@ -9,6 +10,8 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   templateUrl: './admin.component.html',
 })
 export class AdminComponent {
+  private auth = inject(AuthService)
+
   menuItems = [
     { label: 'Tableau de bord', icon: '🏠', path: '/admin' },
     { label: 'Produits', icon: '📦', path: '/admin/products' },
@@ -18,5 +21,9 @@ export class AdminComponent {
     { label: 'Abonnés', icon: '🔔', path: '/admin/subscribers' },
     { label: 'Lieux de vente', icon: '👥', path: '/admin/selling-places' },
     { label: 'Contact', icon: '✉️', path: '/admin/settings' },
-  ];
+  ]
+
+  logout() {
+    this.auth.logout()
+  }
 }
