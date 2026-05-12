@@ -1,7 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../core/services/api.service';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormsModule } from '@angular/forms'
+import { ApiService } from '../../core/services/api.service'
+import { ToastService } from '../../core/services/toast.service'
 
 @Component({
   selector: 'app-home',
@@ -10,13 +11,13 @@ import { ApiService } from '../../core/services/api.service';
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  products: any[] = [];
-  events: any[] = [];
-  sellingPlaces: any[] = [];
-  cities: any[] = [];
+  products: any[] = []
+  events: any[] = []
+  sellingPlaces: any[] = []
+  cities: any[] = []
 
-  currentMonth = new Date().getMonth() + 1;
-  currentYear = new Date().getFullYear();
+  currentMonth = new Date().getMonth() + 1
+  currentYear = new Date().getFullYear()
 
   subscribeForm = {
     phone: '',
@@ -25,21 +26,24 @@ export class HomeComponent implements OnInit {
   subscribeSuccess = false
   subscribeError = ''
 
- private api = inject(ApiService)
- private cdr = inject(ChangeDetectorRef) 
+  private api = inject(ApiService)
+  private cdr = inject(ChangeDetectorRef)
+  private toast = inject(ToastService)
 
   ngOnInit() {
-    this.loadData();
+    this.loadData()
   }
 
   loadData() {
-    this.api.getProducts().subscribe((data) => (this.products = data));
-    this.api.getSellingPlaces().subscribe((data) => (this.sellingPlaces = data));
+    this.api.getProducts().subscribe((data) => (this.products = data))
+    this.api.getSellingPlaces().subscribe((data) => (this.sellingPlaces = data))
     this.api.getCities().subscribe((data) => {
-        this.cities = [...data]
-        this.cdr.detectChanges()
-    });
-    this.api.getEvents(this.currentMonth, this.currentYear).subscribe((data) => (this.events = data));
+      this.cities = [...data]
+      this.cdr.detectChanges()
+    })
+    this.api
+      .getEvents(this.currentMonth, this.currentYear)
+      .subscribe((data) => (this.events = data))
   }
 
   toggleCity(cityId: number) {
@@ -55,53 +59,57 @@ export class HomeComponent implements OnInit {
   }
 
   subscribe() {
-    this.subscribeError = ''
     if (!this.subscribeForm.phone || this.subscribeForm.cityIds.length === 0) {
-      this.subscribeError = 'Veuillez remplir votre numéro de téléphone et sélectionner au moins une ville.'
+      this.toast.warning('Veuillez remplir votre numéro et sélectionner au moins une ville.')
       return
     }
     this.api.createSubscriber(this.subscribeForm).subscribe({
       next: () => {
         this.subscribeSuccess = true
         this.subscribeForm = { phone: '', cityIds: [] }
+        this.toast.success('Inscription confirmée !')
       },
-    error: (err) => {
-    if (err.status === 409) {
-        this.subscribeError = 'Ce numéro est déjà inscrit. Vos villes ont été mises à jour.'
+      error: (err) => {
+        if (err.status === 409) {
+          this.toast.info('Ce numéro est déjà inscrit. Vos villes ont été mises à jour.')
         } else if (err.status === 422) {
-            this.subscribeError = 'Numéro de téléphone invalide. Format attendu : 06XXXXXXXX ou 07XXXXXXXX'
+          this.toast.error('Numéro invalide. Format attendu : 06XXXXXXXX ou 07XXXXXXXX')
         } else {
-            this.subscribeError = 'Une erreur est survenue, veuillez réessayer.'
+          this.toast.error('Une erreur est survenue, veuillez réessayer.')
         }
-    } 
+      },
     })
   }
 
   prevMonth() {
     if (this.currentMonth === 1) {
-      this.currentMonth = 12;
-      this.currentYear--;
+      this.currentMonth = 12
+      this.currentYear--
     } else {
-      this.currentMonth--;
+      this.currentMonth--
     }
-    this.api.getEvents(this.currentMonth, this.currentYear).subscribe((data) => (this.events = data));
+    this.api
+      .getEvents(this.currentMonth, this.currentYear)
+      .subscribe((data) => (this.events = data))
   }
 
   nextMonth() {
     if (this.currentMonth === 12) {
-      this.currentMonth = 1;
-      this.currentYear++;
+      this.currentMonth = 1
+      this.currentYear++
     } else {
-      this.currentMonth++;
+      this.currentMonth++
     }
-    this.api.getEvents(this.currentMonth, this.currentYear).subscribe((data) => (this.events = data));
+    this.api
+      .getEvents(this.currentMonth, this.currentYear)
+      .subscribe((data) => (this.events = data))
   }
 
   getMonthName(month: number, year: number): string {
     return new Date(year, month - 1).toLocaleDateString('fr-FR', {
       month: 'long',
       year: 'numeric',
-    });
+    })
   }
 
   getDaysInMonth(month: number, year: number): (number | null)[] {
