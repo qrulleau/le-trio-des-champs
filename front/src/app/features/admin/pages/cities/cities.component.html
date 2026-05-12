@@ -61,9 +61,16 @@
               <p class="font-medium">{{ city.name }}</p>
               <p class="text-gray-400 text-xs">{{ city.color }}</p>
             </div>
-            <div class="flex gap-2">
+            <div class="flex gap-2 items-center">
               <button (click)="openForm(city)" class="bg-blue-50 hover:bg-blue-100 text-blue-600 p-2 rounded-xl transition">✏️</button>
-              <button (click)="delete(city.id)" class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition">🗑️</button>
+              @if (cityToDelete === city.id) {
+                <div class="flex gap-1 items-center">
+                  <button (click)="delete()" class="bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-medium">Confirmer</button>
+                  <button (click)="cancelDelete()" class="bg-gray-100 text-gray-600 px-3 py-1 rounded-lg text-xs">Annuler</button>
+                </div>
+              } @else {
+                <button (click)="confirmDelete(city.id)" class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition">🗑️</button>
+              }
             </div>
           </div>
         }
