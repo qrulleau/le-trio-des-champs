@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Setting from '#models/setting'
+import { updateSettingValidator } from '#validators/setting'
 
 export default class SettingsController {
   async index({ response }: HttpContext) {
@@ -8,15 +9,15 @@ export default class SettingsController {
   }
 
   async store({ request, response }: HttpContext) {
-    const data = request.only(['email', 'phones', 'instagramUrl', 'facebookUrl'])
-    const settings = await Setting.create(data)
+    const payload = await request.validateUsing(updateSettingValidator)
+    const settings = await Setting.create(payload)
     return response.created(settings)
   }
 
   async update({ params, request, response }: HttpContext) {
     const settings = await Setting.findOrFail(params.id)
-    const data = request.only(['email', 'phones', 'instagramUrl', 'facebookUrl'])
-    settings.merge(data)
+    const payload = await request.validateUsing(updateSettingValidator)
+    settings.merge(payload)
     await settings.save()
     return response.ok(settings)
   }

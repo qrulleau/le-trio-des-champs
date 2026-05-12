@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Product from '#models/product'
+import { createProductValidator, updateProductValidator } from '#validators/product'
 
 export default class ProductsController {
   async index({ response }: HttpContext) {
@@ -8,8 +9,8 @@ export default class ProductsController {
   }
 
   async store({ request, response }: HttpContext) {
-    const data = request.only(['name', 'description', 'price', 'imageUrl'])
-    const product = await Product.create(data)
+    const payload = await request.validateUsing(createProductValidator)
+    const product = await Product.create(payload)
     return response.created(product)
   }
 
@@ -20,8 +21,8 @@ export default class ProductsController {
 
   async update({ params, request, response }: HttpContext) {
     const product = await Product.findOrFail(params.id)
-    const data = request.only(['name', 'description', 'price', 'imageUrl'])
-    product.merge(data)
+    const payload = await request.validateUsing(updateProductValidator)
+    product.merge(payload)
     await product.save()
     return response.ok(product)
   }

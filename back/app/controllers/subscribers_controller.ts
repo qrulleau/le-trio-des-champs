@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Subscriber from '#models/subscriber'
+import { createSubscriberValidator } from '#validators/subscriber'
 
 export default class SubscribersController {
   async index({ response }: HttpContext) {
@@ -8,7 +9,7 @@ export default class SubscribersController {
   }
 
   async store({ request, response }: HttpContext) {
-    const { phone, email, cityIds } = request.only(['phone', 'email', 'cityIds'])
+    const { phone, email, cityIds } = await request.validateUsing(createSubscriberValidator)
 
     const existing = await Subscriber.query()
       .where('phone', phone)
@@ -22,7 +23,6 @@ export default class SubscribersController {
 
     const subscriber = await Subscriber.create({ phone, email })
     await subscriber.related('cities').attach(cityIds)
-
     return response.created(subscriber)
   }
 

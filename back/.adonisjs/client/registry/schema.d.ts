@@ -71,12 +71,12 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/api/v1/cities'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/city').createCityValidator)>>
       paramsTuple: []
       params: {}
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/city').createCityValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/cities_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/cities_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/cities_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'cities.show': {
@@ -95,12 +95,12 @@ export interface Registry {
     methods: ["PUT","PATCH"]
     pattern: '/api/v1/cities/:id'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/city').updateCityValidator)>>
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/city').updateCityValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/cities_controller').default['update']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/cities_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/cities_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'cities.destroy': {
@@ -131,12 +131,12 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/api/v1/products'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/product').createProductValidator)>>
       paramsTuple: []
       params: {}
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/product').createProductValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/products_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/products_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/products_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'products.show': {
@@ -155,12 +155,12 @@ export interface Registry {
     methods: ["PUT","PATCH"]
     pattern: '/api/v1/products/:id'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/product').updateProductValidator)>>
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/product').updateProductValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/products_controller').default['update']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/products_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/products_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'products.destroy': {
@@ -191,12 +191,12 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/api/v1/selling-places'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/selling_place').createSellingPlaceValidator)>>
       paramsTuple: []
       params: {}
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/selling_place').createSellingPlaceValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/selling_places_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/selling_places_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/selling_places_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'selling_places.show': {
@@ -215,12 +215,12 @@ export interface Registry {
     methods: ["PUT","PATCH"]
     pattern: '/api/v1/selling-places/:id'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/selling_place').updateSellingPlaceValidator)>>
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/selling_place').updateSellingPlaceValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/selling_places_controller').default['update']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/selling_places_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/selling_places_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'selling_places.destroy': {
@@ -251,12 +251,12 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/api/v1/events'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/event').createEventValidator)>>
       paramsTuple: []
       params: {}
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/event').createEventValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/events_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/events_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/events_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'events.show': {
@@ -275,12 +275,12 @@ export interface Registry {
     methods: ["PUT","PATCH"]
     pattern: '/api/v1/events/:id'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/event').updateEventValidator)>>
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/event').updateEventValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/events_controller').default['update']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/events_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/events_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'events.destroy': {

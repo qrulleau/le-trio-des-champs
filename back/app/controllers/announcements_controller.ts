@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Announcement from '#models/announcement'
+import { updateAnnouncementValidator } from '#validators/announcement'
 
 export default class AnnouncementsController {
   async index({ response }: HttpContext) {
@@ -8,14 +9,8 @@ export default class AnnouncementsController {
   }
 
   async store({ request, response }: HttpContext) {
-    const data = request.only([
-      'title',
-      'eventDate',
-      'location',
-      'showLimitedQuantities',
-      'isActive',
-    ])
-    const announcement = await Announcement.create(data)
+    const payload = await request.validateUsing(updateAnnouncementValidator)
+    const announcement = await Announcement.create(payload)
     return response.created(announcement)
   }
 
@@ -26,14 +21,8 @@ export default class AnnouncementsController {
 
   async update({ params, request, response }: HttpContext) {
     const announcement = await Announcement.findOrFail(params.id)
-    const data = request.only([
-      'title',
-      'eventDate',
-      'location',
-      'showLimitedQuantities',
-      'isActive',
-    ])
-    announcement.merge(data)
+    const payload = await request.validateUsing(updateAnnouncementValidator)
+    announcement.merge(payload)
     await announcement.save()
     return response.ok(announcement)
   }
