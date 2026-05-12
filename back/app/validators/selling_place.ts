@@ -1,7 +1,5 @@
 import vine from '@vinejs/vine'
 
-import vine from '@vinejs/vine'
-
 export const createSellingPlaceValidator = vine.compile(
   vine.object({
     name: vine.string().trim(),
