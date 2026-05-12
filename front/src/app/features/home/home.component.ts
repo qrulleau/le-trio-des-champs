@@ -65,9 +65,15 @@ export class HomeComponent implements OnInit {
         this.subscribeSuccess = true
         this.subscribeForm = { phone: '', cityIds: [] }
       },
-      error: () => {
-        this.subscribeError = 'Numéro de téléphone invalide ou déjà inscrit.'
-      },
+    error: (err) => {
+    if (err.status === 409) {
+        this.subscribeError = 'Ce numéro est déjà inscrit. Vos villes ont été mises à jour.'
+        } else if (err.status === 422) {
+            this.subscribeError = 'Numéro de téléphone invalide. Format attendu : 06XXXXXXXX ou 07XXXXXXXX'
+        } else {
+            this.subscribeError = 'Une erreur est survenue, veuillez réessayer.'
+        }
+    } 
     })
   }
 

@@ -8,22 +8,22 @@ export default class SubscribersController {
     return response.ok(subscribers)
   }
 
-  async store({ request, response }: HttpContext) {
-    const { phone, cityIds } = await request.validateUsing(createSubscriberValidator)
+async store({ request, response }: HttpContext) {
+  const { phone, cityIds } = await request.validateUsing(createSubscriberValidator)
 
-    const existing = await Subscriber.query()
-      .where('phone', phone)
-      .first()
+  const existing = await Subscriber.query()
+    .where('phone', phone)
+    .first()
 
-    if (existing) {
-      await existing.related('cities').sync(cityIds, false)
-      return response.ok(existing)
-    }
-
-    const subscriber = await Subscriber.create({ phone })
-    await subscriber.related('cities').attach(cityIds)
-    return response.created(subscriber)
+  if (existing) {
+    await existing.related('cities').sync(cityIds, false)
+    return response.conflict({ message: 'Ce numéro est déjà inscrit. Vos villes ont été mises à jour.' })
   }
+
+  const subscriber = await Subscriber.create({ phone })
+  await subscriber.related('cities').attach(cityIds)
+  return response.created(subscriber)
+}
 
   async show({ params, response }: HttpContext) {
     const subscriber = await Subscriber.query()

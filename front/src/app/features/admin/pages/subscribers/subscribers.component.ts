@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ApiService } from '../../../../core/services/api.service'
 
@@ -12,7 +12,8 @@ export class SubscribersComponent implements OnInit {
   subscribers: any[] = []
   subscribersByCity: { [key: string]: any[] } = {}
 
-  constructor(private api: ApiService) {}
+  private api = inject(ApiService)
+  private cdr = inject(ChangeDetectorRef)
 
   ngOnInit() {
     this.loadSubscribers()
@@ -20,8 +21,9 @@ export class SubscribersComponent implements OnInit {
 
   loadSubscribers() {
     this.api.getSubscribers().subscribe((data) => {
-      this.subscribers = data
+      this.subscribers = [...data]
       this.groupByCity()
+      this.cdr.detectChanges()
     })
   }
 
@@ -42,17 +44,14 @@ export class SubscribersComponent implements OnInit {
   }
 
   delete(id: number) {
-    if (confirm('Supprimer cet abonné ?')) {
-      this.api.deleteSubscriber(id).subscribe(() => this.loadSubscribers())
-    }
+    this.api.deleteSubscriber(id).subscribe(() => this.loadSubscribers())
   }
 
   exportCsv() {
-    const rows = [['Téléphone', 'Email', 'Villes', 'Date inscription']]
+    const rows = [['Téléphone', 'Villes', 'Date inscription']]
     for (const sub of this.subscribers) {
       rows.push([
         sub.phone,
-        sub.email,
         sub.cities?.map((c: any) => c.name).join(' | ') || '',
         new Date(sub.createdAt).toLocaleDateString('fr-FR'),
       ])

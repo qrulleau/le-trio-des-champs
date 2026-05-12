@@ -1,0 +1,19 @@
+{
+  "name": "agriculteur",
+  "version": "1.0.0",
+  "scripts": {
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "front/src/**/*.{ts,html,scss,css}": [
+      "front/node_modules/.bin/prettier --write"
+    ],
+    "back/app/**/*.ts": [
+      "back/node_modules/.bin/prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0"
+  }
+}
