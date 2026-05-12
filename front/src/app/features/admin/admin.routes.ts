@@ -1,6 +1,11 @@
-import { Routes } from '@angular/router';
+import { Routes } from '@angular/router'
 
 export const ADMIN_ROUTES: Routes = [
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/login/login.component').then((m) => m.LoginComponent),
+  },
   {
     path: '',
     loadComponent: () =>
@@ -48,4 +53,4 @@ export const ADMIN_ROUTES: Routes = [
       },
     ],
   },
-];
+]
