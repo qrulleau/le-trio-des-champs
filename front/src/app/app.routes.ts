@@ -1,18 +1,17 @@
-import { Routes } from '@angular/router';
+import { Routes } from '@angular/router'
 
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./features/home/home.routes').then((m) => m.HOME_ROUTES),
+    loadChildren: () => import('./features/home/home.routes').then((m) => m.HOME_ROUTES),
   },
   {
     path: 'admin',
-    loadChildren: () =>
-      import('./features/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
+    loadChildren: () => import('./features/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
   },
   {
     path: '**',
     redirectTo: '',
   },
-];
+]
+// test
