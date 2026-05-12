@@ -1,0 +1,70 @@
+<div>
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h2 class="text-2xl font-semibold">Gestion des Produits</h2>
+      <p class="text-gray-500 text-sm">Ajoutez, modifiez ou supprimez vos produits</p>
+    </div>
+    <button (click)="openForm()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl flex items-center gap-2 transition">
+      + Ajouter un produit
+    </button>
+  </div>
+
+  <!-- Formulaire -->
+  @if (showForm) {
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+      <h3 class="font-semibold mb-4">{{ editingProduct ? 'Modifier le produit' : 'Nouveau produit' }}</h3>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label class="text-sm text-gray-600 mb-1 block">Nom *</label>
+          <input [(ngModel)]="form.name" type="text" class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300" placeholder="Pommes de terre" />
+        </div>
+        <div>
+          <label class="text-sm text-gray-600 mb-1 block">Prix *</label>
+          <input [(ngModel)]="form.price" type="text" class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300" placeholder="4€ le filet de 10kg" />
+        </div>
+        <div>
+          <label class="text-sm text-gray-600 mb-1 block">Description</label>
+          <input [(ngModel)]="form.description" type="text" class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300" placeholder="Description du produit" />
+        </div>
+        <div>
+          <label class="text-sm text-gray-600 mb-1 block">URL de l'image</label>
+          <input [(ngModel)]="form.imageUrl" type="text" class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300" placeholder="https://..." />
+        </div>
+      </div>
+      <div class="flex gap-3 mt-4">
+        <button (click)="submit()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl text-sm transition">
+          {{ editingProduct ? 'Modifier' : 'Ajouter' }}
+        </button>
+        <button (click)="closeForm()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-6 py-2 rounded-xl text-sm transition">
+          Annuler
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Liste -->
+  <div class="bg-white rounded-2xl shadow-sm divide-y">
+    @if (products.length === 0) {
+      <p class="text-center text-gray-400 py-12">Aucun produit pour le moment</p>
+    } @else {
+      @for (product of products; track product.id) {
+        <div class="flex items-center gap-4 p-4">
+          @if (product.imageUrl) {
+            <img [src]="product.imageUrl" [alt]="product.name" class="w-16 h-16 object-cover rounded-xl" />
+          } @else {
+            <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center text-2xl">🌾</div>
+          }
+          <div class="flex-1">
+            <p class="font-semibold">{{ product.name }}</p>
+            <p class="text-gray-500 text-sm">{{ product.description }}</p>
+            <p class="text-purple-600 text-sm font-medium">{{ product.price }}</p>
+          </div>
+          <div class="flex gap-2">
+            <button (click)="openForm(product)" class="bg-blue-50 hover:bg-blue-100 text-blue-600 p-2 rounded-xl transition">✏️</button>
+            <button (click)="delete(product.id)" class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition">🗑️</button>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>
