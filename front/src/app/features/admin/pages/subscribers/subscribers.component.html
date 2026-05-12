@@ -6,7 +6,7 @@
     </div>
   </div>
 
-  <!-- Stats -->
+  <!-- Stats + Filtres -->
   <div class="grid md:grid-cols-3 gap-4 mb-6">
     <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-4">
       <div class="bg-blue-100 p-3 rounded-xl text-2xl">👥</div>
@@ -16,51 +16,89 @@
       </div>
     </div>
     <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-4">
-      <div class="bg-green-100 p-3 rounded-xl text-2xl">🔔</div>
+      <div class="bg-green-100 p-3 rounded-xl text-2xl">🔍</div>
       <div>
-        <p class="text-gray-500 text-sm">Villes couvertes</p>
-        <p class="text-3xl font-semibold">{{ getCityNames().length }}</p>
+        <p class="text-gray-500 text-sm">Résultats filtrés</p>
+        <p class="text-3xl font-semibold">{{ filteredSubscribers.length }}</p>
       </div>
     </div>
-    <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center justify-between">
-      <p class="text-gray-500 text-sm">Exporter la liste</p>
-      <button (click)="exportCsv()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm transition flex items-center gap-2">
-        ⬇️ Exporter CSV
-      </button>
+    <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-4">
+      <div class="flex-1">
+        <label class="text-sm text-gray-600 mb-1 block">Filtrer par ville</label>
+        <select
+          [(ngModel)]="selectedCity"
+          (ngModelChange)="applyFilter()"
+          class="w-full border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+        >
+          <option value="">Toutes les villes</option>
+          @for (city of cities; track city) {
+            <option [value]="city">{{ city }}</option>
+          }
+        </select>
+      </div>
     </div>
   </div>
 
-  <!-- Liste par ville -->
-  <div class="space-y-4">
-    @if (subscribers.length === 0) {
-      <div class="bg-white rounded-2xl shadow-sm p-12 text-center">
-        <p class="text-gray-400">Aucun abonné pour le moment</p>
-      </div>
-    } @else {
-      <div class="bg-white rounded-2xl shadow-sm p-6">
-        <h3 class="font-semibold mb-4">👥 Liste des abonnés</h3>
-        @for (city of getCityNames(); track city) {
-          <div class="mb-6">
-            <p class="flex items-center gap-2 font-medium text-gray-700 mb-3">
-              📍 {{ city }} ({{ subscribersByCity[city].length }})
-            </p>
-            <div class="space-y-2">
-              @for (subscriber of subscribersByCity[city]; track subscriber.id) {
-                <div class="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3">
-                  <div class="flex items-center gap-3">
-                    <div class="bg-blue-100 p-2 rounded-xl text-lg">🔔</div>
-                    <div>
-                      <p class="font-medium text-sm">{{ subscriber.phone }}</p>
-                      <p class="text-gray-400 text-xs">{{ subscriber.email }}</p>
-                      <p class="text-gray-400 text-xs">Inscrit le {{ subscriber.createdAt | date:'d MMM yyyy' }}</p>
-                    </div>
-                  </div>
-                  <button (click)="delete(subscriber.id)" class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition">🗑️</button>
-                </div>
-              }
-            </div>
-          </div>
+  <!-- Tableau -->
+  <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+    <table class="w-full">
+      <thead class="bg-gray-50 border-b">
+        <tr>
+          <th class="text-left px-6 py-3 text-sm font-semibold text-gray-600">Téléphone</th>
+          <th class="text-left px-6 py-3 text-sm font-semibold text-gray-600">Villes</th>
+          <th class="text-left px-6 py-3 text-sm font-semibold text-gray-600">
+            Date d'inscription
+          </th>
+          <th class="text-right px-6 py-3 text-sm font-semibold text-gray-600">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y">
+        @if (paginatedSubscribers.length === 0) {
+          <tr>
+            <td colspan="4" class="text-center text-gray-400 py-12">Aucun abonné pour le moment</td>
+          </tr>
+        } @else {
+          @for (subscriber of paginatedSubscribers; track subscriber.id) {
+            <tr class="hover:bg-gray-50 transition">
+              <td class="px-6 py-4 text-sm font-medium">{{ subscriber.phone }}</td>
+              <td class="px-6 py-4 text-sm text-gray-500">{{ getCityNames(subscriber) }}</td>
+              <td class="px-6 py-4 text-sm text-gray-500">
+                {{ subscriber.createdAt | date: 'd MMM yyyy' }}
+              </td>
+              <td class="px-6 py-4 text-right">
+                <button
+                  (click)="delete(subscriber.id)"
+                  class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition"
+                >
+                  🗑️
+                </button>
+              </td>
+            </tr>
+          }
         }
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    @if (totalPages > 1) {
+      <div class="flex items-center justify-between px-6 py-4 border-t">
+        <p class="text-sm text-gray-500">Page {{ currentPage }} sur {{ totalPages }}</p>
+        <div class="flex gap-2">
+          <button
+            (click)="currentPage = currentPage - 1"
+            [disabled]="currentPage === 1"
+            class="px-3 py-1 rounded-lg text-sm border disabled:opacity-40 hover:bg-gray-50 transition"
+          >
+            ← Précédent
+          </button>
+          <button
+            (click)="currentPage = currentPage + 1"
+            [disabled]="currentPage === totalPages"
+            class="px-3 py-1 rounded-lg text-sm border disabled:opacity-40 hover:bg-gray-50 transition"
+          >
+            Suivant →
+          </button>
+        </div>
       </div>
     }
   </div>

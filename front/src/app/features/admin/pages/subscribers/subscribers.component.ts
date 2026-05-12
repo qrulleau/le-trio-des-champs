@@ -1,18 +1,25 @@
 import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { FormsModule } from '@angular/forms'
 import { ApiService } from '../../../../core/services/api.service'
+import { ToastService } from '../../../../core/services/toast.service'
 
 @Component({
   selector: 'app-subscribers',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './subscribers.component.html',
 })
 export class SubscribersComponent implements OnInit {
   subscribers: any[] = []
-  subscribersByCity: { [key: string]: any[] } = {}
+  filteredSubscribers: any[] = []
+  cities: string[] = []
+  selectedCity = ''
+  currentPage = 1
+  pageSize = 10
 
   private api = inject(ApiService)
+  private toast = inject(ToastService)
   private cdr = inject(ChangeDetectorRef)
 
   ngOnInit() {
@@ -22,46 +29,53 @@ export class SubscribersComponent implements OnInit {
   loadSubscribers() {
     this.api.getSubscribers().subscribe((data) => {
       this.subscribers = [...data]
-      this.groupByCity()
+      this.extractCities()
+      this.applyFilter()
       this.cdr.detectChanges()
     })
   }
 
-  groupByCity() {
-    this.subscribersByCity = {}
-    for (const subscriber of this.subscribers) {
-      for (const city of subscriber.cities || []) {
-        if (!this.subscribersByCity[city.name]) {
-          this.subscribersByCity[city.name] = []
-        }
-        this.subscribersByCity[city.name].push(subscriber)
+  extractCities() {
+    const citySet = new Set<string>()
+    for (const sub of this.subscribers) {
+      for (const city of sub.cities || []) {
+        citySet.add(city.name)
       }
     }
+    this.cities = Array.from(citySet)
   }
 
-  getCityNames(): string[] {
-    return Object.keys(this.subscribersByCity)
+  applyFilter() {
+    if (this.selectedCity) {
+      this.filteredSubscribers = this.subscribers.filter((sub) =>
+        sub.cities?.some((c: any) => c.name === this.selectedCity)
+      )
+    } else {
+      this.filteredSubscribers = [...this.subscribers]
+    }
+    this.currentPage = 1
+  }
+
+  get paginatedSubscribers() {
+    const start = (this.currentPage - 1) * this.pageSize
+    return this.filteredSubscribers.slice(start, start + this.pageSize)
+  }
+
+  get totalPages() {
+    return Math.ceil(this.filteredSubscribers.length / this.pageSize)
+  }
+
+  getCityNames(subscriber: any): string {
+    return subscriber.cities?.map((c: any) => c.name).join(', ') || '-'
   }
 
   delete(id: number) {
-    this.api.deleteSubscriber(id).subscribe(() => this.loadSubscribers())
-  }
-
-  exportCsv() {
-    const rows = [['Téléphone', 'Villes', 'Date inscription']]
-    for (const sub of this.subscribers) {
-      rows.push([
-        sub.phone,
-        sub.cities?.map((c: any) => c.name).join(' | ') || '',
-        new Date(sub.createdAt).toLocaleDateString('fr-FR'),
-      ])
-    }
-    const csv = rows.map((r) => r.join(',')).join('\n')
-    const blob = new Blob([csv], { type: 'text/csv' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'abonnes.csv'
-    a.click()
+    this.api.deleteSubscriber(id).subscribe({
+      next: () => {
+        this.toast.success('Abonné supprimé')
+        this.loadSubscribers()
+      },
+      error: () => this.toast.error('Erreur lors de la suppression'),
+    })
   }
 }
