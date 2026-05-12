@@ -1,25 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../core/services/api.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
   products: any[] = [];
   events: any[] = [];
   sellingPlaces: any[] = [];
-  announcement: any = null;
-  settings: any = null;
   cities: any[] = [];
 
   currentMonth = new Date().getMonth() + 1;
   currentYear = new Date().getFullYear();
 
-  constructor(private api: ApiService) {}
+  subscribeForm = {
+    phone: '',
+    cityIds: [] as number[],
+  }
+  subscribeSuccess = false
+  subscribeError = ''
+
+ private api = inject(ApiService)
+ private cdr = inject(ChangeDetectorRef) 
 
   ngOnInit() {
     this.loadData();
@@ -28,8 +35,40 @@ export class HomeComponent implements OnInit {
   loadData() {
     this.api.getProducts().subscribe((data) => (this.products = data));
     this.api.getSellingPlaces().subscribe((data) => (this.sellingPlaces = data));
-    this.api.getCities().subscribe((data) => (this.cities = data));
+    this.api.getCities().subscribe((data) => {
+        this.cities = [...data]
+        this.cdr.detectChanges()
+    });
     this.api.getEvents(this.currentMonth, this.currentYear).subscribe((data) => (this.events = data));
+  }
+
+  toggleCity(cityId: number) {
+    if (this.subscribeForm.cityIds.includes(cityId)) {
+      this.subscribeForm.cityIds = this.subscribeForm.cityIds.filter((id) => id !== cityId)
+    } else {
+      this.subscribeForm.cityIds = [...this.subscribeForm.cityIds, cityId]
+    }
+  }
+
+  isCitySelected(cityId: number): boolean {
+    return this.subscribeForm.cityIds.includes(cityId)
+  }
+
+  subscribe() {
+    this.subscribeError = ''
+    if (!this.subscribeForm.phone || this.subscribeForm.cityIds.length === 0) {
+      this.subscribeError = 'Veuillez remplir votre numéro de téléphone et sélectionner au moins une ville.'
+      return
+    }
+    this.api.createSubscriber(this.subscribeForm).subscribe({
+      next: () => {
+        this.subscribeSuccess = true
+        this.subscribeForm = { phone: '', cityIds: [] }
+      },
+      error: () => {
+        this.subscribeError = 'Numéro de téléphone invalide ou déjà inscrit.'
+      },
+    })
   }
 
   prevMonth() {
