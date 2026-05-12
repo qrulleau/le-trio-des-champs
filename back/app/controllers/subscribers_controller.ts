@@ -9,11 +9,10 @@ export default class SubscribersController {
   }
 
   async store({ request, response }: HttpContext) {
-    const { phone, email, cityIds } = await request.validateUsing(createSubscriberValidator)
+    const { phone, cityIds } = await request.validateUsing(createSubscriberValidator)
 
     const existing = await Subscriber.query()
       .where('phone', phone)
-      .orWhere('email', email)
       .first()
 
     if (existing) {
@@ -21,7 +20,7 @@ export default class SubscribersController {
       return response.ok(existing)
     }
 
-    const subscriber = await Subscriber.create({ phone, email })
+    const subscriber = await Subscriber.create({ phone })
     await subscriber.related('cities').attach(cityIds)
     return response.created(subscriber)
   }

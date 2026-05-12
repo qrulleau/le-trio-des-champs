@@ -299,12 +299,12 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/api/v1/subscribers'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/subscriber').createSubscriberValidator)>>
       paramsTuple: []
       params: {}
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/subscriber').createSubscriberValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/subscribers_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscribers_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscribers_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'admin.announcements.index': {
@@ -323,12 +323,12 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/api/v1/admin/announcements'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/announcement').updateAnnouncementValidator)>>
       paramsTuple: []
       params: {}
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/announcement').updateAnnouncementValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/announcements_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/announcements_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/announcements_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'admin.announcements.show': {
@@ -347,12 +347,12 @@ export interface Registry {
     methods: ["PUT","PATCH"]
     pattern: '/api/v1/admin/announcements/:id'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/announcement').updateAnnouncementValidator)>>
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/announcement').updateAnnouncementValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/announcements_controller').default['update']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/announcements_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/announcements_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'admin.announcements.destroy': {
@@ -383,12 +383,12 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/api/v1/admin/settings'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/setting').updateSettingValidator)>>
       paramsTuple: []
       params: {}
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/setting').updateSettingValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/settings_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/settings_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/settings_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'admin.settings.show': {
@@ -407,12 +407,12 @@ export interface Registry {
     methods: ["PUT","PATCH"]
     pattern: '/api/v1/admin/settings/:id'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/setting').updateSettingValidator)>>
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/setting').updateSettingValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/settings_controller').default['update']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/settings_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/settings_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'admin.settings.destroy': {
@@ -443,12 +443,12 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/api/v1/admin/subscribers'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/subscriber').createSubscriberValidator)>>
       paramsTuple: []
       params: {}
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/subscriber').createSubscriberValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/subscribers_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscribers_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscribers_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'admin.subscribers.show': {

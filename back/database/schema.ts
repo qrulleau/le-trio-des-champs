@@ -160,12 +160,10 @@ export class SubscriberCitySchema extends BaseModel {
 }
 
 export class SubscriberSchema extends BaseModel {
-  static $columns = ['createdAt', 'email', 'id', 'phone', 'updatedAt'] as const
+  static $columns = ['createdAt', 'id', 'phone', 'updatedAt'] as const
   $columns = SubscriberSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
-  @column()
-  declare email: string
   @column({ isPrimary: true })
   declare id: number
   @column()
