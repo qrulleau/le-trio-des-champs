@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   events: any[] = []
   sellingPlaces: any[] = []
   cities: any[] = []
+  announcement: any = null
 
   currentMonth = new Date().getMonth() + 1
   currentYear = new Date().getFullYear()
@@ -49,6 +50,10 @@ export class HomeComponent implements OnInit {
     })
     this.api.getEvents(this.currentMonth, this.currentYear).subscribe((data) => {
       this.events = [...data]
+      this.cdr.detectChanges()
+    })
+    this.api.getAnnouncement().subscribe((data) => {
+      this.announcement = data
       this.cdr.detectChanges()
     })
   }

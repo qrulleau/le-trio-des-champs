@@ -265,3 +265,272 @@
     </div>
   </div>
 </section>
+<!-- ── EVENT BANNER (ruban) ── -->
+@if (announcement && announcement.isActive) {
+  <section style="background: var(--bg); padding: 10px 0 0">
+    <div style="position: relative">
+      <div
+        style="
+          background: var(--accent-2);
+          color: var(--paper);
+          padding: 36px 0;
+          position: relative;
+          box-shadow: 0 6px 0 -1px rgba(0, 0, 0, 0.05);
+        "
+      >
+        <div
+          class="wrap"
+          style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 40px; align-items: center"
+        >
+          <div style="text-align: right">
+            <div
+              style="
+                font-size: 11px;
+                letter-spacing: 0.24em;
+                text-transform: uppercase;
+                color: rgba(250, 246, 236, 0.7);
+                margin-bottom: 8px;
+                font-weight: 600;
+              "
+            >
+              Événement spécial
+            </div>
+            <div
+              style="
+                font-family: var(--font-display);
+                font-size: clamp(28px, 3.4vw, 44px);
+                line-height: 1;
+              "
+            >
+              {{ announcement.title }}
+            </div>
+          </div>
+          <div style="width: 1px; height: 64px; background: rgba(250, 246, 236, 0.35)"></div>
+          <div style="text-align: left">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 19px;
+                font-weight: 500;
+              "
+            >
+              📍 {{ announcement.location }}
+            </div>
+            @if (announcement.showLimitedQuantities) {
+              <div style="margin-top: 8px; font-size: 14px; color: rgba(250, 246, 236, 0.78)">
+                ⚠️ Quantités limitées · Premier arrivé, premier servi
+              </div>
+            }
+          </div>
+        </div>
+        <span
+          style="
+            position: absolute;
+            left: 0;
+            top: -6px;
+            width: 0;
+            height: 0;
+            border-left: 14px solid transparent;
+            border-bottom: 14px solid var(--accent-2);
+            filter: brightness(0.7);
+          "
+        ></span>
+        <span
+          style="
+            position: absolute;
+            right: 0;
+            top: -6px;
+            width: 0;
+            height: 0;
+            border-right: 14px solid transparent;
+            border-bottom: 14px solid var(--accent-2);
+            filter: brightness(0.7);
+          "
+        ></span>
+      </div>
+      <div style="height: 10px; background: var(--accent-2); filter: brightness(0.78)"></div>
+    </div>
+  </section>
+}
+
+<!-- ── PRODUCTS ── -->
+<section id="produits" style="background: var(--bg-2); padding: 120px 0">
+  <div class="wrap">
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        gap: 32px;
+        margin-bottom: 56px;
+      "
+    >
+      <div>
+        <div class="eyebrow" style="margin-bottom: 18px">Nos produits</div>
+        <h2 class="h-section">
+          Le <em style="font-style: italic; color: var(--accent-2)">trio</em><br />des champs
+        </h2>
+      </div>
+      <p style="max-width: 38ch; font-size: 16px; color: var(--ink-soft); margin: 0">
+        Trois produits, trois prix doux. Récoltés par nos fermes en Picardie, vendus en circuit
+        court — sans intermédiaire.
+      </p>
+    </div>
+
+    <div
+      style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px"
+    >
+      @for (product of products; track product.id) {
+        <article style="position: relative; padding-top: 18px">
+          <div
+            style="
+              position: absolute;
+              top: 0;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 24px;
+              height: 24px;
+              display: flex;
+              justify-content: center;
+              align-items: flex-start;
+              z-index: 2;
+            "
+          >
+            <span style="width: 1px; height: 18px; background: var(--ink-mute)"></span>
+          </div>
+          <div
+            style="
+              background: var(--paper);
+              border-radius: 4px;
+              padding: 32px 26px 26px;
+              position: relative;
+              box-shadow:
+                0 1px 0 rgba(35, 25, 17, 0.04),
+                0 18px 40px -22px rgba(35, 25, 17, 0.25);
+              border: 1px solid var(--rule);
+            "
+          >
+            <span
+              style="
+                position: absolute;
+                top: -1px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 14px;
+                height: 14px;
+                border-radius: 999px;
+                background: var(--bg-2);
+                border: 1px solid var(--rule);
+              "
+            ></span>
+
+            @if (product.imageUrl) {
+              <img
+                [src]="product.imageUrl"
+                [alt]="product.name"
+                style="
+                  width: 100%;
+                  aspect-ratio: 4/3;
+                  object-fit: cover;
+                  border-radius: 2px;
+                  margin-bottom: 20px;
+                "
+              />
+            } @else {
+              <div
+                style="
+                  width: 100%;
+                  aspect-ratio: 4/3;
+                  background: var(--bg-2);
+                  border-radius: 2px;
+                  margin-bottom: 20px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 48px;
+                "
+              >
+                🌾
+              </div>
+            }
+
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 12px;
+              "
+            >
+              <div>
+                <h3
+                  style="
+                    margin: 0;
+                    font-family: var(--font-display);
+                    font-size: 24px;
+                    line-height: 1.05;
+                    color: var(--ink);
+                  "
+                >
+                  {{ product.name }}
+                </h3>
+                <div
+                  style="
+                    margin-top: 6px;
+                    font-family: var(--font-script);
+                    font-size: 18px;
+                    color: var(--accent);
+                  "
+                >
+                  {{ product.description }}
+                </div>
+              </div>
+              <div style="text-align: right; flex-shrink: 0">
+                <div
+                  style="
+                    font-family: var(--font-display);
+                    font-size: 30px;
+                    line-height: 1;
+                    color: var(--accent-2);
+                  "
+                >
+                  {{ product.price.split(' ')[0] }}
+                </div>
+                <div
+                  style="
+                    margin-top: 4px;
+                    font-size: 12px;
+                    color: var(--ink-mute);
+                    letter-spacing: 0.05em;
+                  "
+                >
+                  {{ product.price.split(' ').slice(1).join(' ') }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+
+    <div
+      style="
+        margin-top: 48px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        color: var(--ink-mute);
+        font-size: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+      "
+    >
+      <span style="display: inline-block; width: 28px; height: 1px; background: var(--rule)"></span>
+      <span>Espèces ou carte bleue · pensez à votre cabas</span>
+      <span style="display: inline-block; width: 28px; height: 1px; background: var(--rule)"></span>
+    </div>
+  </div>
+</section>
