@@ -27,16 +27,22 @@ export class HomeComponent implements OnInit {
   subscribeError = ''
 
   private api = inject(ApiService)
-  private cdr = inject(ChangeDetectorRef)
   private toast = inject(ToastService)
+  private cdr = inject(ChangeDetectorRef)
 
   ngOnInit() {
     this.loadData()
   }
 
   loadData() {
-    this.api.getProducts().subscribe((data) => (this.products = data))
-    this.api.getSellingPlaces().subscribe((data) => (this.sellingPlaces = data))
+    this.api.getProducts().subscribe((data) => {
+      this.products = [...data]
+      this.cdr.detectChanges()
+    })
+    this.api.getSellingPlaces().subscribe((data) => {
+      this.sellingPlaces = [...data]
+      this.cdr.detectChanges()
+    })
     this.api.getCities().subscribe((data) => {
       this.cities = [...data]
       this.cdr.detectChanges()
@@ -81,6 +87,7 @@ export class HomeComponent implements OnInit {
       },
     })
   }
+
   prevMonth() {
     if (this.currentMonth === 1) {
       this.currentMonth = 12
@@ -114,31 +121,16 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  getDaysInMonth(month: number, year: number): (number | null)[] {
-    const firstDay = new Date(year, month - 1, 1).getDay()
-    const daysInMonth = new Date(year, month, 0).getDate()
-    const days: (number | null)[] = Array(firstDay).fill(null)
-    for (let i = 1; i <= daysInMonth; i++) days.push(i)
-    return days
+  getCityColor(location: string): string {
+    const city = this.cities.find((c) => c.name === location)
+    return city ? city.color : '#2d4a2f'
   }
 
-  hasEvent(day: number | null): any {
-    if (!day) return null
-    return this.events.find((e) => new Date(e.date).getDate() === day)
-  }
-
-  getCityColor(eventLocation: string): string {
-    const city = this.cities.find((c) => c.name === eventLocation)
-    return city ? city.color : '#16a34a'
-  }
-
-  isToday(day: number | null): boolean {
-    if (!day) return false
-    const today = new Date()
-    return (
-      today.getDate() === day &&
-      today.getMonth() + 1 === this.currentMonth &&
-      today.getFullYear() === this.currentYear
-    )
+  formatEventDate(date: string): string {
+    return new Date(date).toLocaleDateString('fr-FR', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+    })
   }
 }

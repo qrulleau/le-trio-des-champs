@@ -1,272 +1,267 @@
-<section
-  class="relative min-h-screen bg-gradient-to-br from-green-600 to-green-400 flex flex-col items-center justify-center text-white text-center px-4"
->
-  <span
-    class="text-xs font-semibold tracking-widest uppercase bg-white/20 px-4 py-1 rounded-full mb-6"
-    >Produits locaux & frais</span
+<nav style="background: var(--bg); border-bottom: 1px solid var(--rule)">
+  <div
+    class="wrap"
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    "
   >
-  <h1 class="text-6xl font-light mb-4">Le Trio des Champs</h1>
-  <p class="text-xl text-white/80 mb-8">L'agriculture locale à portée de main</p>
-  <div class="flex gap-4 flex-wrap justify-center">
-    <div class="bg-white/20 backdrop-blur px-6 py-3 rounded-full flex items-center gap-2">
-      📅 Tous les lundis 17h-19h
+    <div style="display: flex; align-items: center; gap: 10px; color: var(--ink)">
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--accent-3)"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 22V8" />
+        <path d="M12 8 C10 8 8 6.5 8 4.5 C10 4.5 12 6 12 8 Z" />
+        <path d="M12 8 C14 8 16 6.5 16 4.5 C14 4.5 12 6 12 8 Z" />
+        <path d="M12 13 C10 13 8 11.5 8 9.5 C10 9.5 12 11 12 13 Z" />
+        <path d="M12 13 C14 13 16 11.5 16 9.5 C14 9.5 12 11 12 13 Z" />
+      </svg>
+      <span style="font-family: var(--font-display); font-size: 19px">Le Trio des Champs</span>
     </div>
     <div
-      class="bg-yellow-400 text-yellow-900 px-6 py-3 rounded-full flex items-center gap-2 font-semibold"
+      style="
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        font-size: 13px;
+        color: var(--ink-soft);
+        font-weight: 500;
+      "
     >
-      📉 Prix imbattables
-    </div>
-  </div>
-</section>
-
-<!-- Calendrier -->
-<section class="py-16 px-4 bg-gray-50">
-  <div class="max-w-2xl mx-auto">
-    <div class="text-center mb-8">
+      <a href="#produits">Produits</a>
+      <a href="#dates">Dates</a>
+      <a href="#contact">Contact</a>
       <span
-        class="text-xs font-semibold tracking-widest uppercase text-green-600 bg-green-100 px-4 py-1 rounded-full"
-        >Calendrier</span
+        style="
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 12px;
+          border-radius: 999px;
+          background: var(--paper);
+          border: 1px solid var(--rule);
+        "
       >
-      <h2 class="text-4xl font-light mt-4 mb-2">Prochaines dates de vente</h2>
-      <p class="text-gray-500">Consultez nos prochaines présences</p>
-    </div>
-
-    <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
-      <div class="bg-green-600 text-white flex items-center justify-between px-6 py-4">
-        <button (click)="prevMonth()" class="hover:bg-white/20 p-2 rounded-full transition">
-          ‹
-        </button>
-        <span class="font-medium capitalize">{{ getMonthName(currentMonth, currentYear) }}</span>
-        <button (click)="nextMonth()" class="hover:bg-white/20 p-2 rounded-full transition">
-          ›
-        </button>
-      </div>
-
-      <div class="grid grid-cols-7 text-center text-xs font-semibold text-gray-400 py-3 border-b">
-        <span>Dim</span><span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span
-        ><span>Ven</span><span>Sam</span>
-      </div>
-
-      <div class="grid grid-cols-7 text-center p-4 gap-1">
-        @for (day of getDaysInMonth(currentMonth, currentYear); track $index) {
-          <div
-            class="aspect-square flex items-center justify-center rounded-full text-sm cursor-default transition"
-            [class.text-white]="isToday(day) || !!hasEvent(day)"
-            [class.font-bold]="isToday(day)"
-            [class.text-gray-300]="!day"
-            [style.background-color]="
-              hasEvent(day) ? getCityColor(hasEvent(day).location) : isToday(day) ? '#16a34a' : ''
-            "
-          >
-            {{ day }}
-          </div>
-        }
-      </div>
-
-      <div class="px-6 pb-6">
-        <p class="text-sm font-semibold text-gray-500 mb-3 flex items-center gap-2">
-          📅 Prochains événements
-        </p>
-        @if (events.length === 0) {
-          <p class="text-sm text-gray-400 text-center py-4">Aucun événement à venir ce mois-ci</p>
-        } @else {
-          @for (event of events; track event.id) {
-            <div class="bg-gray-50 rounded-xl p-4 mb-2 flex items-center gap-3">
-              <div
-                class="text-center text-white rounded-xl px-3 py-2 min-w-12"
-                [style.background-color]="getCityColor(event.location)"
-              >
-                <p class="text-xs font-medium">{{ event.date | date: 'MMM' | uppercase }}</p>
-                <p class="text-lg font-bold leading-none">{{ event.date | date: 'd' }}</p>
-              </div>
-              <div>
-                <p class="font-semibold text-sm">{{ event.title }}</p>
-                <p class="text-xs text-gray-500">📍 {{ event.location }}</p>
-              </div>
-            </div>
-          }
-        }
-      </div>
+        <span
+          style="
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: var(--accent-2);
+            display: inline-block;
+          "
+        ></span>
+        Ouvert lundi 17h–19h
+      </span>
     </div>
   </div>
-</section>
+</nav>
 
-<!-- Lieux de vente + Produits -->
-<section class="py-16 px-4">
-  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 mb-16">
-    <div class="bg-white rounded-2xl shadow-sm p-6">
-      <div class="flex items-center gap-3 mb-4">
-        <div class="bg-green-100 p-2 rounded-xl">📍</div>
-        <h3 class="font-semibold">Ventes régulières</h3>
+<!-- ── HERO ── -->
+<section style="background: var(--bg); position: relative; overflow: hidden">
+  <div class="wrap" style="padding-top: 40px; padding-bottom: 90px">
+    <!-- Meta top -->
+    <div
+      style="
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 56px;
+        color: var(--ink-soft);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      "
+    >
+      <div style="display: flex; align-items: center; gap: 10px">
+        <span style="color: var(--accent)">—</span>
+        Producteurs · Picardie · Oise
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px">
+        Saison 2026
+        <span style="color: var(--accent)">—</span>
+      </div>
+    </div>
+
+    <!-- Headline -->
+    <div style="text-align: center">
+      <div
+        style="
+          margin-bottom: 18px;
+          display: inline-flex;
+          align-items: center;
+          gap: 14px;
+          color: var(--accent);
+        "
+      >
+        <svg width="32" height="14" viewBox="0 0 32 14" fill="none" style="color: var(--ink-mute)">
+          <path d="M2 7 H30" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+          <ellipse cx="22" cy="4.5" rx="2.4" ry="1.4" fill="currentColor" />
+          <ellipse cx="22" cy="9.5" rx="2.4" ry="1.4" fill="currentColor" />
+          <ellipse cx="26.5" cy="4.5" rx="2" ry="1.2" fill="currentColor" />
+          <ellipse cx="26.5" cy="9.5" rx="2" ry="1.2" fill="currentColor" />
+        </svg>
+        <span style="font-family: var(--font-script); font-size: 28px; color: var(--accent-2)"
+          >directement de la ferme</span
+        >
+        <svg
+          width="32"
+          height="14"
+          viewBox="0 0 32 14"
+          fill="none"
+          style="transform: scaleX(-1); color: var(--ink-mute)"
+        >
+          <path d="M2 7 H30" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+          <ellipse cx="22" cy="4.5" rx="2.4" ry="1.4" fill="currentColor" />
+          <ellipse cx="22" cy="9.5" rx="2.4" ry="1.4" fill="currentColor" />
+          <ellipse cx="26.5" cy="4.5" rx="2" ry="1.2" fill="currentColor" />
+          <ellipse cx="26.5" cy="9.5" rx="2" ry="1.2" fill="currentColor" />
+        </svg>
+      </div>
+
+      <h1
+        class="h-display"
+        style="
+          margin: 0;
+          font-size: clamp(64px, 13vw, 200px);
+          letter-spacing: -0.02em;
+          line-height: 0.88;
+        "
+      >
+        Le Trio<br />
+        <span style="display: inline-flex; align-items: baseline; gap: 0.18em">
+          <em style="font-style: italic; color: var(--accent-2)">des</em>
+          <span>Champs</span>
+        </span>
+      </h1>
+
+      <p class="lead" style="margin: 36px auto 0; text-align: center">
+        Œufs, oignons et pommes de terre <span class="underline-script">à prix juste</span>, vendus
+        chaque semaine partout en Picardie par un collectif de producteurs locaux.
+      </p>
+
+      <div
+        style="
+          margin-top: 48px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: clamp(20px, 4vw, 56px);
+          font-family: var(--font-display);
+          font-size: clamp(20px, 2.2vw, 30px);
+          color: var(--ink);
+        "
+      >
+        <span>œufs</span>
+        <span style="color: var(--accent-3)">✦</span>
+        <span style="font-style: italic">oignons</span>
+        <span style="color: var(--accent-3)">✦</span>
+        <span>pommes de terre</span>
+      </div>
+    </div>
+
+    <!-- Meta strip -->
+    <div
+      style="
+        margin-top: 80px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 24px;
+        padding: 26px 0;
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+      "
+    >
+      <div>
+        <div
+          style="
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            font-weight: 600;
+            margin-bottom: 6px;
+          "
+        >
+          Quand
+        </div>
+        <div style="font-family: var(--font-display); font-size: 24px; line-height: 1.1">
+          Tous les lundis
+        </div>
+        <div style="margin-top: 4px; font-size: 14px; color: var(--ink-soft)">17h — 19h</div>
       </div>
       @for (place of sellingPlaces; track place.id) {
-        <div class="mb-3">
-          <p class="text-green-600 font-medium">📅 {{ place.schedule }}</p>
-          <p class="text-gray-700">{{ place.name }}</p>
-          <p class="text-gray-500 text-sm">{{ place.address }}</p>
-        </div>
-      }
-    </div>
-
-    <div class="bg-white rounded-2xl shadow-sm p-6">
-      <div class="flex items-center gap-3 mb-4">
-        <div class="bg-green-100 p-2 rounded-xl">📉</div>
-        <h3 class="font-semibold">Nos tarifs</h3>
-      </div>
-      @for (product of products; track product.id) {
-        <p class="text-gray-700 mb-1">🥔 {{ product.name }} – {{ product.price }}</p>
-      }
-    </div>
-  </div>
-
-  <!-- Produits -->
-  <div class="max-w-5xl mx-auto text-center mb-10">
-    <span
-      class="text-xs font-semibold tracking-widest uppercase text-green-600 bg-green-100 px-4 py-1 rounded-full"
-      >Nos produits</span
-    >
-    <h2 class="text-4xl font-light mt-4 mb-2">Ce que nous proposons</h2>
-    <p class="text-gray-500">Produits disponibles (quantités limitées)</p>
-  </div>
-
-  <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-    @for (product of products; track product.id) {
-      <div class="text-center">
-        @if (product.imageUrl) {
-          <img
-            [src]="product.imageUrl"
-            [alt]="product.name"
-            class="w-full h-48 object-cover rounded-2xl mb-3"
-          />
-        } @else {
+        <div>
           <div
-            class="w-full h-48 bg-gray-100 rounded-2xl mb-3 flex items-center justify-center text-4xl"
+            style="
+              font-size: 11px;
+              letter-spacing: 0.2em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+              margin-bottom: 6px;
+            "
           >
-            🌾
+            Où
           </div>
-        }
-        <p class="font-medium">{{ product.name }}</p>
-        <p class="text-green-600 text-sm">{{ product.price }}</p>
-      </div>
-    }
-  </div>
-</section>
-
-<!-- Avantages -->
-<section class="py-16 px-4 bg-gray-50">
-  <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
-    <div class="bg-white rounded-2xl p-6 shadow-sm">
-      <div class="bg-green-100 w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4">
-        🌿
-      </div>
-      <h3 class="font-semibold mb-1">100% Local</h3>
-      <p class="text-gray-500 text-sm">Direct de nos fermes régionales</p>
-    </div>
-    <div class="bg-white rounded-2xl p-6 shadow-sm">
-      <div class="bg-green-100 w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4">
-        💰
-      </div>
-      <h3 class="font-semibold mb-1">Petit Prix</h3>
-      <p class="text-gray-500 text-sm">Sans intermédiaire, économisez</p>
-    </div>
-    <div class="bg-white rounded-2xl p-6 shadow-sm">
-      <div class="bg-green-100 w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4">
-        ✨
-      </div>
-      <h3 class="font-semibold mb-1">Fraîcheur</h3>
-      <p class="text-gray-500 text-sm">Récolté et livré rapidement</p>
-    </div>
-  </div>
-</section>
-
-<!-- Contact -->
-<section class="py-16 px-4">
-  <div class="max-w-3xl mx-auto text-center mb-10">
-    <h2 class="text-4xl font-light mb-2">Contactez-nous</h2>
-    <p class="text-gray-500">Une question ? N'hésitez pas à nous contacter</p>
-  </div>
-  <div class="max-w-3xl mx-auto grid md:grid-cols-2 gap-6">
-    <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-4">
-      <div class="bg-green-100 p-3 rounded-xl text-2xl">✉️</div>
-      <div>
-        <p class="text-sm text-gray-500">Email</p>
-        <p class="text-green-600">letriodeschamps&#64;gmail.com</p>
-      </div>
-    </div>
-    <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-4">
-      <div class="bg-green-100 p-3 rounded-xl text-2xl">📞</div>
-      <div>
-        <p class="text-sm text-gray-500">Téléphone</p>
-        <p class="text-green-600">06 76 63 66 10</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Inscription SMS -->
-<section class="py-16 px-4 bg-gray-900 text-white">
-  <div class="max-w-2xl mx-auto text-center mb-10">
-    <h2 class="text-4xl font-light mb-2">Rejoignez le mouvement local</h2>
-    <p class="text-gray-400">
-      Recevez un SMS 24h/48h avant chaque vente avec la liste des produits disponibles
-    </p>
-  </div>
-
-  @if (subscribeSuccess) {
-    <div class="max-w-2xl mx-auto bg-green-600 rounded-2xl p-6 text-center">
-      <p class="text-2xl mb-2">✅</p>
-      <p class="font-semibold">Inscription confirmée !</p>
-      <p class="text-green-200 text-sm mt-1">
-        Vous recevrez des notifications SMS avant chaque vente.
-      </p>
-    </div>
-  } @else {
-    <div class="max-w-2xl mx-auto bg-gray-800 rounded-2xl p-6">
-      @if (subscribeError) {
-        <div class="bg-red-900 text-red-200 text-sm px-4 py-3 rounded-xl mb-4">
-          {{ subscribeError }}
+          <div style="font-family: var(--font-display); font-size: 24px; line-height: 1.1">
+            {{ place.name }}
+          </div>
+          <div style="margin-top: 4px; font-size: 14px; color: var(--ink-soft)">
+            {{ place.schedule }}
+          </div>
         </div>
       }
-      <div class="space-y-4">
-        <div>
-          <label class="text-sm text-gray-400 mb-1 block">Numéro de téléphone</label>
-          <input
-            [(ngModel)]="subscribeForm.phone"
-            type="tel"
-            class="w-full bg-gray-700 border border-gray-600 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-green-400"
-            placeholder="06 12 34 56 78"
-          />
-        </div>
-        <div>
-          <label class="text-sm text-gray-400 mb-2 block">Villes qui vous intéressent</label>
-          <div class="flex flex-wrap gap-2">
-            @for (city of cities; track city.id) {
-              <button
-                (click)="toggleCity(city.id)"
-                class="px-4 py-2 rounded-full text-sm transition border"
-                [class.border-green-400]="isCitySelected(city.id)"
-                [class.text-green-400]="isCitySelected(city.id)"
-                [class.bg-green-400/10]="isCitySelected(city.id)"
-                [class.border-gray-600]="!isCitySelected(city.id)"
-                [class.text-gray-400]="!isCitySelected(city.id)"
-              >
-                {{ city.name }}
-              </button>
-            }
-          </div>
-        </div>
-        <button
-          (click)="subscribe()"
-          class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-medium transition"
+      <div>
+        <div
+          style="
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            font-weight: 600;
+            margin-bottom: 6px;
+          "
         >
-          🔔 S'inscrire aux notifications
-        </button>
+          Combien
+        </div>
+        <div style="font-family: var(--font-display); font-size: 24px; line-height: 1.1">
+          à partir de 3 €
+        </div>
+        <div style="margin-top: 4px; font-size: 14px; color: var(--ink-soft)">filet de 5 kg</div>
+      </div>
+      <div>
+        <div
+          style="
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            font-weight: 600;
+            margin-bottom: 6px;
+          "
+        >
+          Pour qui
+        </div>
+        <div style="font-family: var(--font-display); font-size: 24px; line-height: 1.1">Tous</div>
+        <div style="margin-top: 4px; font-size: 14px; color: var(--ink-soft)">
+          venez avec votre cabas
+        </div>
       </div>
     </div>
-  }
+  </div>
 </section>
-
-<!-- Footer -->
-<footer class="bg-gray-950 text-white py-8 px-4 text-center">
-  <p class="text-gray-500 text-sm">© 2026 Le Trio des Champs — Tous droits réservés</p>
-</footer>
