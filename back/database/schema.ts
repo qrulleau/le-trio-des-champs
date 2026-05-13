@@ -139,7 +139,7 @@ export class SettingSchema extends BaseModel {
   @column()
   declare instagramUrl: string | null
   @column()
-  declare phones: any | null
+  declare phones: string | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 }

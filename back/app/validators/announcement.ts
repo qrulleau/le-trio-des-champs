@@ -1,7 +1,5 @@
 import vine from '@vinejs/vine'
 
-import vine from '@vinejs/vine'
-
 export const updateAnnouncementValidator = vine.compile(
   vine.object({
     title: vine.string().trim().optional(),

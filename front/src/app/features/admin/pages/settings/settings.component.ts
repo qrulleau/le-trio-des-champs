@@ -33,9 +33,13 @@ export class SettingsComponent implements OnInit {
     this.api.getSettings().subscribe((data) => {
       if (data) {
         this.settings = data
+        let phones = []
+        if (data.phones) {
+          phones = typeof data.phones === 'string' ? JSON.parse(data.phones) : data.phones
+        }
         this.form = {
           email: data.email || '',
-          phones: data.phones || [],
+          phones: phones,
           instagramUrl: data.instagramUrl || '',
           facebookUrl: data.facebookUrl || '',
         }
@@ -55,20 +59,32 @@ export class SettingsComponent implements OnInit {
     this.form.phones = this.form.phones.filter((_, i) => i !== index)
   }
 
+  get phonesList(): string[] {
+    if (!this.form.phones) return []
+    if (typeof this.form.phones === 'string') {
+      try {
+        return JSON.parse(this.form.phones as any)
+      } catch {
+        return []
+      }
+    }
+    return this.form.phones
+  }
+
   save() {
     if (this.settings) {
       this.api.updateSettings(this.settings.id, this.form).subscribe({
-        next: (data) => {
-          this.settings = data
+        next: (response) => {
+          this.settings = response
           this.toast.success('Coordonnées enregistrées avec succès')
           this.cdr.detectChanges()
         },
         error: () => this.toast.error("Erreur lors de l'enregistrement"),
       })
     } else {
-      this.api.updateSettings(0, this.form).subscribe({
-        next: (data) => {
-          this.settings = data
+      this.api.createSettings(this.form).subscribe({
+        next: (response) => {
+          this.settings = response
           this.toast.success('Coordonnées enregistrées avec succès')
           this.cdr.detectChanges()
         },

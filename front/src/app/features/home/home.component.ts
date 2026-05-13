@@ -41,9 +41,10 @@ export class HomeComponent implements OnInit {
       this.cities = [...data]
       this.cdr.detectChanges()
     })
-    this.api
-      .getEvents(this.currentMonth, this.currentYear)
-      .subscribe((data) => (this.events = data))
+    this.api.getEvents(this.currentMonth, this.currentYear).subscribe((data) => {
+      this.events = [...data]
+      this.cdr.detectChanges()
+    })
   }
 
   toggleCity(cityId: number) {
@@ -80,7 +81,6 @@ export class HomeComponent implements OnInit {
       },
     })
   }
-
   prevMonth() {
     if (this.currentMonth === 1) {
       this.currentMonth = 12
@@ -88,9 +88,10 @@ export class HomeComponent implements OnInit {
     } else {
       this.currentMonth--
     }
-    this.api
-      .getEvents(this.currentMonth, this.currentYear)
-      .subscribe((data) => (this.events = data))
+    this.api.getEvents(this.currentMonth, this.currentYear).subscribe((data) => {
+      this.events = [...data]
+      this.cdr.detectChanges()
+    })
   }
 
   nextMonth() {
@@ -100,9 +101,10 @@ export class HomeComponent implements OnInit {
     } else {
       this.currentMonth++
     }
-    this.api
-      .getEvents(this.currentMonth, this.currentYear)
-      .subscribe((data) => (this.events = data))
+    this.api.getEvents(this.currentMonth, this.currentYear).subscribe((data) => {
+      this.events = [...data]
+      this.cdr.detectChanges()
+    })
   }
 
   getMonthName(month: number, year: number): string {

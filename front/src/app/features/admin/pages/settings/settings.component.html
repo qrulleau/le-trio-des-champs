@@ -14,19 +14,26 @@
           class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
           placeholder="letriodeschamps@gmail.com"
         />
-        <p class="text-xs text-gray-400 mt-1">Cette adresse sera affichée sur votre page publique</p>
+        <p class="text-xs text-gray-400 mt-1">
+          Cette adresse sera affichée sur votre page publique
+        </p>
       </div>
 
       <div>
         <label class="text-sm text-gray-600 mb-1 block">Numéros de téléphone *</label>
         <div class="space-y-2 mb-3">
-          @for (phone of form.phones; track $index) {
+          @for (phone of phonesList; track $index) {
             <div class="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-2">
               <div class="flex items-center gap-2">
                 <span>📱</span>
                 <span class="text-sm">{{ phone }}</span>
               </div>
-              <button (click)="removePhone($index)" class="text-red-500 hover:text-red-700 transition">🗑️</button>
+              <button
+                (click)="removePhone($index)"
+                class="text-red-500 hover:text-red-700 transition"
+              >
+                🗑️
+              </button>
             </div>
           }
         </div>
@@ -38,11 +45,16 @@
             class="flex-1 border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
             placeholder="0612345678"
           />
-          <button (click)="addPhone()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-4 py-2 rounded-xl text-sm transition">
+          <button
+            (click)="addPhone()"
+            class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-4 py-2 rounded-xl text-sm transition"
+          >
             + Ajouter
           </button>
         </div>
-        <p class="text-xs text-gray-400 mt-1">Appuyez sur Entrée ou cliquez sur "Ajouter" pour ajouter un numéro</p>
+        <p class="text-xs text-gray-400 mt-1">
+          Appuyez sur Entrée ou cliquez sur "Ajouter" pour ajouter un numéro
+        </p>
       </div>
 
       <div>
@@ -66,7 +78,10 @@
       </div>
     </div>
 
-    <button (click)="save()" class="mt-6 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl text-sm transition flex items-center gap-2">
+    <button
+      (click)="save()"
+      class="mt-6 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl text-sm transition flex items-center gap-2"
+    >
       💾 Enregistrer les modifications
     </button>
   </div>
@@ -85,10 +100,10 @@
         <div class="bg-purple-100 p-2 rounded-xl text-xl">📱</div>
         <h3 class="font-semibold">Téléphone</h3>
       </div>
-      @for (phone of form.phones; track $index) {
+      @for (phone of phonesList; track $index) {
         <p class="text-purple-600 text-sm">{{ phone }}</p>
       }
-      @if (form.phones.length === 0) {
+      @if (phonesList.length === 0) {
         <p class="text-gray-400 text-sm">Aucun numéro renseigné</p>
       }
     </div>

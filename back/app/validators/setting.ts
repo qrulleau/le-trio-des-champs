@@ -1,7 +1,5 @@
 import vine from '@vinejs/vine'
 
-import vine from '@vinejs/vine'
-
 export const updateSettingValidator = vine.compile(
   vine.object({
     email: vine.string().trim().email().optional(),
