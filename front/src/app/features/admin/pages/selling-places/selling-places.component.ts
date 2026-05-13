@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { ApiService } from '../../../../core/services/api.service'
+import { ToastService } from '../../../../core/services/toast.service'
 
 @Component({
   selector: 'app-selling-places',
@@ -20,14 +21,19 @@ export class SellingPlacesComponent implements OnInit {
     schedule: '',
   }
 
-  constructor(private api: ApiService) {}
+  private api = inject(ApiService)
+  private toast = inject(ToastService)
+  private cdr = inject(ChangeDetectorRef)
 
   ngOnInit() {
     this.loadSellingPlaces()
   }
 
   loadSellingPlaces() {
-    this.api.getSellingPlaces().subscribe((data) => (this.sellingPlaces = data))
+    this.api.getSellingPlaces().subscribe((data) => {
+      this.sellingPlaces = [...data]
+      this.cdr.detectChanges()
+    })
   }
 
   openForm(place?: any) {
@@ -48,21 +54,33 @@ export class SellingPlacesComponent implements OnInit {
 
   submit() {
     if (this.editingPlace) {
-      this.api.updateSellingPlace(this.editingPlace.id, this.form).subscribe(() => {
-        this.loadSellingPlaces()
-        this.closeForm()
+      this.api.updateSellingPlace(this.editingPlace.id, this.form).subscribe({
+        next: () => {
+          this.toast.success('Lieu modifié avec succès')
+          this.loadSellingPlaces()
+          this.closeForm()
+        },
+        error: () => this.toast.error('Erreur lors de la modification'),
       })
     } else {
-      this.api.createSellingPlace(this.form).subscribe(() => {
-        this.loadSellingPlaces()
-        this.closeForm()
+      this.api.createSellingPlace(this.form).subscribe({
+        next: () => {
+          this.toast.success('Lieu ajouté avec succès')
+          this.loadSellingPlaces()
+          this.closeForm()
+        },
+        error: () => this.toast.error("Erreur lors de l'ajout"),
       })
     }
   }
 
   delete(id: number) {
-    if (confirm('Supprimer ce lieu de vente ?')) {
-      this.api.deleteSellingPlace(id).subscribe(() => this.loadSellingPlaces())
-    }
+    this.api.deleteSellingPlace(id).subscribe({
+      next: () => {
+        this.toast.success('Lieu supprimé')
+        this.loadSellingPlaces()
+      },
+      error: () => this.toast.error('Erreur lors de la suppression'),
+    })
   }
 }

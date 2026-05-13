@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { ApiService } from '../../../../core/services/api.service'
+import { ToastService } from '../../../../core/services/toast.service'
 
 @Component({
   selector: 'app-settings',
@@ -20,7 +21,9 @@ export class SettingsComponent implements OnInit {
     facebookUrl: '',
   }
 
-  constructor(private api: ApiService) {}
+  private api = inject(ApiService)
+  private toast = inject(ToastService)
+  private cdr = inject(ChangeDetectorRef)
 
   ngOnInit() {
     this.loadSettings()
@@ -36,6 +39,7 @@ export class SettingsComponent implements OnInit {
           instagramUrl: data.instagramUrl || '',
           facebookUrl: data.facebookUrl || '',
         }
+        this.cdr.detectChanges()
       }
     })
   }
@@ -53,12 +57,22 @@ export class SettingsComponent implements OnInit {
 
   save() {
     if (this.settings) {
-      this.api.updateSettings(this.settings.id, this.form).subscribe((data) => {
-        this.settings = data
+      this.api.updateSettings(this.settings.id, this.form).subscribe({
+        next: (data) => {
+          this.settings = data
+          this.toast.success('Coordonnées enregistrées avec succès')
+          this.cdr.detectChanges()
+        },
+        error: () => this.toast.error("Erreur lors de l'enregistrement"),
       })
     } else {
-      this.api.updateSettings(0, this.form).subscribe((data) => {
-        this.settings = data
+      this.api.updateSettings(0, this.form).subscribe({
+        next: (data) => {
+          this.settings = data
+          this.toast.success('Coordonnées enregistrées avec succès')
+          this.cdr.detectChanges()
+        },
+        error: () => this.toast.error("Erreur lors de l'enregistrement"),
       })
     }
   }
