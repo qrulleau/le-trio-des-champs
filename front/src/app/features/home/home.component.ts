@@ -138,4 +138,12 @@ export class HomeComponent implements OnInit {
       month: 'long',
     })
   }
+  getPriceAmount(price: string): string {
+    const match = price.match(/^[\d,.]+ ?€/)
+    return match ? match[0] : price
+  }
+
+  getPriceUnit(price: string): string {
+    return price.replace(/^[\d,.]+ ?€ ?/, '').trim()
+  }
 }

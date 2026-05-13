@@ -1,3 +1,4 @@
+<!-- ── NAV ── -->
 <nav style="background: var(--bg); border-bottom: 1px solid var(--rule)">
   <div
     class="wrap"
@@ -70,7 +71,6 @@
 <!-- ── HERO ── -->
 <section style="background: var(--bg); position: relative; overflow: hidden">
   <div class="wrap" style="padding-top: 40px; padding-bottom: 90px">
-    <!-- Meta top -->
     <div
       style="
         display: flex;
@@ -96,17 +96,8 @@
       </div>
     </div>
 
-    <!-- Headline -->
     <div style="text-align: center">
-      <div
-        style="
-          margin-bottom: 18px;
-          display: inline-flex;
-          align-items: center;
-          gap: 14px;
-          color: var(--accent);
-        "
-      >
+      <div style="margin-bottom: 18px; display: inline-flex; align-items: center; gap: 14px">
         <svg width="32" height="14" viewBox="0 0 32 14" fill="none" style="color: var(--ink-mute)">
           <path d="M2 7 H30" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
           <ellipse cx="22" cy="4.5" rx="2.4" ry="1.4" fill="currentColor" />
@@ -174,7 +165,6 @@
       </div>
     </div>
 
-    <!-- Meta strip -->
     <div
       style="
         margin-top: 80px;
@@ -265,6 +255,7 @@
     </div>
   </div>
 </section>
+
 <!-- ── EVENT BANNER (ruban) ── -->
 @if (announcement && announcement.isActive) {
   <section style="background: var(--bg); padding: 10px 0 0">
@@ -426,7 +417,6 @@
                 border: 1px solid var(--rule);
               "
             ></span>
-
             @if (product.imageUrl) {
               <img
                 [src]="product.imageUrl"
@@ -456,7 +446,6 @@
                 🌾
               </div>
             }
-
             <div
               style="
                 display: flex;
@@ -534,3 +523,1197 @@
     </div>
   </div>
 </section>
+
+<!-- ── VALUES ── -->
+<section style="background: var(--bg); padding: 120px 0">
+  <div class="wrap">
+    <div style="text-align: center; margin-bottom: 64px">
+      <div class="eyebrow" style="margin-bottom: 18px">Nos engagements</div>
+      <h2 class="h-section">
+        Trois <em style="font-style: italic; color: var(--accent-2)">promesses</em>, tenues.
+      </h2>
+    </div>
+    <div
+      style="
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid var(--rule);
+      "
+    >
+      <div
+        style="
+          padding: 44px 32px 44px 0;
+          border-bottom: 1px solid var(--rule);
+          border-right: 1px solid var(--rule);
+        "
+      >
+        <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px">
+          <span
+            style="
+              font-family: var(--font-mono);
+              font-size: 13px;
+              color: var(--accent-2);
+              letter-spacing: 0.05em;
+            "
+            >01</span
+          >
+          <span style="font-family: var(--font-display); font-size: 28px; color: var(--ink)"
+            >100 % local</span
+          >
+        </div>
+        <p
+          style="
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.55;
+            color: var(--ink-soft);
+            max-width: 32ch;
+          "
+        >
+          Nos fermes sont à moins de 30 km. Vous savez d'où vient ce que vous mangez.
+        </p>
+      </div>
+      <div
+        style="
+          padding: 44px 32px;
+          border-bottom: 1px solid var(--rule);
+          border-right: 1px solid var(--rule);
+        "
+      >
+        <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px">
+          <span
+            style="
+              font-family: var(--font-mono);
+              font-size: 13px;
+              color: var(--accent-2);
+              letter-spacing: 0.05em;
+            "
+            >02</span
+          >
+          <span style="font-family: var(--font-display); font-size: 28px; color: var(--ink)"
+            >Prix juste</span
+          >
+        </div>
+        <p
+          style="
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.55;
+            color: var(--ink-soft);
+            max-width: 32ch;
+          "
+        >
+          Sans intermédiaire. Le prix sur l'étiquette est celui que le producteur encaisse.
+        </p>
+      </div>
+      <div style="padding: 44px 0 44px 32px; border-bottom: 1px solid var(--rule)">
+        <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px">
+          <span
+            style="
+              font-family: var(--font-mono);
+              font-size: 13px;
+              color: var(--accent-2);
+              letter-spacing: 0.05em;
+            "
+            >03</span
+          >
+          <span style="font-family: var(--font-display); font-size: 28px; color: var(--ink)"
+            >Fraîcheur</span
+          >
+        </div>
+        <p
+          style="
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.55;
+            color: var(--ink-soft);
+            max-width: 32ch;
+          "
+        >
+          Récolté dans la semaine, vendu le lundi. Pas de chaîne du froid, pas de stockage long.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SCHEDULE ── -->
+<section style="background: var(--accent); color: var(--paper); padding: 120px 0">
+  <div class="wrap">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start">
+      <div>
+        <div class="eyebrow" style="color: var(--accent-3); margin-bottom: 18px">Permanence</div>
+        <h2 class="h-section" style="color: var(--paper)">
+          Tous les <em style="font-style: italic; color: var(--accent-3)">lundis</em>,<br />de 17h à
+          19h.
+        </h2>
+        <p
+          style="
+            margin-top: 24px;
+            color: rgba(250, 246, 236, 0.78);
+            font-size: 17px;
+            line-height: 1.55;
+            max-width: 44ch;
+          "
+        >
+          Pas besoin de réserver. On déballe le camion à 17h pétantes et on remballe quand il n'y a
+          plus rien — souvent avant 19h.
+        </p>
+        <div style="margin-top: 36px; display: flex; flex-direction: column; gap: 18px">
+          @for (place of sellingPlaces; track place.id) {
+            <div
+              style="display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start"
+            >
+              <span style="margin-top: 4px">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--accent-3)"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 22s-7-7.5-7-13a7 7 0 1114 0c0 5.5-7 13-7 13z" />
+                  <circle cx="12" cy="9" r="2.5" />
+                </svg>
+              </span>
+              <div>
+                <div
+                  style="
+                    font-size: 11px;
+                    letter-spacing: 0.18em;
+                    text-transform: uppercase;
+                    color: rgba(250, 246, 236, 0.6);
+                    margin-bottom: 6px;
+                    font-weight: 600;
+                  "
+                >
+                  Adresse
+                </div>
+                <div style="font-size: 17px; line-height: 1.4; color: var(--paper)">
+                  {{ place.address }}<br />
+                  <span style="color: rgba(250, 246, 236, 0.7)">{{ place.name }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div
+        style="
+          background: rgba(0, 0, 0, 0.18);
+          border: 1px solid rgba(250, 246, 236, 0.15);
+          border-radius: 4px;
+          padding: 36px 36px 40px;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 24px;
+          "
+        >
+          <div style="font-family: var(--font-display); font-size: 28px; color: var(--paper)">
+            Nos tarifs
+          </div>
+          <div style="font-family: var(--font-script); font-size: 22px; color: var(--accent-3)">
+            au plus juste
+          </div>
+        </div>
+        <ul
+          style="
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+          "
+        >
+          @for (product of products; track product.id) {
+            <li
+              style="
+                display: grid;
+                grid-template-columns: 1fr auto;
+                align-items: baseline;
+                gap: 12px;
+              "
+            >
+              <div style="display: flex; align-items: baseline; gap: 12px">
+                <span
+                  style="font-family: var(--font-display); font-size: 20px; color: var(--paper)"
+                  >{{ product.name }}</span
+                >
+                <span
+                  style="
+                    flex: 1;
+                    border-bottom: 1px dotted rgba(250, 246, 236, 0.3);
+                    transform: translateY(-4px);
+                  "
+                ></span>
+                <span style="font-size: 13px; color: rgba(250, 246, 236, 0.55)">{{
+                  product.price.split(' ').slice(1).join(' ')
+                }}</span>
+              </div>
+              <span
+                style="font-family: var(--font-display); font-size: 22px; color: var(--accent-3)"
+                >{{ product.price.split(' ')[0] }}</span
+              >
+            </li>
+          }
+        </ul>
+        <div
+          style="
+            margin-top: 28px;
+            padding: 18px 0 0;
+            border-top: 1px dashed rgba(250, 246, 236, 0.2);
+            font-size: 13px;
+            color: rgba(250, 246, 236, 0.7);
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px">
+            <span style="font-size: 18px">💳</span>
+            <span style="font-size: 18px">💶</span>
+            <strong style="color: var(--paper); font-weight: 600">Espèces &amp; carte bleue</strong>
+            acceptés
+          </div>
+          <div style="color: rgba(250, 246, 236, 0.55)">
+            Pensez à votre cabas · pas de vente les jours fériés
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CALENDAR ── -->
+<section id="dates" style="background: var(--bg); padding: 120px 0">
+  <div class="wrap">
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        gap: 32px;
+        margin-bottom: 56px;
+      "
+    >
+      <div>
+        <div class="eyebrow" style="margin-bottom: 18px">Calendrier</div>
+        <h2 class="h-section">
+          Prochaines<br /><em style="font-style: italic; color: var(--accent-2)">permanences</em>
+        </h2>
+      </div>
+      <p style="max-width: 32ch; font-size: 16px; color: var(--ink-soft); margin: 0">
+        Le rendez-vous régulier, plus quelques sorties exceptionnelles dans les villes voisines.
+      </p>
+    </div>
+
+    <ul style="list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule)">
+      @if (events.length === 0) {
+        <li
+          style="
+            padding: 40px 0;
+            text-align: center;
+            color: var(--ink-mute);
+            border-bottom: 1px solid var(--rule);
+          "
+        >
+          Aucun événement programmé ce mois-ci
+        </li>
+      } @else {
+        @for (event of events; track event.id) {
+          <li
+            style="
+              display: grid;
+              grid-template-columns: 120px 1fr auto;
+              align-items: center;
+              gap: 32px;
+              padding: 28px 0;
+              border-bottom: 1px solid var(--rule);
+            "
+          >
+            <div style="display: flex; align-items: baseline; gap: 10px">
+              <span
+                style="font-family: var(--font-display); font-size: 52px; line-height: 1"
+                [style.color]="getCityColor(event.location)"
+              >
+                {{ event.date | date: 'd' }}
+              </span>
+              <span
+                style="font-family: var(--font-display); font-size: 18px; color: var(--ink-soft)"
+              >
+                {{ event.date | date: 'MMM' }}
+              </span>
+            </div>
+            <div>
+              <div style="font-size: 17px; color: var(--ink); font-weight: 500">
+                {{ event.title }}
+              </div>
+              <div
+                style="
+                  margin-top: 4px;
+                  font-size: 14px;
+                  color: var(--ink-soft);
+                  display: flex;
+                  gap: 8px;
+                  align-items: center;
+                "
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--ink-mute)"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 22s-7-7.5-7-13a7 7 0 1114 0c0 5.5-7 13-7 13z" />
+                  <circle cx="12" cy="9" r="2.5" />
+                </svg>
+                {{ event.location }}
+              </div>
+            </div>
+            <div>
+              @if (event.isRecurring) {
+                <span
+                  style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 6px 12px;
+                    border-radius: 999px;
+                    background: transparent;
+                    color: var(--ink-mute);
+                    border: 1px solid var(--rule);
+                    font-size: 12px;
+                    font-weight: 600;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                  "
+                  >permanence</span
+                >
+              } @else {
+                <span
+                  style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 6px 12px;
+                    border-radius: 999px;
+                    background: var(--accent-2);
+                    color: var(--paper);
+                    font-size: 12px;
+                    font-weight: 600;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                  "
+                  >spécial</span
+                >
+              }
+            </div>
+          </li>
+        }
+      }
+    </ul>
+
+    <div
+      style="display: flex; align-items: center; justify-content: space-between; margin-top: 32px"
+    >
+      <button
+        (click)="prevMonth()"
+        style="
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 18px;
+          border: 1px solid var(--rule);
+          border-radius: 999px;
+          background: transparent;
+          color: var(--ink-soft);
+          font-size: 14px;
+        "
+      >
+        ← Mois précédent
+      </button>
+      <span
+        style="
+          font-family: var(--font-display);
+          font-size: 20px;
+          color: var(--ink);
+          text-transform: capitalize;
+        "
+      >
+        {{ getMonthName(currentMonth, currentYear) }}
+      </span>
+      <button
+        (click)="nextMonth()"
+        style="
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 18px;
+          border: 1px solid var(--rule);
+          border-radius: 999px;
+          background: transparent;
+          color: var(--ink-soft);
+          font-size: 14px;
+        "
+      >
+        Mois suivant →
+      </button>
+    </div>
+  </div>
+</section>
+<!-- ── SMS INSCRIPTION ── -->
+<section id="alertes" style="background: var(--bg); padding: 120px 0">
+  <div class="wrap">
+    <div style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 72px; align-items: start">
+      <!-- Colonne gauche -->
+      <div>
+        <div class="eyebrow" style="margin-bottom: 18px">Ne ratez plus une date</div>
+        <h2 class="h-section">
+          Recevez un <em style="font-style: italic; color: var(--accent-2)">SMS</em><br />24h avant.
+        </h2>
+        <p class="lead" style="margin-top: 24px">
+          Pas de newsletter, pas de pub. Juste un message la veille du jour où on passe près de chez
+          vous — avec l'heure et l'adresse exacte.
+        </p>
+
+        <ul
+          style="
+            list-style: none;
+            margin: 36px 0 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+          "
+        >
+          <li
+            style="display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: baseline"
+          >
+            <span style="font-family: var(--font-script); font-size: 22px; color: var(--accent-2)"
+              >✓</span
+            >
+            <span style="font-size: 15px; color: var(--ink-soft); line-height: 1.5"
+              ><strong style="color: var(--ink); font-weight: 600">1 SMS</strong> par date de
+              distribution, pas plus.</span
+            >
+          </li>
+          <li
+            style="display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: baseline"
+          >
+            <span style="font-family: var(--font-script); font-size: 22px; color: var(--accent-2)"
+              >✓</span
+            >
+            <span style="font-size: 15px; color: var(--ink-soft); line-height: 1.5"
+              ><strong style="color: var(--ink); font-weight: 600">Choisissez</strong> uniquement
+              les villes qui vous intéressent.</span
+            >
+          </li>
+          <li
+            style="display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: baseline"
+          >
+            <span style="font-family: var(--font-script); font-size: 22px; color: var(--accent-2)"
+              >✓</span
+            >
+            <span style="font-size: 15px; color: var(--ink-soft); line-height: 1.5"
+              ><strong style="color: var(--ink); font-weight: 600">Stop quand vous voulez</strong>
+              répondez STOP à n'importe quel message.</span
+            >
+          </li>
+        </ul>
+
+        <!-- Bubble SMS exemple -->
+        <div
+          style="
+            margin-top: 40px;
+            padding: 20px 22px;
+            background: var(--paper);
+            border: 1px solid var(--rule);
+            border-radius: 16px 16px 16px 4px;
+            max-width: 400px;
+            box-shadow: 0 12px 30px -20px rgba(35, 25, 17, 0.25);
+          "
+        >
+          <div
+            style="
+              font-size: 11px;
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+              margin-bottom: 8px;
+              display: flex;
+              justify-content: space-between;
+            "
+          >
+            <span>Trio des Champs</span>
+            <span>dim. 17 mai · 9h12</span>
+          </div>
+          <div style="font-size: 15px; color: var(--ink); line-height: 1.5">
+            Salut ! On est <strong>demain lundi à Plessier-sur-Bulles</strong>, 104 rue de Monceaux,
+            de 17h à 19h. Œufs, oignons, pommes de terre. À demain ! 🌾
+          </div>
+        </div>
+      </div>
+
+      <!-- Colonne droite — formulaire -->
+      <div style="position: relative">
+        <span
+          style="
+            position: absolute;
+            top: -10px;
+            left: 32px;
+            width: 14px;
+            height: 14px;
+            border-radius: 999px;
+            background: var(--accent-2);
+            box-shadow:
+              0 2px 4px rgba(0, 0, 0, 0.18),
+              inset 0 -2px 0 rgba(0, 0, 0, 0.18);
+            z-index: 2;
+          "
+        ></span>
+
+        @if (subscribeSuccess) {
+          <div
+            style="
+              background: var(--paper);
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              padding: 40px;
+              box-shadow: 0 24px 60px -30px rgba(35, 25, 17, 0.35);
+              text-align: center;
+            "
+          >
+            <div
+              style="
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 56px;
+                height: 56px;
+                border-radius: 999px;
+                background: var(--accent);
+                color: var(--paper);
+                margin-bottom: 18px;
+              "
+            >
+              <svg
+                width="26"
+                height="26"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12l5 5L20 7" />
+              </svg>
+            </div>
+            <div
+              style="
+                font-family: var(--font-display);
+                font-size: 30px;
+                color: var(--ink);
+                line-height: 1.1;
+              "
+            >
+              C'est noté !
+            </div>
+            <div
+              style="
+                margin-top: 10px;
+                font-family: var(--font-script);
+                font-size: 26px;
+                color: var(--accent-2);
+              "
+            >
+              à très vite
+            </div>
+            <p
+              style="
+                margin-top: 20px;
+                font-size: 15px;
+                color: var(--ink-soft);
+                line-height: 1.55;
+                max-width: 360px;
+                margin-inline: auto;
+              "
+            >
+              Vous recevrez un SMS la veille de chaque permanence dans votre secteur.
+            </p>
+          </div>
+        } @else {
+          <div
+            style="
+              background: var(--paper);
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              padding: 40px 40px 36px;
+              box-shadow: 0 24px 60px -30px rgba(35, 25, 17, 0.35);
+            "
+          >
+            <div
+              style="
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                margin-bottom: 4px;
+              "
+            >
+              <div
+                style="
+                  font-family: var(--font-display);
+                  font-size: 28px;
+                  color: var(--ink);
+                  line-height: 1;
+                "
+              >
+                Inscription
+              </div>
+              <div style="font-family: var(--font-script); font-size: 22px; color: var(--accent-2)">
+                c'est gratuit
+              </div>
+            </div>
+            <div style="font-size: 13px; color: var(--ink-mute); margin-bottom: 28px">
+              Aux alertes SMS du Trio
+            </div>
+
+            <!-- Téléphone -->
+            <div style="margin-bottom: 28px">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: baseline;
+                  margin-bottom: 10px;
+                  font-size: 11px;
+                  letter-spacing: 0.18em;
+                  text-transform: uppercase;
+                  color: var(--ink-soft);
+                  font-weight: 600;
+                "
+              >
+                <span>Votre numéro</span>
+                <span style="color: var(--ink-mute)">obligatoire</span>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  background: var(--bg);
+                  border: 1px solid var(--rule);
+                  border-radius: 4px;
+                "
+              >
+                <span
+                  style="
+                    padding: 0 14px 0 16px;
+                    color: var(--ink-soft);
+                    font-size: 15px;
+                    font-family: var(--font-mono);
+                    border-right: 1px solid var(--rule);
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                  "
+                  >+33</span
+                >
+                <input
+                  [(ngModel)]="subscribeForm.phone"
+                  type="tel"
+                  placeholder="6 12 34 56 78"
+                  style="
+                    flex: 1;
+                    height: 50px;
+                    border: 0;
+                    background: transparent;
+                    padding: 0 16px;
+                    font-size: 16px;
+                    font-family: var(--font-body);
+                    color: var(--ink);
+                    outline: none;
+                    letter-spacing: 0.03em;
+                  "
+                />
+              </div>
+            </div>
+
+            <!-- Villes -->
+            <div style="margin-bottom: 28px">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: baseline;
+                  margin-bottom: 10px;
+                  font-size: 11px;
+                  letter-spacing: 0.18em;
+                  text-transform: uppercase;
+                  color: var(--ink-soft);
+                  font-weight: 600;
+                "
+              >
+                <span>Villes qui vous intéressent</span>
+                <span style="color: var(--ink-mute)"
+                  >{{ subscribeForm.cityIds.length }} sélectionnée{{
+                    subscribeForm.cityIds.length > 1 ? 's' : ''
+                  }}</span
+                >
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px">
+                @for (city of cities; track city.id) {
+                  <button
+                    (click)="toggleCity(city.id)"
+                    style="
+                      appearance: none;
+                      padding: 10px 16px;
+                      border-radius: 999px;
+                      font-size: 14px;
+                      font-weight: 500;
+                      font-family: var(--font-body);
+                      cursor: pointer;
+                      transition: all 0.15s ease;
+                      display: inline-flex;
+                      align-items: center;
+                      gap: 8px;
+                      border: 1px solid;
+                    "
+                    [style.border-color]="isCitySelected(city.id) ? 'var(--accent)' : 'var(--rule)'"
+                    [style.background]="isCitySelected(city.id) ? 'var(--accent)' : 'transparent'"
+                    [style.color]="isCitySelected(city.id) ? 'var(--paper)' : 'var(--ink)'"
+                  >
+                    @if (isCitySelected(city.id)) {
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M5 12l5 5L20 7" />
+                      </svg>
+                    }
+                    {{ city.name }}
+                  </button>
+                }
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <button
+              (click)="subscribe()"
+              [disabled]="!subscribeForm.phone || subscribeForm.cityIds.length === 0"
+              style="
+                appearance: none;
+                width: 100%;
+                padding: 16px 22px;
+                background: var(--ink);
+                color: var(--paper);
+                border: 0;
+                border-radius: 999px;
+                font-family: var(--font-body);
+                font-size: 15px;
+                font-weight: 600;
+                letter-spacing: 0.01em;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                transition:
+                  transform 0.15s ease,
+                  opacity 0.15s ease;
+              "
+              [style.opacity]="
+                !subscribeForm.phone || subscribeForm.cityIds.length === 0 ? '0.4' : '1'
+              "
+            >
+              Je m'inscris aux alertes →
+            </button>
+
+            <div
+              style="
+                margin-top: 18px;
+                font-size: 12px;
+                color: var(--ink-mute);
+                text-align: center;
+                line-height: 1.55;
+              "
+            >
+              Vos coordonnées restent entre nous — jamais revendues, jamais partagées.
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact" style="background: var(--bg-2); padding: 120px 0">
+  <div
+    class="wrap"
+    style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start"
+  >
+    <div>
+      <div class="eyebrow" style="margin-bottom: 18px">Une question ?</div>
+      <h2 class="h-section">
+        On vous <em style="font-style: italic; color: var(--accent-2)">répond</em><br />vite.
+      </h2>
+      <p class="lead" style="margin-top: 24px">
+        Une grosse commande pour votre cantine, votre AMAP, votre voisinage ? Écrivez-nous. On
+        organise ce qu'il faut.
+      </p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <div
+        style="
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          padding: 24px 26px;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--accent);
+          "
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="M3 7l9 7 9-7" />
+          </svg>
+          <span
+            style="
+              font-size: 11px;
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+            "
+            >Par mail</span
+          >
+        </div>
+        <div style="font-family: var(--font-display); font-size: 22px; color: var(--ink)">
+          <a
+            href="mailto:letriodeschamps&#64;gmail.com"
+            style="border-bottom: 1px solid var(--ink-mute)"
+            >letriodeschamps&#64;gmail.com</a
+          >
+        </div>
+      </div>
+      <div
+        style="
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          padding: 24px 26px;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--accent);
+          "
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M5 4h3l2 5-2 1c1 3 3 5 6 6l1-2 5 2v3a2 2 0 01-2 2 16 16 0 01-15-15 2 2 0 012-2z"
+            />
+          </svg>
+          <span
+            style="
+              font-size: 11px;
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+            "
+            >Par téléphone</span
+          >
+        </div>
+        <div
+          style="
+            font-family: var(--font-display);
+            font-size: 20px;
+            color: var(--ink);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+          "
+        >
+          <a href="tel:+33676636610">06 76 63 66 10</a>
+          <a href="tel:+33658556064">06 58 55 60 64</a>
+          <a href="tel:+33680817828">06 80 81 78 28</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SMS INSCRIPTION ── -->
+<section style="background: var(--ink); color: var(--paper); padding: 120px 0">
+  <div class="wrap">
+    <div style="text-align: center; margin-bottom: 64px">
+      <div class="eyebrow" style="color: var(--accent-3); margin-bottom: 18px">
+        Notifications SMS
+      </div>
+      <h2 class="h-section" style="color: var(--paper)">
+        Soyez <em style="font-style: italic; color: var(--accent-3)">prévenu</em><br />avant tout le
+        monde.
+      </h2>
+      <p
+        style="
+          margin-top: 24px;
+          color: rgba(250, 246, 236, 0.7);
+          font-size: 17px;
+          line-height: 1.55;
+          max-width: 44ch;
+          margin-inline: auto;
+        "
+      >
+        Recevez un SMS 24h/48h avant chaque vente avec la liste des produits disponibles.
+      </p>
+    </div>
+
+    @if (subscribeSuccess) {
+      <div
+        style="
+          max-width: 520px;
+          margin-inline: auto;
+          background: var(--accent);
+          border-radius: 4px;
+          padding: 40px;
+          text-align: center;
+        "
+      >
+        <div
+          style="
+            font-family: var(--font-script);
+            font-size: 32px;
+            color: var(--accent-3);
+            margin-bottom: 12px;
+          "
+        >
+          C'est noté !
+        </div>
+        <p style="color: rgba(250, 246, 236, 0.8); margin: 0">
+          Vous recevrez un SMS avant chaque vente dans votre secteur.
+        </p>
+      </div>
+    } @else {
+      <div
+        style="
+          max-width: 520px;
+          margin-inline: auto;
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(250, 246, 236, 0.15);
+          border-radius: 4px;
+          padding: 40px;
+        "
+      >
+        <div style="display: flex; flex-direction: column; gap: 20px">
+          <div>
+            <label
+              style="
+                display: block;
+                font-size: 11px;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: rgba(250, 246, 236, 0.6);
+                font-weight: 600;
+                margin-bottom: 10px;
+              "
+              >Numéro de téléphone</label
+            >
+            <input
+              [(ngModel)]="subscribeForm.phone"
+              type="tel"
+              placeholder="06 12 34 56 78"
+              style="
+                width: 100%;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(250, 246, 236, 0.2);
+                border-radius: 4px;
+                padding: 14px 16px;
+                color: var(--paper);
+                font-size: 16px;
+                font-family: var(--font-body);
+                outline: none;
+                box-sizing: border-box;
+              "
+            />
+          </div>
+          <div>
+            <label
+              style="
+                display: block;
+                font-size: 11px;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: rgba(250, 246, 236, 0.6);
+                font-weight: 600;
+                margin-bottom: 10px;
+              "
+              >Villes qui vous intéressent</label
+            >
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              @for (city of cities; track city.id) {
+                <button
+                  (click)="toggleCity(city.id)"
+                  style="
+                    padding: 8px 16px;
+                    border-radius: 999px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    transition: all 0.15s ease;
+                    border: 1px solid;
+                  "
+                  [style.background]="isCitySelected(city.id) ? 'var(--accent-3)' : 'transparent'"
+                  [style.color]="isCitySelected(city.id) ? 'var(--ink)' : 'rgba(250,246,236,.7)'"
+                  [style.border-color]="
+                    isCitySelected(city.id) ? 'var(--accent-3)' : 'rgba(250,246,236,.25)'
+                  "
+                >
+                  {{ city.name }}
+                </button>
+              }
+            </div>
+          </div>
+          <button
+            (click)="subscribe()"
+            style="
+              width: 100%;
+              padding: 16px;
+              background: var(--accent-3);
+              color: var(--ink);
+              border: none;
+              border-radius: 4px;
+              font-size: 16px;
+              font-weight: 600;
+              font-family: var(--font-body);
+              letter-spacing: 0.02em;
+              transition: opacity 0.15s ease;
+            "
+          >
+            S'inscrire aux notifications →
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer
+  style="
+    background: var(--ink);
+    color: var(--paper);
+    padding: 100px 0 60px;
+    border-top: 1px solid rgba(250, 246, 236, 0.1);
+  "
+>
+  <div class="wrap" style="text-align: center">
+    <div
+      style="
+        color: var(--accent-3);
+        margin-bottom: 24px;
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+      "
+    >
+      <svg
+        width="32"
+        height="14"
+        viewBox="0 0 32 14"
+        fill="none"
+        style="color: currentColor; opacity: 0.7"
+      >
+        <path d="M2 7 H30" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+        <ellipse cx="22" cy="4.5" rx="2.4" ry="1.4" fill="currentColor" />
+        <ellipse cx="22" cy="9.5" rx="2.4" ry="1.4" fill="currentColor" />
+        <ellipse cx="26.5" cy="4.5" rx="2" ry="1.2" fill="currentColor" />
+        <ellipse cx="26.5" cy="9.5" rx="2" ry="1.2" fill="currentColor" />
+      </svg>
+      <span style="font-family: var(--font-script); font-size: 28px">on se voit lundi</span>
+      <svg
+        width="32"
+        height="14"
+        viewBox="0 0 32 14"
+        fill="none"
+        style="transform: scaleX(-1); color: currentColor; opacity: 0.7"
+      >
+        <path d="M2 7 H30" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+        <ellipse cx="22" cy="4.5" rx="2.4" ry="1.4" fill="currentColor" />
+        <ellipse cx="22" cy="9.5" rx="2.4" ry="1.4" fill="currentColor" />
+        <ellipse cx="26.5" cy="4.5" rx="2" ry="1.2" fill="currentColor" />
+        <ellipse cx="26.5" cy="9.5" rx="2" ry="1.2" fill="currentColor" />
+      </svg>
+    </div>
+    <h2
+      class="h-display"
+      style="font-size: clamp(48px, 7vw, 96px); line-height: 0.95; color: var(--paper); margin: 0"
+    >
+      Le bon, le local,<br />le pas cher.
+    </h2>
+    <div
+      style="
+        margin-top: 56px;
+        padding-top: 28px;
+        border-top: 1px solid rgba(250, 246, 236, 0.12);
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 13px;
+        color: rgba(250, 246, 236, 0.6);
+      "
+    >
+      <div>© 2026 Le Trio des Champs — Collectif de producteurs picards</div>
+      <div>Plessier-sur-Bulles · Oise · France</div>
+    </div>
+  </div>
+</footer>
