@@ -125,6 +125,11 @@ export class HomeComponent implements OnInit {
     return this.events.find((e) => new Date(e.date).getDate() === day)
   }
 
+  getCityColor(eventLocation: string): string {
+    const city = this.cities.find((c) => c.name === eventLocation)
+    return city ? city.color : '#16a34a'
+  }
+
   isToday(day: number | null): boolean {
     if (!day) return false
     const today = new Date()

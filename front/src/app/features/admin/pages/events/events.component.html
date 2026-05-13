@@ -12,15 +12,33 @@
     <div class="grid md:grid-cols-2 gap-4">
       <div>
         <label class="text-sm text-gray-600 mb-1 block">Titre de l'événement *</label>
-        <input [(ngModel)]="form.title" type="text" class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300" placeholder="Vente de produits, Événement spécial..." />
+        <input
+          [(ngModel)]="form.title"
+          type="text"
+          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          placeholder="Vente de produits, Événement spécial..."
+        />
       </div>
       <div>
         <label class="text-sm text-gray-600 mb-1 block">Lieu *</label>
-        <input [(ngModel)]="form.location" type="text" class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300" placeholder="Plessier-sur-Bulles, Compiègne..." />
+        <select
+          [(ngModel)]="form.location"
+          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+        >
+          <option value="">Sélectionner une ville...</option>
+          @for (city of cities; track city.id) {
+            <option [value]="city.name">{{ city.name }}</option>
+          }
+        </select>
       </div>
       <div class="md:col-span-2">
         <label class="text-sm text-gray-600 mb-1 block">Description (optionnel)</label>
-        <textarea [(ngModel)]="form.description" class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300" rows="2" placeholder="Informations supplémentaires..."></textarea>
+        <textarea
+          [(ngModel)]="form.description"
+          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          rows="2"
+          placeholder="Informations supplémentaires..."
+        ></textarea>
       </div>
     </div>
 
@@ -31,16 +49,50 @@
       </label>
       <div>
         <label class="text-sm text-gray-600 mb-1 block">Date *</label>
-        <input [(ngModel)]="form.date" type="date" class="border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300" />
+        <div class="flex gap-2">
+          <select
+            [(ngModel)]="formDay"
+            class="border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          >
+            <option value="" disabled>Jour</option>
+            @for (d of days; track d) {
+              <option [value]="d">{{ d }}</option>
+            }
+          </select>
+          <select
+            [(ngModel)]="formMonth"
+            class="border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          >
+            <option value="" disabled>Mois</option>
+            @for (m of months; track m.value) {
+              <option [value]="m.value">{{ m.label }}</option>
+            }
+          </select>
+          <select
+            [(ngModel)]="formYear"
+            class="border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          >
+            <option value="" disabled>Année</option>
+            @for (y of years; track y) {
+              <option [value]="y">{{ y }}</option>
+            }
+          </select>
+        </div>
       </div>
     </div>
 
     <div class="flex gap-3 mt-4">
-      <button (click)="submit()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl text-sm transition flex items-center gap-2">
-        💾 {{ editingEvent ? 'Modifier l\'événement' : 'Ajouter l\'événement' }}
+      <button
+        (click)="submit()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl text-sm transition flex items-center gap-2"
+      >
+        💾 {{ editingEvent ? "Modifier l'événement" : "Ajouter l'événement" }}
       </button>
       @if (editingEvent) {
-        <button (click)="closeForm()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-6 py-2 rounded-xl text-sm transition">
+        <button
+          (click)="closeForm()"
+          class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-6 py-2 rounded-xl text-sm transition"
+        >
           Annuler
         </button>
       }
@@ -62,7 +114,9 @@
                   📅 {{ formatDate(event.date) }}
                 </span>
                 @if (event.isRecurring) {
-                  <span class="ml-2 bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full">🔄 Récurrent</span>
+                  <span class="ml-2 bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full"
+                    >🔄 Récurrent</span
+                  >
                 }
                 <p class="font-semibold mt-2">{{ event.title }}</p>
                 <p class="text-gray-500 text-sm">📍 {{ event.location }}</p>
@@ -71,8 +125,18 @@
                 }
               </div>
               <div class="flex gap-2">
-                <button (click)="openForm(event)" class="bg-blue-50 hover:bg-blue-100 text-blue-600 p-2 rounded-xl transition">✏️</button>
-                <button (click)="delete(event.id)" class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition">🗑️</button>
+                <button
+                  (click)="openForm(event)"
+                  class="bg-blue-50 hover:bg-blue-100 text-blue-600 p-2 rounded-xl transition"
+                >
+                  ✏️
+                </button>
+                <button
+                  (click)="delete(event.id)"
+                  class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition"
+                >
+                  🗑️
+                </button>
               </div>
             </div>
           </div>
