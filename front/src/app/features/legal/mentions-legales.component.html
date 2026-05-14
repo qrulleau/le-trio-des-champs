@@ -1,0 +1,346 @@
+<!-- ── NAV ── -->
+<nav style="background: var(--bg); border-bottom: 1px solid var(--rule)">
+  <div
+    class="wrap"
+    style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0"
+  >
+    <a
+      routerLink="/"
+      style="
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        text-decoration: none;
+      "
+    >
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--accent-3)"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 22V8" />
+        <path d="M12 8 C10 8 8 6.5 8 4.5 C10 4.5 12 6 12 8 Z" />
+        <path d="M12 8 C14 8 16 6.5 16 4.5 C14 4.5 12 6 12 8 Z" />
+        <path d="M12 13 C10 13 8 11.5 8 9.5 C10 9.5 12 11 12 13 Z" />
+        <path d="M12 13 C14 13 16 11.5 16 9.5 C14 9.5 12 11 12 13 Z" />
+        <path d="M12 18 C10 18 8 16.5 8 14.5 C10 14.5 12 16 12 18 Z" />
+        <path d="M12 18 C14 18 16 16.5 16 14.5 C14 14.5 12 16 12 18 Z" />
+      </svg>
+      <span style="font-family: var(--font-display); font-size: 19px">Le Trio des Champs</span>
+    </a>
+    <nav
+      style="display: flex; gap: 24px; font-size: 13px; color: var(--ink-soft); font-weight: 500"
+    >
+      <a routerLink="/">Accueil</a>
+      <a routerLink="/" fragment="dates">Dates</a>
+      <a routerLink="/" fragment="contact">Contact</a>
+    </nav>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section style="padding: 80px 0 56px; border-bottom: 1px solid var(--rule); background: var(--bg)">
+  <div class="wrap">
+    <div class="eyebrow" style="margin-bottom: 18px">Informations légales</div>
+    <h1
+      style="
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: clamp(48px, 7vw, 84px);
+        line-height: 0.98;
+        letter-spacing: -0.01em;
+        margin: 0;
+        color: var(--ink);
+      "
+    >
+      Mentions <em style="font-style: italic; color: var(--accent-2)">légales</em>
+    </h1>
+    <div style="margin-top: 18px; font-size: 13px; color: var(--ink-mute); letter-spacing: 0.04em">
+      Dernière mise à jour : 14 mai 2026
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTENT ── -->
+<article style="padding: 64px 0 100px; background: var(--bg)">
+  <div class="wrap" style="max-width: 760px">
+    <h2
+      style="
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: clamp(26px, 3.5vw, 36px);
+        color: var(--ink);
+        margin: 56px 0 18px;
+      "
+    >
+      1. Éditeur du site
+    </h2>
+    <p style="font-size: 16px; line-height: 1.7; color: var(--ink-soft)">
+      Le présent site est édité par <strong style="color: var(--ink)">Le Trio des Champs</strong>,
+      collectif de producteurs agricoles établi en région des Hauts-de-France.
+    </p>
+
+    <div
+      style="
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 8px 24px;
+        margin: 8px 0 28px;
+        padding: 18px 22px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+      "
+    >
+      <dt
+        style="
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+        "
+      >
+        Dénomination
+      </dt>
+      <dd style="margin: 0; font-size: 15px; color: var(--ink)">Le Trio des Champs</dd>
+      <dt
+        style="
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+        "
+      >
+        Forme juridique
+      </dt>
+      <dd style="margin: 0; font-size: 15px; color: var(--ink)">[À compléter]</dd>
+      <dt
+        style="
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+        "
+      >
+        Siège social
+      </dt>
+      <dd style="margin: 0; font-size: 15px; color: var(--ink)">
+        104 rue de Monceaux<br />60510 Plessier-sur-Bulles, France
+      </dd>
+      <dt
+        style="
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+        "
+      >
+        SIRET
+      </dt>
+      <dd style="margin: 0; font-size: 15px; color: var(--ink)">[À compléter]</dd>
+      <dt
+        style="
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+        "
+      >
+        Représentant légal
+      </dt>
+      <dd style="margin: 0; font-size: 15px; color: var(--ink)">[À compléter]</dd>
+      <dt
+        style="
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+        "
+      >
+        Contact
+      </dt>
+      <dd style="margin: 0; font-size: 15px; color: var(--ink)">
+        letriodeschamps&#64;gmail.com<br />06 76 63 66 10
+      </dd>
+    </div>
+
+    <h2
+      style="
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: clamp(26px, 3.5vw, 36px);
+        color: var(--ink);
+        margin: 56px 0 18px;
+      "
+    >
+      2. Hébergement
+    </h2>
+    <div
+      style="
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 8px 24px;
+        margin: 8px 0 28px;
+        padding: 18px 22px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+      "
+    >
+      <dt
+        style="
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+        "
+      >
+        Hébergeur
+      </dt>
+      <dd style="margin: 0; font-size: 15px; color: var(--ink)">Hébergement personnel (homelab)</dd>
+      <dt
+        style="
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+        "
+      >
+        Domaine
+      </dt>
+      <dd style="margin: 0; font-size: 15px; color: var(--ink)">
+        OVH SAS — 2 rue Kellermann, 59100 Roubaix
+      </dd>
+    </div>
+
+    <h2
+      style="
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: clamp(26px, 3.5vw, 36px);
+        color: var(--ink);
+        margin: 56px 0 18px;
+      "
+    >
+      3. Directeur de la publication
+    </h2>
+    <p style="font-size: 16px; line-height: 1.7; color: var(--ink-soft)">
+      Le directeur de la publication est <strong style="color: var(--ink)">[À compléter]</strong>.
+    </p>
+
+    <h2
+      style="
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: clamp(26px, 3.5vw, 36px);
+        color: var(--ink);
+        margin: 56px 0 18px;
+      "
+    >
+      4. Propriété intellectuelle
+    </h2>
+    <p style="font-size: 16px; line-height: 1.7; color: var(--ink-soft)">
+      L'ensemble des contenus présents sur ce site (textes, photographies, illustrations, logo,
+      charte graphique, structure du site) est protégé par les dispositions du Code de la propriété
+      intellectuelle et reste la propriété exclusive du Trio des Champs ou de ses ayants droit.
+    </p>
+    <p style="font-size: 16px; line-height: 1.7; color: var(--ink-soft)">
+      Toute reproduction, représentation, modification, publication ou adaptation, totale ou
+      partielle, de l'un quelconque de ces éléments est interdite sans autorisation écrite
+      préalable.
+    </p>
+
+    <h2
+      style="
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: clamp(26px, 3.5vw, 36px);
+        color: var(--ink);
+        margin: 56px 0 18px;
+      "
+    >
+      5. Liens hypertextes
+    </h2>
+    <p style="font-size: 16px; line-height: 1.7; color: var(--ink-soft)">
+      Le site peut contenir des liens vers d'autres sites internet. Le Trio des Champs n'exerce
+      aucun contrôle sur ces sites externes et décline toute responsabilité quant à leur contenu.
+    </p>
+
+    <h2
+      style="
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: clamp(26px, 3.5vw, 36px);
+        color: var(--ink);
+        margin: 56px 0 18px;
+      "
+    >
+      6. Droit applicable
+    </h2>
+    <p style="font-size: 16px; line-height: 1.7; color: var(--ink-soft)">
+      Les présentes mentions légales sont régies par le droit français. En cas de litige, compétence
+      est attribuée aux tribunaux français.
+    </p>
+
+    <hr
+      style="
+        border: 0;
+        height: 1px;
+        background-image: linear-gradient(to right, var(--rule) 50%, transparent 0%);
+        background-size: 6px 1px;
+        background-repeat: repeat-x;
+        margin: 48px 0;
+      "
+    />
+    <p style="font-size: 14px; color: var(--ink-mute)">
+      Pour toute question, écrivez-nous à
+      <a
+        href="mailto:letriodeschamps&#64;gmail.com"
+        style="color: var(--accent-2); border-bottom: 1px solid currentColor"
+        >letriodeschamps&#64;gmail.com</a
+      >.
+    </p>
+  </div>
+</article>
+
+<!-- ── FOOTER ── -->
+<footer style="background: var(--ink); color: var(--paper); padding: 48px 0">
+  <div
+    class="wrap"
+    style="
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: rgba(250, 246, 236, 0.6);
+    "
+  >
+    <div>© 2026 Le Trio des Champs — Collectif de producteurs picards</div>
+    <div style="display: flex; gap: 24px; flex-wrap: wrap">
+      <a routerLink="/mentions-legales" style="border-bottom: 1px solid rgba(250, 246, 236, 0.25)"
+        >Mentions légales</a
+      >
+      <a
+        routerLink="/politique-confidentialite"
+        style="border-bottom: 1px solid rgba(250, 246, 236, 0.25)"
+        >Politique de confidentialité</a
+      >
+    </div>
+    <div>Plessier-sur-Bulles · Oise · France</div>
+  </div>
+</footer>
