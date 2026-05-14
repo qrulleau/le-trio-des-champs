@@ -168,3 +168,27 @@ a,
   color: var(--ink);
   border-color: var(--ink);
 }
+@media (max-width: 720px) {
+  .topbar-link,
+  .topbar-pill {
+    display: none;
+  }
+  .hero-meta {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .split-grid,
+  .schedule-grid,
+  .contact-grid,
+  .event-ruban-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .calendar-row {
+    grid-template-columns: 80px 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-meta {
+    grid-template-columns: 1fr !important;
+  }
+}
