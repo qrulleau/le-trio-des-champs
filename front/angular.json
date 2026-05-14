@@ -54,6 +54,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": ["trio.quentin-rulleau.fr"]
+          },
           "configurations": {
             "production": {
               "buildTarget": "front:build:production"
