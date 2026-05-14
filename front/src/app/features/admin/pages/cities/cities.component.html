@@ -44,23 +44,17 @@
         </div>
         <div>
           <label class="text-sm text-gray-600 mb-1 block">Couleur *</label>
-          <div class="flex items-center gap-3">
-            <input
-              [(ngModel)]="form.color"
-              type="color"
-              class="w-12 h-10 rounded-xl border cursor-pointer"
-            />
-            <div class="flex gap-2 flex-wrap">
-              @for (color of suggestedColors; track color) {
-                <button
-                  (click)="form.color = color"
-                  class="w-7 h-7 rounded-full border-2 transition"
-                  [style.background-color]="color"
-                  [class.border-gray-800]="form.color === color"
-                  [class.border-transparent]="form.color !== color"
-                ></button>
-              }
-            </div>
+          <div class="flex gap-2 flex-wrap mt-2">
+            @for (color of suggestedColors; track color) {
+              <button
+                (click)="form.color = color"
+                class="w-8 h-8 rounded-full border-2 transition"
+                [style.background-color]="color"
+                [class.border-gray-800]="form.color === color"
+                [class.border-transparent]="form.color !== color"
+                [title]="color"
+              ></button>
+            }
           </div>
         </div>
       </div>

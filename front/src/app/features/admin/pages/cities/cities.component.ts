@@ -21,16 +21,13 @@ export class CitiesComponent implements OnInit {
   searchSubject = new Subject<string>()
 
   suggestedColors = [
-    '#FF5733',
-    '#33FF57',
-    '#3357FF',
-    '#FF33F5',
-    '#FFD700',
-    '#00CED1',
-    '#FF8C00',
-    '#8A2BE2',
-    '#00FF7F',
-    '#FF1493',
+    '#2d4a2f', // vert accent
+    '#b85c3a', // terra cotta
+    '#c9943c', // doré
+    '#5a4a3d', // brun
+    '#8a7868', // brun clair
+    '#ebe1cf', // beige
+    '#231911', // ink
   ]
 
   form = {
