@@ -168,6 +168,7 @@ a,
   color: var(--ink);
   border-color: var(--ink);
 }
+
 @media (max-width: 720px) {
   .topbar-link,
   .topbar-pill {
@@ -187,8 +188,32 @@ a,
   }
 }
 
+@media (max-width: 530px) {
+  .values-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .values-grid > div {
+    border-right: none !important;
+    padding: 32px 16px !important;
+  }
+}
+
 @media (max-width: 480px) {
   .hero-meta {
     grid-template-columns: 1fr !important;
+  }
+  .calendar-nav {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+  .calendar-nav .calendar-month {
+    order: 1;
+  }
+  .calendar-nav .calendar-next {
+    order: 2;
+  }
+  .calendar-nav .calendar-prev {
+    order: 3;
   }
 }

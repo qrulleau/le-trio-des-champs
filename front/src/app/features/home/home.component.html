@@ -551,6 +551,7 @@
       </h2>
     </div>
     <div
+      class="values-grid"
       style="
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -948,9 +949,11 @@
     </ul>
 
     <div
+      class="calendar-nav"
       style="display: flex; align-items: center; justify-content: space-between; margin-top: 32px"
     >
       <button
+        class="calendar-prev"
         (click)="prevMonth()"
         style="
           display: flex;
@@ -977,6 +980,7 @@
         {{ getMonthName(currentMonth, currentYear) }}
       </span>
       <button
+        class="calendar-next"
         (click)="nextMonth()"
         style="
           display: flex;
