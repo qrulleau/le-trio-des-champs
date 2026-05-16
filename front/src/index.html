@@ -1,7 +1,23 @@
 <!doctype html>
 <html lang="fr">
   <head>
-    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="Le Trio des Champs — Œufs, oignons et pommes de terre à prix juste, vendus chaque semaine en Picardie. Producteurs locaux, circuit court, sans intermédiaire."
+    />
+    <meta
+      name="keywords"
+      content="producteurs locaux Picardie, légumes Compiègne, œufs frais Oise, circuit court Picardie, pommes de terre Plessier-sur-Bulles"
+    />
+    <meta property="og:title" content="Le Trio des Champs — Producteurs locaux en Picardie" />
+    <meta
+      property="og:description"
+      content="Œufs, oignons et pommes de terre à prix juste, vendus chaque semaine partout en Picardie."
+    />
+    <meta property="og:url" content="https://letriodeschamps.fr" />
+    <meta property="og:type" content="website" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://letriodeschamps.fr" />
     <title>Le Trio des Champs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -15,5 +31,37 @@
   </head>
   <body>
     <app-root></app-root>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Le Trio des Champs",
+        "description": "Collectif de producteurs locaux en Picardie. Œufs, oignons et pommes de terre à prix juste, vendus en circuit court.",
+        "url": "https://letriodeschamps.fr",
+        "email": "letriodeschamps@gmail.com",
+        "telephone": "+33676636610",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "104 rue de Monceaux",
+          "addressLocality": "Plessier-sur-Bulles",
+          "postalCode": "60510",
+          "addressCountry": "FR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 49.4167,
+          "longitude": 2.5833
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Monday",
+          "opens": "17:00",
+          "closes": "19:00"
+        },
+        "priceRange": "€",
+        "servesCuisine": "Produits locaux",
+        "areaServed": "Picardie"
+      }
+    </script>
   </body>
 </html>
