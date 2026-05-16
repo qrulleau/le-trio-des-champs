@@ -102,6 +102,10 @@ export class ApiService {
     return this.http.put(`${this.baseUrl}/admin/announcements/${id}`, data)
   }
 
+  createAnnouncement(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/admin/announcements`, data)
+  }
+
   // Settings
   getSettings(): Observable<any> {
     return this.http.get(`${this.baseUrl}/admin/settings`)

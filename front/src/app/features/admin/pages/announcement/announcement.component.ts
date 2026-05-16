@@ -50,7 +50,7 @@ export class AnnouncementComponent implements OnInit {
         this.isActive = data.isActive
       })
     } else {
-      this.api.updateAnnouncement(0, this.form).subscribe((data) => {
+      this.api.createAnnouncement(this.form).subscribe((data) => {
         this.announcement = data
         this.isActive = data.isActive
       })

@@ -156,6 +156,12 @@ const routes = {
     tokens: [{"old":"/api/v1/subscribers","type":0,"val":"api","end":""},{"old":"/api/v1/subscribers","type":0,"val":"v1","end":""},{"old":"/api/v1/subscribers","type":0,"val":"subscribers","end":""}],
     types: placeholder as Registry['subscribers.public.store']['types'],
   },
+  'announcements.public.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/api/v1/announcements',
+    tokens: [{"old":"/api/v1/announcements","type":0,"val":"api","end":""},{"old":"/api/v1/announcements","type":0,"val":"v1","end":""},{"old":"/api/v1/announcements","type":0,"val":"announcements","end":""}],
+    types: placeholder as Registry['announcements.public.index']['types'],
+  },
   'admin.announcements.index': {
     methods: ["GET","HEAD"],
     pattern: '/api/v1/admin/announcements',

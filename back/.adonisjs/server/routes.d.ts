@@ -29,6 +29,7 @@ export type ScannedRoutes = {
     'events.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'events.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'subscribers.public.store': { paramsTuple?: []; params?: {} }
+    'announcements.public.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.store': { paramsTuple?: []; params?: {} }
     'admin.announcements.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -68,6 +69,7 @@ export type ScannedRoutes = {
     'selling_places.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'events.index': { paramsTuple?: []; params?: {} }
     'events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'announcements.public.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.settings.index': { paramsTuple?: []; params?: {} }
@@ -85,6 +87,7 @@ export type ScannedRoutes = {
     'selling_places.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'events.index': { paramsTuple?: []; params?: {} }
     'events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'announcements.public.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.settings.index': { paramsTuple?: []; params?: {} }

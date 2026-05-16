@@ -45,6 +45,7 @@ router
     router.resource('selling-places', SellingPlacesController).apiOnly()
     router.resource('events', EventsController).apiOnly()
     router.post('subscribers', [SubscribersController, 'store']).as('subscribers.public.store')
+    router.get('announcements', [AnnouncementsController, 'index']).as('announcements.public.index')
 
     // Routes admin (protégées)
     router

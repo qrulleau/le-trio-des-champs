@@ -307,6 +307,18 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscribers_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
+  'announcements.public.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/announcements'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/announcements_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/announcements_controller').default['index']>>>
+    }
+  }
   'admin.announcements.index': {
     methods: ["GET","HEAD"]
     pattern: '/api/v1/admin/announcements'

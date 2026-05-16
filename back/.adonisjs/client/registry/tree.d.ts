@@ -51,6 +51,11 @@ export interface ApiDefinition {
       store: typeof routes['subscribers.public.store']
     }
   }
+  announcements: {
+    public: {
+      index: typeof routes['announcements.public.index']
+    }
+  }
   admin: {
     announcements: {
       index: typeof routes['admin.announcements.index']
