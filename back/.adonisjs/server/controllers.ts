@@ -14,4 +14,7 @@ export const controllers = {
   SellingPlaces: () => import('#controllers/selling_places_controller'),
   Settings: () => import('#controllers/settings_controller'),
   Subscribers: () => import('#controllers/subscribers_controller'),
+  Dates: () => import('#controllers/dates_controller'),
+  Reservations: () => import('#controllers/reservations_controller'),
+  Lieux: () => import('#controllers/lieux_controller'),
 }
