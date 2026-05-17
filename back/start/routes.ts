@@ -19,6 +19,9 @@ const EventsController = () => import('#controllers/events_controller')
 const SubscribersController = () => import('#controllers/subscribers_controller')
 const AnnouncementsController = () => import('#controllers/announcements_controller')
 const SettingsController = () => import('#controllers/settings_controller')
+const LieuxController = () => import('#controllers/lieux_controller')
+const DatesController = () => import('#controllers/dates_controller')
+const ReservationsController = () => import('#controllers/reservations_controller')
 
 router
   .group(() => {
@@ -45,6 +48,8 @@ router
     router.resource('products', ProductsController).apiOnly()
     router.resource('selling-places', SellingPlacesController).apiOnly()
     router.resource('events', EventsController).apiOnly()
+    router.resource('lieux', LieuxController).apiOnly().only(['index', 'show'])
+    router.resource('dates', DatesController).apiOnly().only(['index', 'show'])
     router.post('subscribers', [SubscribersController, 'store'])
     .as('subscribers.public.store')
     .use(subscriberThrottle)
@@ -58,9 +63,23 @@ router
         router.resource('announcements', AnnouncementsController).apiOnly()
         router.resource('settings', SettingsController).apiOnly()
         router.resource('subscribers', SubscribersController).apiOnly()
+        router.resource('lieux', LieuxController).apiOnly()
+        router.resource('dates', DatesController).apiOnly()
+        router.resource('reservations', ReservationsController).apiOnly()
+        router.get('reservations/my', [ReservationsController, 'myReservations'])
       })
       .use(middleware.auth())
       .prefix('admin')
       .as('admin')
+
+    // Route réservations pour utilisateurs connectés
+    router
+      .group(() => {
+        router.post('reservations', [ReservationsController, 'store'])
+        router.get('reservations/my', [ReservationsController, 'myReservations'])
+      })
+  .use(middleware.auth())
+  .prefix('user')
+  .as('user')
   })
   .prefix('/api/v1')

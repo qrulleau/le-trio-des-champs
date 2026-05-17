@@ -295,6 +295,54 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/events_controller').default['destroy']>>>
     }
   }
+  'lieux.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/lieux'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['index']>>>
+    }
+  }
+  'lieux.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/lieux/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['show']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['show']>>>
+    }
+  }
+  'dates.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/dates'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['index']>>>
+    }
+  }
+  'dates.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/dates/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['show']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['show']>>>
+    }
+  }
   'subscribers.public.store': {
     methods: ["POST"]
     pattern: '/api/v1/subscribers'
@@ -497,6 +545,222 @@ export interface Registry {
       query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/subscribers_controller').default['destroy']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscribers_controller').default['destroy']>>>
+    }
+  }
+  'admin.lieux.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/lieux'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['index']>>>
+    }
+  }
+  'admin.lieux.store': {
+    methods: ["POST"]
+    pattern: '/api/v1/admin/lieux'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/lieu').createLieuValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/lieu').createLieuValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'admin.lieux.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/lieux/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['show']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['show']>>>
+    }
+  }
+  'admin.lieux.update': {
+    methods: ["PUT","PATCH"]
+    pattern: '/api/v1/admin/lieux/:id'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/lieu').updateLieuValidator)>>
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQuery<InferInput<(typeof import('#validators/lieu').updateLieuValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'admin.lieux.destroy': {
+    methods: ["DELETE"]
+    pattern: '/api/v1/admin/lieux/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/lieux_controller').default['destroy']>>>
+    }
+  }
+  'admin.dates.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/dates'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['index']>>>
+    }
+  }
+  'admin.dates.store': {
+    methods: ["POST"]
+    pattern: '/api/v1/admin/dates'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/date').createDateValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/date').createDateValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'admin.dates.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/dates/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['show']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['show']>>>
+    }
+  }
+  'admin.dates.update': {
+    methods: ["PUT","PATCH"]
+    pattern: '/api/v1/admin/dates/:id'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/date').updateDateValidator)>>
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQuery<InferInput<(typeof import('#validators/date').updateDateValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'admin.dates.destroy': {
+    methods: ["DELETE"]
+    pattern: '/api/v1/admin/dates/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/dates_controller').default['destroy']>>>
+    }
+  }
+  'admin.reservations.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/reservations'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['index']>>>
+    }
+  }
+  'admin.reservations.store': {
+    methods: ["POST"]
+    pattern: '/api/v1/admin/reservations'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/reservation').createReservationValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/reservation').createReservationValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'admin.reservations.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/reservations/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['show']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['show']>>>
+    }
+  }
+  'admin.reservations.update': {
+    methods: ["PUT","PATCH"]
+    pattern: '/api/v1/admin/reservations/:id'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/reservation').updateReservationStatusValidator)>>
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQuery<InferInput<(typeof import('#validators/reservation').updateReservationStatusValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'admin.reservations.destroy': {
+    methods: ["DELETE"]
+    pattern: '/api/v1/admin/reservations/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['destroy']>>>
+    }
+  }
+  'admin.reservations.my_reservations': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/reservations/my'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['myReservations']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['myReservations']>>>
+    }
+  }
+  'user.reservations.store': {
+    methods: ["POST"]
+    pattern: '/api/v1/user/reservations'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/reservation').createReservationValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/reservation').createReservationValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'user.reservations.my_reservations': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/user/reservations/my'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['myReservations']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['myReservations']>>>
     }
   }
 }

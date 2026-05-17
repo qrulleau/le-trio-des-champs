@@ -46,6 +46,14 @@ export interface ApiDefinition {
     update: typeof routes['events.update']
     destroy: typeof routes['events.destroy']
   }
+  lieux: {
+    index: typeof routes['lieux.index']
+    show: typeof routes['lieux.show']
+  }
+  dates: {
+    index: typeof routes['dates.index']
+    show: typeof routes['dates.show']
+  }
   subscribers: {
     public: {
       store: typeof routes['subscribers.public.store']
@@ -77,6 +85,34 @@ export interface ApiDefinition {
       show: typeof routes['admin.subscribers.show']
       update: typeof routes['admin.subscribers.update']
       destroy: typeof routes['admin.subscribers.destroy']
+    }
+    lieux: {
+      index: typeof routes['admin.lieux.index']
+      store: typeof routes['admin.lieux.store']
+      show: typeof routes['admin.lieux.show']
+      update: typeof routes['admin.lieux.update']
+      destroy: typeof routes['admin.lieux.destroy']
+    }
+    dates: {
+      index: typeof routes['admin.dates.index']
+      store: typeof routes['admin.dates.store']
+      show: typeof routes['admin.dates.show']
+      update: typeof routes['admin.dates.update']
+      destroy: typeof routes['admin.dates.destroy']
+    }
+    reservations: {
+      index: typeof routes['admin.reservations.index']
+      store: typeof routes['admin.reservations.store']
+      show: typeof routes['admin.reservations.show']
+      update: typeof routes['admin.reservations.update']
+      destroy: typeof routes['admin.reservations.destroy']
+      myReservations: typeof routes['admin.reservations.my_reservations']
+    }
+  }
+  user: {
+    reservations: {
+      store: typeof routes['user.reservations.store']
+      myReservations: typeof routes['user.reservations.my_reservations']
     }
   }
 }
