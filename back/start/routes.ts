@@ -10,7 +10,7 @@
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 import { controllers } from '#generated/controllers'
-import { throttle } from '@adonisjs/limiter/throttle'
+import { subscriberThrottle } from '#start/limiter'
 
 const CitiesController = () => import('#controllers/cities_controller')
 const ProductsController = () => import('#controllers/products_controller')
@@ -19,18 +19,6 @@ const EventsController = () => import('#controllers/events_controller')
 const SubscribersController = () => import('#controllers/subscribers_controller')
 const AnnouncementsController = () => import('#controllers/announcements_controller')
 const SettingsController = () => import('#controllers/settings_controller')
-
-const subscriberLimiter = throttle({
-  requests: 5,
-  duration: '1 min',
-  errorMessage: 'Trop de tentatives. Attendez une minute avant de réessayer.',
-})
-
-const reservationLimiter = throttle({
-  requests: 10,
-  duration: '1 min',
-  errorMessage: 'Trop de tentatives. Attendez une minute avant de réessayer.',
-})
 
 router
   .group(() => {
@@ -59,7 +47,7 @@ router
     router.resource('events', EventsController).apiOnly()
     router.post('subscribers', [SubscribersController, 'store'])
     .as('subscribers.public.store')
-    .use(subscriberLimiter)
+    .use(subscriberThrottle)
 
     router.get('announcements', [AnnouncementsController, 'index'])
     .as('announcements.public.index')
