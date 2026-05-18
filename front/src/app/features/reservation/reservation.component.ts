@@ -39,11 +39,11 @@ export class ReservationComponent implements OnInit {
   }
 
   loadData() {
-    this.api.getLieux().subscribe((data) => {
+    this.api.getCities().subscribe((data) => {
       this.lieux = [...data]
       this.cdr.detectChanges()
     })
-    this.api.getDates().subscribe((data) => {
+    this.api.getDistributionDates().subscribe((data) => {
       this.dates = [...data]
       this.cdr.detectChanges()
     })
@@ -53,9 +53,9 @@ export class ReservationComponent implements OnInit {
     })
   }
 
-  getDatesForLieu(lieuId: number) {
+  getDatesForLieu(cityId: number) {
     const today = new Date().toISOString().split('T')[0]
-    return this.dates.filter((d) => d.lieuId === lieuId && d.date >= today)
+    return this.dates.filter((d) => d.cityId === cityId && d.date >= today)
   }
 
   selectLieu(lieu: any) {
@@ -103,6 +103,7 @@ export class ReservationComponent implements OnInit {
       next: () => {
         this.step = 'success'
         this.toast.success('Réservation confirmée !')
+        this.cdr.detectChanges()
       },
       error: () => {
         this.toast.error('Erreur lors de la réservation.')

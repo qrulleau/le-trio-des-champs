@@ -1,27 +1,29 @@
 import { BaseModel, column, belongsTo, hasMany } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
-import User from '#models/user'
-import DistributionDate from '#models/distribution_date'
-import ReservationItem from '#models/reservation_item'
+import City from '#models/city'
+import Reservation from '#models/reservation'
 
-export default class Reservation extends BaseModel {
-  static table = 'reservations'
+export default class DistributionDate extends BaseModel {
+  static table = 'distribution_dates'
 
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare userId: number
+  declare cityId: number
 
   @column()
-  declare distributionDateId: number
+  declare date: string
 
   @column()
-  declare status: 'pending' | 'confirmed' | 'cancelled'
+  declare time: string
 
   @column()
-  declare total: number
+  declare capacity: number
+
+  @column()
+  declare notes: string | null
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -29,12 +31,9 @@ export default class Reservation extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-  @belongsTo(() => User)
-  declare user: BelongsTo<typeof User>
+  @belongsTo(() => City)
+  declare city: BelongsTo<typeof City>
 
-  @belongsTo(() => DistributionDate)
-  declare distributionDate: BelongsTo<typeof DistributionDate>
-
-  @hasMany(() => ReservationItem)
-  declare items: HasMany<typeof ReservationItem>
+  @hasMany(() => Reservation)
+  declare reservations: HasMany<typeof Reservation>
 }

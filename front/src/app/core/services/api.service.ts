@@ -137,14 +137,22 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/account/logout`, {})
   }
 
-  // Lieux
-  getLieux(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/lieux`)
+  // Distribution dates
+  getDistributionDates(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/distribution-dates`)
   }
 
-  // Dates
-  getDates(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/dates`)
+  // Admin distribution dates
+  createDistributionDate(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/admin/distribution-dates`, data)
+  }
+
+  updateDistributionDate(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/admin/distribution-dates/${id}`, data)
+  }
+
+  deleteDistributionDate(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/admin/distribution-dates/${id}`)
   }
 
   // Reservations

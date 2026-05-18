@@ -2,7 +2,7 @@ import { BaseModel, column, belongsTo, hasMany } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import User from '#models/user'
-import Date from '#models/date'
+import DistributionDate from '#models/distribution_date'
 import ReservationItem from '#models/reservation_item'
 
 export default class Reservation extends BaseModel {
@@ -15,7 +15,7 @@ export default class Reservation extends BaseModel {
   declare userId: number
 
   @column()
-  declare dateId: number
+  declare distributionDateId: number
 
   @column()
   declare status: 'pending' | 'confirmed' | 'cancelled'
@@ -32,8 +32,8 @@ export default class Reservation extends BaseModel {
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
 
-  @belongsTo(() => Date)
-  declare date: BelongsTo<typeof Date>
+  @belongsTo(() => DistributionDate)
+  declare distributionDate: BelongsTo<typeof DistributionDate>
 
   @hasMany(() => ReservationItem)
   declare items: HasMany<typeof ReservationItem>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { Router, RouterModule } from '@angular/router'
@@ -12,7 +12,7 @@ import { ToastService } from '../../core/services/toast.service'
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   tab: 'login' | 'signup' = 'login'
 
   loginForm = {
@@ -33,6 +33,12 @@ export class LoginComponent {
   private auth = inject(AuthService)
   private router = inject(Router)
   private toast = inject(ToastService)
+
+  ngOnInit() {
+    if (this.auth.isLoggedIn()) {
+      this.router.navigate(['/reservation'])
+    }
+  }
 
   login() {
     this.error = ''
