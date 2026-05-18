@@ -28,10 +28,8 @@ export type ScannedRoutes = {
     'events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'events.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'events.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'lieux.index': { paramsTuple?: []; params?: {} }
-    'lieux.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dates.index': { paramsTuple?: []; params?: {} }
-    'dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'distribution_dates.index': { paramsTuple?: []; params?: {} }
+    'distribution_dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'subscribers.public.store': { paramsTuple?: []; params?: {} }
     'announcements.public.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.index': { paramsTuple?: []; params?: {} }
@@ -49,22 +47,16 @@ export type ScannedRoutes = {
     'admin.subscribers.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.subscribers.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.subscribers.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.lieux.index': { paramsTuple?: []; params?: {} }
-    'admin.lieux.store': { paramsTuple?: []; params?: {} }
-    'admin.lieux.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.lieux.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.lieux.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.dates.index': { paramsTuple?: []; params?: {} }
-    'admin.dates.store': { paramsTuple?: []; params?: {} }
-    'admin.dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.dates.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.dates.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.distribution_dates.index': { paramsTuple?: []; params?: {} }
+    'admin.distribution_dates.store': { paramsTuple?: []; params?: {} }
+    'admin.distribution_dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.distribution_dates.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.distribution_dates.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.index': { paramsTuple?: []; params?: {} }
     'admin.reservations.store': { paramsTuple?: []; params?: {} }
     'admin.reservations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.reservations.my_reservations': { paramsTuple?: []; params?: {} }
     'user.reservations.store': { paramsTuple?: []; params?: {} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
   }
@@ -80,8 +72,7 @@ export type ScannedRoutes = {
     'admin.announcements.store': { paramsTuple?: []; params?: {} }
     'admin.settings.store': { paramsTuple?: []; params?: {} }
     'admin.subscribers.store': { paramsTuple?: []; params?: {} }
-    'admin.lieux.store': { paramsTuple?: []; params?: {} }
-    'admin.dates.store': { paramsTuple?: []; params?: {} }
+    'admin.distribution_dates.store': { paramsTuple?: []; params?: {} }
     'admin.reservations.store': { paramsTuple?: []; params?: {} }
     'user.reservations.store': { paramsTuple?: []; params?: {} }
   }
@@ -95,10 +86,8 @@ export type ScannedRoutes = {
     'selling_places.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'events.index': { paramsTuple?: []; params?: {} }
     'events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'lieux.index': { paramsTuple?: []; params?: {} }
-    'lieux.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dates.index': { paramsTuple?: []; params?: {} }
-    'dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'distribution_dates.index': { paramsTuple?: []; params?: {} }
+    'distribution_dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'announcements.public.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -106,13 +95,10 @@ export type ScannedRoutes = {
     'admin.settings.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.subscribers.index': { paramsTuple?: []; params?: {} }
     'admin.subscribers.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.lieux.index': { paramsTuple?: []; params?: {} }
-    'admin.lieux.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.dates.index': { paramsTuple?: []; params?: {} }
-    'admin.dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.distribution_dates.index': { paramsTuple?: []; params?: {} }
+    'admin.distribution_dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.index': { paramsTuple?: []; params?: {} }
     'admin.reservations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.reservations.my_reservations': { paramsTuple?: []; params?: {} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
@@ -125,10 +111,8 @@ export type ScannedRoutes = {
     'selling_places.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'events.index': { paramsTuple?: []; params?: {} }
     'events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'lieux.index': { paramsTuple?: []; params?: {} }
-    'lieux.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dates.index': { paramsTuple?: []; params?: {} }
-    'dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'distribution_dates.index': { paramsTuple?: []; params?: {} }
+    'distribution_dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'announcements.public.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -136,13 +120,10 @@ export type ScannedRoutes = {
     'admin.settings.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.subscribers.index': { paramsTuple?: []; params?: {} }
     'admin.subscribers.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.lieux.index': { paramsTuple?: []; params?: {} }
-    'admin.lieux.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.dates.index': { paramsTuple?: []; params?: {} }
-    'admin.dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.distribution_dates.index': { paramsTuple?: []; params?: {} }
+    'admin.distribution_dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.index': { paramsTuple?: []; params?: {} }
     'admin.reservations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.reservations.my_reservations': { paramsTuple?: []; params?: {} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
   }
   PUT: {
@@ -153,8 +134,7 @@ export type ScannedRoutes = {
     'admin.announcements.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.settings.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.subscribers.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.lieux.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.dates.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.distribution_dates.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   PATCH: {
@@ -165,8 +145,7 @@ export type ScannedRoutes = {
     'admin.announcements.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.settings.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.subscribers.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.lieux.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.dates.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.distribution_dates.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   DELETE: {
@@ -177,8 +156,7 @@ export type ScannedRoutes = {
     'admin.announcements.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.settings.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.subscribers.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.lieux.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'admin.dates.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.distribution_dates.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }

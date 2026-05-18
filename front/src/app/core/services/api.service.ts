@@ -118,4 +118,41 @@ export class ApiService {
   createSettings(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/admin/settings`, data)
   }
+
+  // Auth
+  login(data: { email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/login`, data)
+  }
+
+  signup(data: {
+    fullName: string
+    email: string
+    password: string
+    passwordConfirmation: string
+  }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/signup`, data)
+  }
+
+  logout(): Observable<any> {
+    return this.http.post(`${this.baseUrl}/account/logout`, {})
+  }
+
+  // Lieux
+  getLieux(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/lieux`)
+  }
+
+  // Dates
+  getDates(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/dates`)
+  }
+
+  // Reservations
+  createReservation(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/user/reservations`, data)
+  }
+
+  getMyReservations(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/user/reservations/my`)
+  }
 }

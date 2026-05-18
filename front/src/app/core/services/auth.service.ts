@@ -10,13 +10,16 @@ import { environment } from '../../../environments/environment'
 export class AuthService {
   private baseUrl = environment.apiUrl
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   login(email: string, password: string) {
     return this.http.post<any>(`${this.baseUrl}/auth/login`, { email, password }).pipe(
-        tap((response) => {
-            localStorage.setItem('token', response.data.token)
-        })
+      tap((response) => {
+        localStorage.setItem('token', response.data.token)
+      })
     )
   }
 
@@ -24,6 +27,10 @@ export class AuthService {
     this.http.post(`${this.baseUrl}/account/logout`, {}).subscribe()
     localStorage.removeItem('token')
     this.router.navigate(['/admin/login'])
+  }
+
+  setToken(token: string): void {
+    localStorage.setItem('token', token)
   }
 
   getToken(): string | null {

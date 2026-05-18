@@ -8,6 +8,7 @@ export const controllers = {
   Announcements: () => import('#controllers/announcements_controller'),
   Cities: () => import('#controllers/cities_controller'),
   Dates: () => import('#controllers/dates_controller'),
+  DistributionDates: () => import('#controllers/distribution_dates_controller'),
   Events: () => import('#controllers/events_controller'),
   Lieux: () => import('#controllers/lieux_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),

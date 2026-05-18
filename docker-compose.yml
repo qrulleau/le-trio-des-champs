@@ -5,6 +5,9 @@ services:
       dockerfile: docker/front/Dockerfile
     ports:
       - "4200:4200"
+    volumes:
+      - ./front:/app
+      - /app/node_modules
     depends_on:
       - api
 

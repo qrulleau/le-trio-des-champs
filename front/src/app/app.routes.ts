@@ -2,6 +2,8 @@ import { Routes } from '@angular/router'
 import { HomeComponent } from './features/home/home.component'
 import { MentionsLegalesComponent } from './features/legal/mentions-legales.component'
 import { PolitiqueConfidentialiteComponent } from './features/legal/politique-confidentialite.component'
+import { LoginComponent } from './features/auth/login.component'
+import { ReservationComponent } from './features/reservation/reservation.component'
 
 export const routes: Routes = [
   {
@@ -19,5 +21,13 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./features/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'reservation',
+    component: ReservationComponent,
   },
 ]

@@ -1,0 +1,710 @@
+<!-- ── NAV ── -->
+<nav style="background: var(--bg); border-bottom: 1px solid var(--rule)">
+  <div
+    class="wrap"
+    style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0"
+  >
+    <a
+      routerLink="/"
+      style="
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        text-decoration: none;
+      "
+    >
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--accent-3)"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 22V8" />
+        <path d="M12 8 C10 8 8 6.5 8 4.5 C10 4.5 12 6 12 8 Z" />
+        <path d="M12 8 C14 8 16 6.5 16 4.5 C14 4.5 12 6 12 8 Z" />
+        <path d="M12 13 C10 13 8 11.5 8 9.5 C10 9.5 12 11 12 13 Z" />
+        <path d="M12 13 C14 13 16 11.5 16 9.5 C14 9.5 12 11 12 13 Z" />
+        <path d="M12 18 C10 18 8 16.5 8 14.5 C10 14.5 12 16 12 18 Z" />
+        <path d="M12 18 C14 18 16 16.5 16 14.5 C14 14.5 12 16 12 18 Z" />
+      </svg>
+      <span style="font-family: var(--font-display); font-size: 19px">Le Trio des Champs</span>
+    </a>
+    <nav
+      style="display: flex; gap: 24px; font-size: 13px; color: var(--ink-soft); font-weight: 500"
+    >
+      <a routerLink="/">Accueil</a>
+      <a routerLink="/login">Mon compte</a>
+    </nav>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section
+  style="background: var(--bg-2); padding: 64px 0 48px; border-bottom: 1px solid var(--rule)"
+>
+  <div class="wrap">
+    <div class="eyebrow" style="margin-bottom: 18px">Réservez à l'avance</div>
+    <h1 class="h-section">
+      On vous met <em style="font-style: italic; color: var(--accent-2)">de côté</em>.
+    </h1>
+    <p class="lead" style="margin-top: 16px">
+      Choisissez votre lieu, votre date et vos produits — on les prépare. Vous payez sur place.
+    </p>
+
+    <!-- Steps -->
+    <div style="display: flex; gap: 32px; margin-top: 36px; flex-wrap: wrap">
+      @for (
+        s of [
+          ['lieu', '01', 'Lieu'],
+          ['date', '02', 'Date'],
+          ['products', '03', 'Produits'],
+          ['confirm', '04', 'Confirmation'],
+        ];
+        track s[0]
+      ) {
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span
+            style="font-family: var(--font-mono); font-size: 13px; font-weight: 600"
+            [style.color]="step === s[0] ? 'var(--accent-2)' : 'var(--ink-mute)'"
+            >{{ s[1] }}</span
+          >
+          <span
+            style="font-size: 14px; font-weight: 500"
+            [style.color]="step === s[0] ? 'var(--ink)' : 'var(--ink-mute)'"
+            >{{ s[2] }}</span
+          >
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTENU ── -->
+<section style="background: var(--bg); padding: 80px 0; min-height: 60vh">
+  <div class="wrap" style="max-width: 760px">
+    <!-- STEP 1 : Lieu -->
+    @if (step === 'lieu') {
+      <h2 class="h-section" style="margin-bottom: 36px">
+        Choisissez un <em style="font-style: italic; color: var(--accent-2)">lieu</em>
+      </h2>
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        @for (lieu of lieux; track lieu.id) {
+          <button
+            (click)="selectLieu(lieu)"
+            style="
+              appearance: none;
+              width: 100%;
+              text-align: left;
+              padding: 24px 26px;
+              background: var(--paper);
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              cursor: pointer;
+              transition: border-color 0.15s ease;
+              display: grid;
+              grid-template-columns: auto 1fr auto;
+              gap: 20px;
+              align-items: center;
+              font-family: var(--font-body);
+            "
+          >
+            <div
+              style="width: 10px; height: 10px; border-radius: 999px; background: var(--accent)"
+            ></div>
+            <div>
+              <div style="font-family: var(--font-display); font-size: 22px; color: var(--ink)">
+                {{ lieu.name }}
+              </div>
+              <div style="font-size: 13px; color: var(--ink-soft); margin-top: 4px">
+                {{ lieu.address }}
+              </div>
+              <div style="margin-top: 6px">
+                <span
+                  style="
+                    font-size: 11px;
+                    letter-spacing: 0.1em;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                    padding: 3px 10px;
+                    border-radius: 999px;
+                  "
+                  [style.background]="
+                    lieu.type === 'permanence' ? 'var(--accent)' : 'var(--accent-3)'
+                  "
+                  [style.color]="lieu.type === 'permanence' ? 'var(--paper)' : 'var(--ink)'"
+                  >{{ lieu.type }}</span
+                >
+              </div>
+            </div>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--ink-mute)"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 12h14" />
+              <path d="M13 5l7 7-7 7" />
+            </svg>
+          </button>
+        }
+      </div>
+    }
+
+    <!-- STEP 2 : Date -->
+    @if (step === 'date') {
+      <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 36px">
+        <button
+          (click)="step = 'lieu'"
+          style="
+            appearance: none;
+            border: 1px solid var(--rule);
+            background: transparent;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            color: var(--ink-soft);
+          "
+        >
+          ← Retour
+        </button>
+        <h2 class="h-section">
+          Choisissez une <em style="font-style: italic; color: var(--accent-2)">date</em>
+        </h2>
+      </div>
+      @if (getDatesForLieu(selectedLieu.id).length === 0) {
+        <div
+          style="
+            padding: 40px;
+            text-align: center;
+            color: var(--ink-mute);
+            background: var(--paper);
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+          "
+        >
+          Aucune date disponible pour ce lieu pour le moment.
+        </div>
+      } @else {
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          @for (date of getDatesForLieu(selectedLieu.id); track date.id) {
+            <button
+              (click)="selectDate(date)"
+              style="
+                appearance: none;
+                width: 100%;
+                text-align: left;
+                padding: 24px 26px;
+                background: var(--paper);
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                cursor: pointer;
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                gap: 20px;
+                align-items: center;
+                font-family: var(--font-body);
+              "
+            >
+              <div style="text-align: center; min-width: 56px">
+                <div
+                  style="
+                    font-family: var(--font-display);
+                    font-size: 36px;
+                    line-height: 1;
+                    color: var(--ink);
+                  "
+                >
+                  {{ date.date | date: 'd' }}
+                </div>
+                <div
+                  style="
+                    font-size: 11px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.12em;
+                    color: var(--ink-mute);
+                  "
+                >
+                  {{ date.date | date: 'MMM' }}
+                </div>
+              </div>
+              <div>
+                <div
+                  style="
+                    font-family: var(--font-display);
+                    font-size: 20px;
+                    color: var(--ink);
+                    text-transform: capitalize;
+                  "
+                >
+                  {{ formatDate(date.date) }}
+                </div>
+                <div style="font-size: 13px; color: var(--ink-soft); margin-top: 4px">
+                  {{ date.time }}
+                </div>
+              </div>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--ink-mute)"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14" />
+                <path d="M13 5l7 7-7 7" />
+              </svg>
+            </button>
+          }
+        </div>
+      }
+    }
+
+    <!-- STEP 3 : Produits -->
+    @if (step === 'products') {
+      <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 36px">
+        <button
+          (click)="step = 'date'"
+          style="
+            appearance: none;
+            border: 1px solid var(--rule);
+            background: transparent;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            color: var(--ink-soft);
+          "
+        >
+          ← Retour
+        </button>
+        <h2 class="h-section">
+          Vos <em style="font-style: italic; color: var(--accent-2)">produits</em>
+        </h2>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px">
+        @for (item of items; track item.productId) {
+          <div
+            style="
+              padding: 20px 24px;
+              background: var(--paper);
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              display: grid;
+              grid-template-columns: 1fr auto;
+              gap: 20px;
+              align-items: center;
+            "
+          >
+            <div>
+              <div style="font-family: var(--font-display); font-size: 20px; color: var(--ink)">
+                {{ item.product.name }}
+              </div>
+              <div style="font-size: 13px; color: var(--ink-soft); margin-top: 2px">
+                {{ item.product.price }}
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px">
+              <button
+                (click)="item.qty = Math.max(0, item.qty - 1)"
+                style="
+                  appearance: none;
+                  width: 32px;
+                  height: 32px;
+                  border: 1px solid var(--rule);
+                  border-radius: 999px;
+                  background: transparent;
+                  font-size: 18px;
+                  cursor: pointer;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--ink);
+                "
+              >
+                −
+              </button>
+              <span
+                style="
+                  font-family: var(--font-mono);
+                  font-size: 18px;
+                  color: var(--ink);
+                  min-width: 24px;
+                  text-align: center;
+                "
+                >{{ item.qty }}</span
+              >
+              <button
+                (click)="item.qty = item.qty + 1"
+                style="
+                  appearance: none;
+                  width: 32px;
+                  height: 32px;
+                  border: 1px solid var(--rule);
+                  border-radius: 999px;
+                  background: transparent;
+                  font-size: 18px;
+                  cursor: pointer;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--ink);
+                "
+              >
+                +
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px 0;
+          border-top: 1px solid var(--rule);
+        "
+      >
+        <div style="font-family: var(--font-display); font-size: 22px; color: var(--ink)">
+          Total estimé : {{ getTotal() }} €
+        </div>
+        <button
+          (click)="goToConfirm()"
+          [disabled]="!hasItems()"
+          style="
+            appearance: none;
+            padding: 14px 24px;
+            background: var(--ink);
+            color: var(--paper);
+            border: 0;
+            border-radius: 999px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+          "
+          [style.opacity]="hasItems() ? '1' : '0.4'"
+        >
+          Continuer →
+        </button>
+      </div>
+    }
+
+    <!-- STEP 4 : Confirmation -->
+    @if (step === 'confirm') {
+      <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 36px">
+        <button
+          (click)="step = 'products'"
+          style="
+            appearance: none;
+            border: 1px solid var(--rule);
+            background: transparent;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            color: var(--ink-soft);
+          "
+        >
+          ← Retour
+        </button>
+        <h2 class="h-section">
+          <em style="font-style: italic; color: var(--accent-2)">Récapitulatif</em>
+        </h2>
+      </div>
+
+      <div
+        style="
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          padding: 32px;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 24px;
+          "
+        >
+          <div style="font-family: var(--font-display); font-size: 24px; color: var(--ink)">
+            Bon de réservation
+          </div>
+          <div style="font-family: var(--font-script); font-size: 22px; color: var(--accent-2)">
+            à payer sur place
+          </div>
+        </div>
+
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-top: 1px solid var(--rule);
+          "
+        >
+          <span
+            style="
+              font-size: 11px;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+            "
+            >Lieu</span
+          >
+          <span style="font-family: var(--font-display); font-size: 18px; color: var(--ink)">{{
+            selectedLieu.name
+          }}</span>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-top: 1px solid var(--rule);
+          "
+        >
+          <span
+            style="
+              font-size: 11px;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+            "
+            >Date</span
+          >
+          <span
+            style="
+              font-family: var(--font-display);
+              font-size: 18px;
+              color: var(--ink);
+              text-transform: capitalize;
+            "
+            >{{ formatDate(selectedDate.date) }}</span
+          >
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-top: 1px solid var(--rule);
+          "
+        >
+          <span
+            style="
+              font-size: 11px;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+            "
+            >Horaires</span
+          >
+          <span style="font-size: 16px; color: var(--ink)">{{ selectedDate.time }}</span>
+        </div>
+
+        <div style="margin-top: 16px; border-top: 1px solid var(--rule)">
+          @for (item of items; track item.productId) {
+            @if (item.qty > 0) {
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr auto auto;
+                  gap: 14px;
+                  padding: 12px 0;
+                  border-bottom: 1px solid var(--rule);
+                  align-items: baseline;
+                "
+              >
+                <span
+                  style="font-family: var(--font-display); font-size: 18px; color: var(--ink)"
+                  >{{ item.product.name }}</span
+                >
+                <span style="font-size: 12px; color: var(--ink-mute); font-family: var(--font-mono)"
+                  >× {{ item.qty }}</span
+                >
+                <span
+                  style="font-family: var(--font-display); font-size: 18px; color: var(--accent-2)"
+                  >{{ item.product.price }}</span
+                >
+              </div>
+            }
+          }
+        </div>
+
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 20px;
+          "
+        >
+          <span
+            style="
+              font-size: 12px;
+              color: var(--ink-mute);
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              font-weight: 600;
+            "
+            >Total estimé</span
+          >
+          <span style="font-family: var(--font-display); font-size: 32px; color: var(--ink)"
+            >{{ getTotal() }} €</span
+          >
+        </div>
+
+        <button
+          (click)="confirm()"
+          style="
+            appearance: none;
+            width: 100%;
+            margin-top: 28px;
+            padding: 16px;
+            background: var(--accent);
+            color: var(--paper);
+            border: 0;
+            border-radius: 999px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+          "
+        >
+          Confirmer ma réservation →
+        </button>
+      </div>
+    }
+
+    <!-- STEP 5 : Succès -->
+    @if (step === 'success') {
+      <div style="text-align: center; padding: 60px 0">
+        <div
+          style="
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 999px;
+            background: var(--accent);
+            color: var(--paper);
+            margin-bottom: 24px;
+          "
+        >
+          <svg
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12l5 5L20 7" />
+          </svg>
+        </div>
+        <h2
+          style="
+            font-family: var(--font-display);
+            font-size: 48px;
+            color: var(--ink);
+            margin: 0 0 12px;
+          "
+        >
+          C'est réservé !
+        </h2>
+        <div
+          style="
+            font-family: var(--font-script);
+            font-size: 28px;
+            color: var(--accent-2);
+            margin-bottom: 24px;
+          "
+        >
+          à très vite
+        </div>
+        <p
+          style="
+            font-size: 16px;
+            color: var(--ink-soft);
+            line-height: 1.6;
+            max-width: 44ch;
+            margin: 0 auto 36px;
+          "
+        >
+          Votre réservation est enregistrée. Rendez-vous le {{ formatDate(selectedDate.date) }} à
+          {{ selectedLieu.name }}. Payez sur place en espèces ou carte bleue.
+        </p>
+        <button
+          (click)="reset()"
+          style="
+            appearance: none;
+            padding: 14px 24px;
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--rule);
+            border-radius: 999px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+          "
+        >
+          Faire une autre réservation
+        </button>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer style="background: var(--ink); color: var(--paper); padding: 32px 0">
+  <div
+    class="wrap"
+    style="
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: rgba(250, 246, 236, 0.6);
+    "
+  >
+    <div>© 2026 Le Trio des Champs</div>
+    <div style="display: flex; gap: 24px">
+      <a routerLink="/mentions-legales" style="border-bottom: 1px solid rgba(250, 246, 236, 0.25)"
+        >Mentions légales</a
+      >
+      <a
+        routerLink="/politique-confidentialite"
+        style="border-bottom: 1px solid rgba(250, 246, 236, 0.25)"
+        >Politique de confidentialité</a
+      >
+    </div>
+  </div>
+</footer>

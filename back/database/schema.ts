@@ -54,8 +54,10 @@ export class AuthAccessTokenSchema extends BaseModel {
 }
 
 export class CitySchema extends BaseModel {
-  static $columns = ['color', 'createdAt', 'id', 'name', 'updatedAt'] as const
+  static $columns = ['address', 'color', 'createdAt', 'id', 'name', 'notes', 'type', 'updatedAt'] as const
   $columns = CitySchema.$columns
+  @column()
+  declare address: string | null
   @column()
   declare color: string
   @column.dateTime({ autoCreate: true })
@@ -64,6 +66,10 @@ export class CitySchema extends BaseModel {
   declare id: number
   @column()
   declare name: string
+  @column()
+  declare notes: string | null
+  @column()
+  declare type: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 }
@@ -81,6 +87,27 @@ export class DateSchema extends BaseModel {
   declare id: number
   @column()
   declare lieuId: number | null
+  @column()
+  declare notes: string | null
+  @column()
+  declare time: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+}
+
+export class DistributionDateSchema extends BaseModel {
+  static $columns = ['capacity', 'cityId', 'createdAt', 'date', 'id', 'notes', 'time', 'updatedAt'] as const
+  $columns = DistributionDateSchema.$columns
+  @column()
+  declare capacity: number
+  @column()
+  declare cityId: number | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column.date()
+  declare date: DateTime
+  @column({ isPrimary: true })
+  declare id: number
   @column()
   declare notes: string | null
   @column()
@@ -181,12 +208,12 @@ export class ReservationItemSchema extends BaseModel {
 }
 
 export class ReservationSchema extends BaseModel {
-  static $columns = ['createdAt', 'dateId', 'id', 'status', 'total', 'updatedAt', 'userId'] as const
+  static $columns = ['createdAt', 'distributionDateId', 'id', 'status', 'total', 'updatedAt', 'userId'] as const
   $columns = ReservationSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
   @column()
-  declare dateId: number | null
+  declare distributionDateId: number | null
   @column({ isPrimary: true })
   declare id: number
   @column()

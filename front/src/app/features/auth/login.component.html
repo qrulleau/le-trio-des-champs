@@ -1,0 +1,447 @@
+<!-- ── NAV ── -->
+<nav style="background: var(--bg); border-bottom: 1px solid var(--rule)">
+  <div
+    class="wrap"
+    style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0"
+  >
+    <a
+      routerLink="/"
+      style="
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        text-decoration: none;
+      "
+    >
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--accent-3)"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 22V8" />
+        <path d="M12 8 C10 8 8 6.5 8 4.5 C10 4.5 12 6 12 8 Z" />
+        <path d="M12 8 C14 8 16 6.5 16 4.5 C14 4.5 12 6 12 8 Z" />
+        <path d="M12 13 C10 13 8 11.5 8 9.5 C10 9.5 12 11 12 13 Z" />
+        <path d="M12 13 C14 13 16 11.5 16 9.5 C14 9.5 12 11 12 13 Z" />
+        <path d="M12 18 C10 18 8 16.5 8 14.5 C10 14.5 12 16 12 18 Z" />
+        <path d="M12 18 C14 18 16 16.5 16 14.5 C14 14.5 12 16 12 18 Z" />
+      </svg>
+      <span style="font-family: var(--font-display); font-size: 19px">Le Trio des Champs</span>
+    </a>
+    <nav
+      style="display: flex; gap: 24px; font-size: 13px; color: var(--ink-soft); font-weight: 500"
+    >
+      <a routerLink="/">Accueil</a>
+      <a routerLink="/reservation">Réserver</a>
+    </nav>
+  </div>
+</nav>
+
+<!-- ── LOGIN ── -->
+<section
+  style="
+    min-height: calc(100vh - 65px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 24px;
+    background: var(--bg);
+  "
+>
+  <div style="width: 100%; max-width: 460px">
+    <!-- Crest -->
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 36px;
+      "
+    >
+      <svg
+        width="36"
+        height="36"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--accent-3)"
+        stroke-width="1.4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 22V8" />
+        <path d="M12 8 C10 8 8 6.5 8 4.5 C10 4.5 12 6 12 8 Z" />
+        <path d="M12 8 C14 8 16 6.5 16 4.5 C14 4.5 12 6 12 8 Z" />
+        <path d="M12 13 C10 13 8 11.5 8 9.5 C10 9.5 12 11 12 13 Z" />
+        <path d="M12 13 C14 13 16 11.5 16 9.5 C14 9.5 12 11 12 13 Z" />
+        <path d="M12 18 C10 18 8 16.5 8 14.5 C10 14.5 12 16 12 18 Z" />
+        <path d="M12 18 C14 18 16 16.5 16 14.5 C14 14.5 12 16 12 18 Z" />
+      </svg>
+      <span style="font-family: var(--font-script); color: var(--accent-2); font-size: 24px"
+        >bienvenue</span
+      >
+    </div>
+
+    <h1
+      style="
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: clamp(40px, 6vw, 56px);
+        line-height: 1;
+        margin: 0 0 32px;
+        text-align: center;
+        color: var(--ink);
+      "
+    >
+      Mon <em style="font-style: italic; color: var(--accent-2)">espace</em>
+    </h1>
+
+    <!-- Tabs -->
+    <div
+      style="
+        display: flex;
+        background: var(--bg-2);
+        border-radius: 999px;
+        padding: 4px;
+        margin-bottom: 28px;
+      "
+    >
+      <button
+        (click)="tab = 'login'"
+        style="
+          flex: 1;
+          appearance: none;
+          border: 0;
+          padding: 10px 18px;
+          border-radius: 999px;
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          font-family: var(--font-body);
+          transition: all 0.15s ease;
+        "
+        [style.background]="tab === 'login' ? 'var(--paper)' : 'transparent'"
+        [style.color]="tab === 'login' ? 'var(--ink)' : 'var(--ink-soft)'"
+        [style.font-weight]="tab === 'login' ? '600' : '500'"
+      >
+        Se connecter
+      </button>
+      <button
+        (click)="tab = 'signup'"
+        style="
+          flex: 1;
+          appearance: none;
+          border: 0;
+          padding: 10px 18px;
+          border-radius: 999px;
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          font-family: var(--font-body);
+          transition: all 0.15s ease;
+        "
+        [style.background]="tab === 'signup' ? 'var(--paper)' : 'transparent'"
+        [style.color]="tab === 'signup' ? 'var(--ink)' : 'var(--ink-soft)'"
+        [style.font-weight]="tab === 'signup' ? '600' : '500'"
+      >
+        Créer un compte
+      </button>
+    </div>
+
+    <!-- Error -->
+    @if (error) {
+      <div
+        style="
+          padding: 12px 14px;
+          background: rgba(184, 92, 58, 0.1);
+          border: 1px solid var(--accent-2);
+          color: var(--accent-2);
+          border-radius: 4px;
+          font-size: 13px;
+          margin-bottom: 18px;
+        "
+      >
+        {{ error }}
+      </div>
+    }
+
+    <!-- Login form -->
+    @if (tab === 'login') {
+      <div
+        style="
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          padding: 28px;
+        "
+      >
+        <div style="margin-bottom: 18px">
+          <label
+            style="
+              display: block;
+              font-size: 11px;
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              color: var(--ink-soft);
+              font-weight: 600;
+              margin-bottom: 8px;
+            "
+            >Email</label
+          >
+          <input
+            [(ngModel)]="loginForm.email"
+            type="email"
+            placeholder="vous@exemple.fr"
+            style="
+              width: 100%;
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              padding: 12px 14px;
+              font-size: 15px;
+              font-family: var(--font-body);
+              color: var(--ink);
+              background: var(--bg);
+              outline: none;
+              box-sizing: border-box;
+            "
+          />
+        </div>
+        <div style="margin-bottom: 24px">
+          <label
+            style="
+              display: block;
+              font-size: 11px;
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              color: var(--ink-soft);
+              font-weight: 600;
+              margin-bottom: 8px;
+            "
+            >Mot de passe</label
+          >
+          <input
+            [(ngModel)]="loginForm.password"
+            type="password"
+            placeholder="••••••••"
+            style="
+              width: 100%;
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              padding: 12px 14px;
+              font-size: 15px;
+              font-family: var(--font-body);
+              color: var(--ink);
+              background: var(--bg);
+              outline: none;
+              box-sizing: border-box;
+            "
+          />
+        </div>
+        <button
+          (click)="login()"
+          style="
+            width: 100%;
+            padding: 14px;
+            background: var(--ink);
+            color: var(--paper);
+            border: 0;
+            border-radius: 999px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+          "
+        >
+          Se connecter →
+        </button>
+      </div>
+    }
+
+    <!-- Signup form -->
+    @if (tab === 'signup') {
+      <div
+        style="
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          padding: 28px;
+        "
+      >
+        <div style="margin-bottom: 18px">
+          <label
+            style="
+              display: block;
+              font-size: 11px;
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              color: var(--ink-soft);
+              font-weight: 600;
+              margin-bottom: 8px;
+            "
+            >Nom complet</label
+          >
+          <input
+            [(ngModel)]="signupForm.fullName"
+            type="text"
+            placeholder="Camille Dupont"
+            style="
+              width: 100%;
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              padding: 12px 14px;
+              font-size: 15px;
+              font-family: var(--font-body);
+              color: var(--ink);
+              background: var(--bg);
+              outline: none;
+              box-sizing: border-box;
+            "
+          />
+        </div>
+        <div style="margin-bottom: 18px">
+          <label
+            style="
+              display: block;
+              font-size: 11px;
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              color: var(--ink-soft);
+              font-weight: 600;
+              margin-bottom: 8px;
+            "
+            >Email</label
+          >
+          <input
+            [(ngModel)]="signupForm.email"
+            type="email"
+            placeholder="vous@exemple.fr"
+            style="
+              width: 100%;
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              padding: 12px 14px;
+              font-size: 15px;
+              font-family: var(--font-body);
+              color: var(--ink);
+              background: var(--bg);
+              outline: none;
+              box-sizing: border-box;
+            "
+          />
+        </div>
+        <div style="margin-bottom: 18px">
+          <label
+            style="
+              display: block;
+              font-size: 11px;
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              color: var(--ink-soft);
+              font-weight: 600;
+              margin-bottom: 8px;
+            "
+            >Mot de passe</label
+          >
+          <input
+            [(ngModel)]="signupForm.password"
+            type="password"
+            placeholder="••••••••"
+            style="
+              width: 100%;
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              padding: 12px 14px;
+              font-size: 15px;
+              font-family: var(--font-body);
+              color: var(--ink);
+              background: var(--bg);
+              outline: none;
+              box-sizing: border-box;
+            "
+          />
+        </div>
+        <div style="margin-bottom: 24px">
+          <label
+            style="
+              display: block;
+              font-size: 11px;
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              color: var(--ink-soft);
+              font-weight: 600;
+              margin-bottom: 8px;
+            "
+            >Confirmer le mot de passe</label
+          >
+          <input
+            [(ngModel)]="signupForm.passwordConfirmation"
+            type="password"
+            placeholder="••••••••"
+            style="
+              width: 100%;
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              padding: 12px 14px;
+              font-size: 15px;
+              font-family: var(--font-body);
+              color: var(--ink);
+              background: var(--bg);
+              outline: none;
+              box-sizing: border-box;
+            "
+          />
+        </div>
+        <button
+          (click)="signup()"
+          style="
+            width: 100%;
+            padding: 14px;
+            background: var(--ink);
+            color: var(--paper);
+            border: 0;
+            border-radius: 999px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+          "
+        >
+          Créer mon compte →
+        </button>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer style="background: var(--ink); color: var(--paper); padding: 32px 0">
+  <div
+    class="wrap"
+    style="
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: rgba(250, 246, 236, 0.6);
+    "
+  >
+    <div>© 2026 Le Trio des Champs</div>
+    <div style="display: flex; gap: 24px">
+      <a routerLink="/mentions-legales" style="border-bottom: 1px solid rgba(250, 246, 236, 0.25)"
+        >Mentions légales</a
+      >
+      <a
+        routerLink="/politique-confidentialite"
+        style="border-bottom: 1px solid rgba(250, 246, 236, 0.25)"
+        >Politique de confidentialité</a
+      >
+    </div>
+  </div>
+</footer>

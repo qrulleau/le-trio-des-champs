@@ -150,29 +150,17 @@ const routes = {
     tokens: [{"old":"/api/v1/events/:id","type":0,"val":"api","end":""},{"old":"/api/v1/events/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/events/:id","type":0,"val":"events","end":""},{"old":"/api/v1/events/:id","type":1,"val":"id","end":""}],
     types: placeholder as Registry['events.destroy']['types'],
   },
-  'lieux.index': {
+  'distribution_dates.index': {
     methods: ["GET","HEAD"],
-    pattern: '/api/v1/lieux',
-    tokens: [{"old":"/api/v1/lieux","type":0,"val":"api","end":""},{"old":"/api/v1/lieux","type":0,"val":"v1","end":""},{"old":"/api/v1/lieux","type":0,"val":"lieux","end":""}],
-    types: placeholder as Registry['lieux.index']['types'],
+    pattern: '/api/v1/distribution-dates',
+    tokens: [{"old":"/api/v1/distribution-dates","type":0,"val":"api","end":""},{"old":"/api/v1/distribution-dates","type":0,"val":"v1","end":""},{"old":"/api/v1/distribution-dates","type":0,"val":"distribution-dates","end":""}],
+    types: placeholder as Registry['distribution_dates.index']['types'],
   },
-  'lieux.show': {
+  'distribution_dates.show': {
     methods: ["GET","HEAD"],
-    pattern: '/api/v1/lieux/:id',
-    tokens: [{"old":"/api/v1/lieux/:id","type":0,"val":"api","end":""},{"old":"/api/v1/lieux/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/lieux/:id","type":0,"val":"lieux","end":""},{"old":"/api/v1/lieux/:id","type":1,"val":"id","end":""}],
-    types: placeholder as Registry['lieux.show']['types'],
-  },
-  'dates.index': {
-    methods: ["GET","HEAD"],
-    pattern: '/api/v1/dates',
-    tokens: [{"old":"/api/v1/dates","type":0,"val":"api","end":""},{"old":"/api/v1/dates","type":0,"val":"v1","end":""},{"old":"/api/v1/dates","type":0,"val":"dates","end":""}],
-    types: placeholder as Registry['dates.index']['types'],
-  },
-  'dates.show': {
-    methods: ["GET","HEAD"],
-    pattern: '/api/v1/dates/:id',
-    tokens: [{"old":"/api/v1/dates/:id","type":0,"val":"api","end":""},{"old":"/api/v1/dates/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/dates/:id","type":0,"val":"dates","end":""},{"old":"/api/v1/dates/:id","type":1,"val":"id","end":""}],
-    types: placeholder as Registry['dates.show']['types'],
+    pattern: '/api/v1/distribution-dates/:id',
+    tokens: [{"old":"/api/v1/distribution-dates/:id","type":0,"val":"api","end":""},{"old":"/api/v1/distribution-dates/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/distribution-dates/:id","type":0,"val":"distribution-dates","end":""},{"old":"/api/v1/distribution-dates/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['distribution_dates.show']['types'],
   },
   'subscribers.public.store': {
     methods: ["POST"],
@@ -276,65 +264,35 @@ const routes = {
     tokens: [{"old":"/api/v1/admin/subscribers/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/subscribers/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/subscribers/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/subscribers/:id","type":0,"val":"subscribers","end":""},{"old":"/api/v1/admin/subscribers/:id","type":1,"val":"id","end":""}],
     types: placeholder as Registry['admin.subscribers.destroy']['types'],
   },
-  'admin.lieux.index': {
+  'admin.distribution_dates.index': {
     methods: ["GET","HEAD"],
-    pattern: '/api/v1/admin/lieux',
-    tokens: [{"old":"/api/v1/admin/lieux","type":0,"val":"api","end":""},{"old":"/api/v1/admin/lieux","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/lieux","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/lieux","type":0,"val":"lieux","end":""}],
-    types: placeholder as Registry['admin.lieux.index']['types'],
+    pattern: '/api/v1/admin/distribution-dates',
+    tokens: [{"old":"/api/v1/admin/distribution-dates","type":0,"val":"api","end":""},{"old":"/api/v1/admin/distribution-dates","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/distribution-dates","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/distribution-dates","type":0,"val":"distribution-dates","end":""}],
+    types: placeholder as Registry['admin.distribution_dates.index']['types'],
   },
-  'admin.lieux.store': {
+  'admin.distribution_dates.store': {
     methods: ["POST"],
-    pattern: '/api/v1/admin/lieux',
-    tokens: [{"old":"/api/v1/admin/lieux","type":0,"val":"api","end":""},{"old":"/api/v1/admin/lieux","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/lieux","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/lieux","type":0,"val":"lieux","end":""}],
-    types: placeholder as Registry['admin.lieux.store']['types'],
+    pattern: '/api/v1/admin/distribution-dates',
+    tokens: [{"old":"/api/v1/admin/distribution-dates","type":0,"val":"api","end":""},{"old":"/api/v1/admin/distribution-dates","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/distribution-dates","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/distribution-dates","type":0,"val":"distribution-dates","end":""}],
+    types: placeholder as Registry['admin.distribution_dates.store']['types'],
   },
-  'admin.lieux.show': {
+  'admin.distribution_dates.show': {
     methods: ["GET","HEAD"],
-    pattern: '/api/v1/admin/lieux/:id',
-    tokens: [{"old":"/api/v1/admin/lieux/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/lieux/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/lieux/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/lieux/:id","type":0,"val":"lieux","end":""},{"old":"/api/v1/admin/lieux/:id","type":1,"val":"id","end":""}],
-    types: placeholder as Registry['admin.lieux.show']['types'],
+    pattern: '/api/v1/admin/distribution-dates/:id',
+    tokens: [{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"distribution-dates","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['admin.distribution_dates.show']['types'],
   },
-  'admin.lieux.update': {
+  'admin.distribution_dates.update': {
     methods: ["PUT","PATCH"],
-    pattern: '/api/v1/admin/lieux/:id',
-    tokens: [{"old":"/api/v1/admin/lieux/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/lieux/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/lieux/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/lieux/:id","type":0,"val":"lieux","end":""},{"old":"/api/v1/admin/lieux/:id","type":1,"val":"id","end":""}],
-    types: placeholder as Registry['admin.lieux.update']['types'],
+    pattern: '/api/v1/admin/distribution-dates/:id',
+    tokens: [{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"distribution-dates","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['admin.distribution_dates.update']['types'],
   },
-  'admin.lieux.destroy': {
+  'admin.distribution_dates.destroy': {
     methods: ["DELETE"],
-    pattern: '/api/v1/admin/lieux/:id',
-    tokens: [{"old":"/api/v1/admin/lieux/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/lieux/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/lieux/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/lieux/:id","type":0,"val":"lieux","end":""},{"old":"/api/v1/admin/lieux/:id","type":1,"val":"id","end":""}],
-    types: placeholder as Registry['admin.lieux.destroy']['types'],
-  },
-  'admin.dates.index': {
-    methods: ["GET","HEAD"],
-    pattern: '/api/v1/admin/dates',
-    tokens: [{"old":"/api/v1/admin/dates","type":0,"val":"api","end":""},{"old":"/api/v1/admin/dates","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/dates","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/dates","type":0,"val":"dates","end":""}],
-    types: placeholder as Registry['admin.dates.index']['types'],
-  },
-  'admin.dates.store': {
-    methods: ["POST"],
-    pattern: '/api/v1/admin/dates',
-    tokens: [{"old":"/api/v1/admin/dates","type":0,"val":"api","end":""},{"old":"/api/v1/admin/dates","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/dates","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/dates","type":0,"val":"dates","end":""}],
-    types: placeholder as Registry['admin.dates.store']['types'],
-  },
-  'admin.dates.show': {
-    methods: ["GET","HEAD"],
-    pattern: '/api/v1/admin/dates/:id',
-    tokens: [{"old":"/api/v1/admin/dates/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/dates/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/dates/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/dates/:id","type":0,"val":"dates","end":""},{"old":"/api/v1/admin/dates/:id","type":1,"val":"id","end":""}],
-    types: placeholder as Registry['admin.dates.show']['types'],
-  },
-  'admin.dates.update': {
-    methods: ["PUT","PATCH"],
-    pattern: '/api/v1/admin/dates/:id',
-    tokens: [{"old":"/api/v1/admin/dates/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/dates/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/dates/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/dates/:id","type":0,"val":"dates","end":""},{"old":"/api/v1/admin/dates/:id","type":1,"val":"id","end":""}],
-    types: placeholder as Registry['admin.dates.update']['types'],
-  },
-  'admin.dates.destroy': {
-    methods: ["DELETE"],
-    pattern: '/api/v1/admin/dates/:id',
-    tokens: [{"old":"/api/v1/admin/dates/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/dates/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/dates/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/dates/:id","type":0,"val":"dates","end":""},{"old":"/api/v1/admin/dates/:id","type":1,"val":"id","end":""}],
-    types: placeholder as Registry['admin.dates.destroy']['types'],
+    pattern: '/api/v1/admin/distribution-dates/:id',
+    tokens: [{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":0,"val":"distribution-dates","end":""},{"old":"/api/v1/admin/distribution-dates/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['admin.distribution_dates.destroy']['types'],
   },
   'admin.reservations.index': {
     methods: ["GET","HEAD"],
@@ -365,12 +323,6 @@ const routes = {
     pattern: '/api/v1/admin/reservations/:id',
     tokens: [{"old":"/api/v1/admin/reservations/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/reservations/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/reservations/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/reservations/:id","type":0,"val":"reservations","end":""},{"old":"/api/v1/admin/reservations/:id","type":1,"val":"id","end":""}],
     types: placeholder as Registry['admin.reservations.destroy']['types'],
-  },
-  'admin.reservations.my_reservations': {
-    methods: ["GET","HEAD"],
-    pattern: '/api/v1/admin/reservations/my',
-    tokens: [{"old":"/api/v1/admin/reservations/my","type":0,"val":"api","end":""},{"old":"/api/v1/admin/reservations/my","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/reservations/my","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/reservations/my","type":0,"val":"reservations","end":""},{"old":"/api/v1/admin/reservations/my","type":0,"val":"my","end":""}],
-    types: placeholder as Registry['admin.reservations.my_reservations']['types'],
   },
   'user.reservations.store': {
     methods: ["POST"],
