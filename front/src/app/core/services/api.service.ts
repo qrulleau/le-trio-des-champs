@@ -163,4 +163,9 @@ export class ApiService {
   getMyReservations(): Observable<any> {
     return this.http.get(`${this.baseUrl}/user/reservations/my`)
   }
+
+  // Account
+  getMe(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/account/profile`)
+  }
 }

@@ -1,14 +1,16 @@
 import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
+import { RouterModule } from '@angular/router'
 import { ApiService } from '../../core/services/api.service'
 import { ToastService } from '../../core/services/toast.service'
-import { RouterModule } from '@angular/router'
+import { NavbarComponent } from '../../shared/components/navbar/navbar.component'
+import { FooterComponent } from '../../shared/components/footer/footer.component'
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NavbarComponent, FooterComponent],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
@@ -60,11 +62,9 @@ export class HomeComponent implements OnInit {
   }
 
   toggleCity(cityId: number) {
-    if (this.subscribeForm.cityIds.includes(cityId)) {
-      this.subscribeForm.cityIds = this.subscribeForm.cityIds.filter((id) => id !== cityId)
-    } else {
-      this.subscribeForm.cityIds = [...this.subscribeForm.cityIds, cityId]
-    }
+    this.subscribeForm.cityIds = this.subscribeForm.cityIds.includes(cityId)
+      ? this.subscribeForm.cityIds.filter((id) => id !== cityId)
+      : [...this.subscribeForm.cityIds, cityId]
   }
 
   isCitySelected(cityId: number): boolean {
@@ -83,13 +83,11 @@ export class HomeComponent implements OnInit {
         this.toast.success('Inscription confirmée !')
       },
       error: (err) => {
-        if (err.status === 409) {
+        if (err.status === 409)
           this.toast.info('Ce numéro est déjà inscrit. Vos villes ont été mises à jour.')
-        } else if (err.status === 422) {
+        else if (err.status === 422)
           this.toast.error('Numéro invalide. Format attendu : 06XXXXXXXX ou 07XXXXXXXX')
-        } else {
-          this.toast.error('Une erreur est survenue, veuillez réessayer.')
-        }
+        else this.toast.error('Une erreur est survenue, veuillez réessayer.')
       },
     })
   }
@@ -98,9 +96,7 @@ export class HomeComponent implements OnInit {
     if (this.currentMonth === 1) {
       this.currentMonth = 12
       this.currentYear--
-    } else {
-      this.currentMonth--
-    }
+    } else this.currentMonth--
     this.api.getEvents(this.currentMonth, this.currentYear).subscribe((data) => {
       this.events = [...data]
       this.cdr.detectChanges()
@@ -111,9 +107,7 @@ export class HomeComponent implements OnInit {
     if (this.currentMonth === 12) {
       this.currentMonth = 1
       this.currentYear++
-    } else {
-      this.currentMonth++
-    }
+    } else this.currentMonth++
     this.api.getEvents(this.currentMonth, this.currentYear).subscribe((data) => {
       this.events = [...data]
       this.cdr.detectChanges()
@@ -121,10 +115,7 @@ export class HomeComponent implements OnInit {
   }
 
   getMonthName(month: number, year: number): string {
-    return new Date(year, month - 1).toLocaleDateString('fr-FR', {
-      month: 'long',
-      year: 'numeric',
-    })
+    return new Date(year, month - 1).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
   }
 
   getCityColor(location: string): string {
@@ -132,13 +123,6 @@ export class HomeComponent implements OnInit {
     return city ? city.color : '#2d4a2f'
   }
 
-  formatEventDate(date: string): string {
-    return new Date(date).toLocaleDateString('fr-FR', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-    })
-  }
   getPriceAmount(price: string): string {
     const match = price.match(/^[\d,.]+ ?€/)
     return match ? match[0] : price

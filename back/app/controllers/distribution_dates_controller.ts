@@ -22,7 +22,7 @@ export default class DistributionDatesController {
     const date = await DistributionDate.query()
       .where('id', params.id)
       .preload('city')
-      .preload('reservations')
+      .preload('reservations', (q) => q.preload('items'))
       .firstOrFail()
     return response.ok(date)
   }
