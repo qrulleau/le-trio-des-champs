@@ -12,14 +12,14 @@ import { ToastService } from '../../../../core/services/toast.service'
 })
 export class ProductsComponent implements OnInit {
   products: any[] = []
-  showForm = false
-  editingProduct: any = null
+  showAddRow = false
 
-  form = {
+  newProduct = {
     name: '',
-    description: '',
+    unit: '',
     price: '',
-    imageUrl: '',
+    stockPerDate: 0,
+    description: '',
   }
 
   private api = inject(ApiService)
@@ -37,45 +37,32 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  openForm(product?: any) {
-    if (product) {
-      this.editingProduct = product
-      this.form = { ...product }
-    } else {
-      this.editingProduct = null
-      this.form = { name: '', description: '', price: '', imageUrl: '' }
+  addProduct() {
+    if (!this.newProduct.name.trim()) {
+      this.toast.warning('Renseignez au moins un nom.')
+      return
     }
-    this.showForm = true
+    this.api.createProduct(this.newProduct).subscribe({
+      next: () => {
+        this.toast.success('Produit ajouté')
+        this.newProduct = { name: '', unit: '', price: '', stockPerDate: 0, description: '' }
+        this.showAddRow = false
+        this.loadProducts()
+      },
+      error: () => this.toast.error("Erreur lors de l'ajout"),
+    })
   }
 
-  closeForm() {
-    this.showForm = false
-    this.editingProduct = null
-  }
-
-  submit() {
-    if (this.editingProduct) {
-      this.api.updateProduct(this.editingProduct.id, this.form).subscribe({
-        next: () => {
-          this.toast.success('Produit modifié avec succès')
-          this.loadProducts()
-          this.closeForm()
-        },
-        error: () => this.toast.error('Erreur lors de la modification'),
-      })
-    } else {
-      this.api.createProduct(this.form).subscribe({
-        next: () => {
-          this.toast.success('Produit ajouté avec succès')
-          this.loadProducts()
-          this.closeForm()
-        },
-        error: () => this.toast.error("Erreur lors de l'ajout"),
-      })
-    }
+  updateField(product: any, field: string, value: any) {
+    const patch: any = { [field]: value }
+    this.api.updateProduct(product.id, patch).subscribe({
+      next: () => this.toast.success('Modifié'),
+      error: () => this.toast.error('Erreur'),
+    })
   }
 
   delete(id: number) {
+    if (!confirm('Supprimer ce produit ?')) return
     this.api.deleteProduct(id).subscribe({
       next: () => {
         this.toast.success('Produit supprimé')
@@ -83,5 +70,15 @@ export class ProductsComponent implements OnInit {
       },
       error: () => this.toast.error('Erreur lors de la suppression'),
     })
+  }
+
+  get totalStock() {
+    return this.products.reduce((s, p) => s + (p.stockPerDate || 0), 0)
+  }
+  get avgPrice() {
+    if (!this.products.length) return '0'
+    const avg =
+      this.products.reduce((s, p) => s + parseFloat(p.price) || 0, 0) / this.products.length
+    return avg.toFixed(2)
   }
 }

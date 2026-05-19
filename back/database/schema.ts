@@ -159,7 +159,7 @@ export class LieuxSchema extends BaseModel {
 }
 
 export class ProductSchema extends BaseModel {
-  static $columns = ['createdAt', 'description', 'id', 'imageUrl', 'name', 'price', 'updatedAt'] as const
+  static $columns = ['createdAt', 'description', 'id', 'imageUrl', 'name', 'price', 'stockPerDate', 'unit', 'updatedAt'] as const
   $columns = ProductSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -173,6 +173,10 @@ export class ProductSchema extends BaseModel {
   declare name: string
   @column()
   declare price: string
+  @column()
+  declare stockPerDate: number | null
+  @column()
+  declare unit: string | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 }
