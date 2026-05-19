@@ -1,51 +1,145 @@
-<div class="min-h-screen bg-gray-50">
+<div style="min-height: 100vh; display: flex; flex-direction: column; background: var(--bg)">
   <header
-    class="bg-gradient-to-r from-purple-700 to-purple-500 text-white px-8 py-5 flex items-center justify-between"
+    style="
+      background: var(--ink);
+      color: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(250, 246, 236, 0.1);
+    "
   >
-    <div>
-      <h1 class="text-2xl font-semibold">Administration</h1>
-      <p class="text-purple-200 text-sm">Le Trio des Champs</p>
-    </div>
-    <a
-      routerLink="/"
-      class="bg-white/20 hover:bg-white/30 transition px-4 py-2 rounded-full text-sm flex items-center gap-2"
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        height: 56px;
+      "
     >
-      Retour au site
-    </a>
-  </header>
-
-  <div class="flex">
-    <aside class="w-72 min-h-screen bg-white shadow-sm p-4 flex flex-col justify-between">
-      <nav class="space-y-1">
-        @for (item of menuItems; track item.path) {
-          <a
-            [routerLink]="item.path"
-            routerLinkActive="bg-purple-600 text-white"
-            [routerLinkActiveOptions]="item.path === '/admin' ? { exact: true } : { exact: false }"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-100 transition text-sm"
-          >
-            <span>{{ item.icon }}</span>
-            <span>{{ item.label }}</span>
-          </a>
-        }
-      </nav>
-
-      <div class="border-t pt-4 mt-4 space-y-2">
-        <div class="text-center text-xs text-gray-400">
-          <p>💾 Sauvegarde automatique</p>
-          <p class="mt-1">Les modifications sont enregistrees automatiquement.</p>
-        </div>
+      <div style="display: flex; align-items: center; gap: 14px">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="var(--accent-3)"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 22V8" />
+          <path d="M12 8 C10 8 8 6.5 8 4.5 C10 4.5 12 6 12 8 Z" />
+          <path d="M12 13 C10 13 8 11.5 8 9.5 C10 9.5 12 11 12 13 Z" />
+          <path d="M12 18 C10 18 8 16.5 8 14.5 C10 14.5 12 16 12 18 Z" />
+        </svg>
+        <span style="font-family: var(--font-display); font-size: 17px; color: var(--paper)"
+          >Le Trio des Champs</span
+        >
+        <span
+          style="
+            width: 1px;
+            height: 18px;
+            background: rgba(250, 246, 236, 0.2);
+            display: inline-block;
+          "
+        ></span>
+        <span
+          style="
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(250, 246, 236, 0.5);
+            font-weight: 600;
+          "
+          >Administration</span
+        >
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px">
+        <a
+          routerLink="/"
+          style="
+            font-size: 13px;
+            color: rgba(250, 246, 236, 0.6);
+            border-bottom: 1px solid rgba(250, 246, 236, 0.2);
+            padding-bottom: 1px;
+          "
+          >Retour au site</a
+        >
         <button
           (click)="logout()"
-          class="w-full bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-xl text-sm transition"
+          style="
+            appearance: none;
+            background: rgba(250, 246, 236, 0.08);
+            border: 1px solid rgba(250, 246, 236, 0.15);
+            color: rgba(250, 246, 236, 0.7);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: var(--font-body);
+          "
         >
-          🚪 Se déconnecter
+          Déconnexion
         </button>
       </div>
+    </div>
+  </header>
+
+  <div style="display: flex; flex: 1">
+    <aside
+      style="
+        width: 220px;
+        flex-shrink: 0;
+        background: var(--paper);
+        border-right: 1px solid var(--rule);
+        padding: 20px 12px;
+        position: sticky;
+        top: 56px;
+        height: calc(100vh - 56px);
+        overflow-y: auto;
+      "
+    >
+      <nav style="display: flex; flex-direction: column; gap: 2px">
+        <ng-container *ngFor="let item of menuItems">
+          <a
+            [routerLink]="item.path"
+            routerLinkActive="nav-active"
+            [routerLinkActiveOptions]="item.exact ? { exact: true } : { exact: false }"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              padding: 9px 12px;
+              border-radius: 4px;
+              font-size: 13px;
+              font-weight: 500;
+              color: var(--ink-soft);
+              text-decoration: none;
+            "
+          >
+            <span style="font-size: 15px; width: 20px; text-align: center">{{ item.icon }}</span>
+            <span>{{ item.label }}</span>
+          </a>
+        </ng-container>
+      </nav>
     </aside>
 
-    <main class="flex-1 p-8">
+    <main style="flex: 1; padding: 40px; min-width: 0; overflow: auto">
       <router-outlet />
     </main>
   </div>
 </div>
+
+<style>
+  a.nav-active {
+    background: var(--bg-2) !important;
+    color: var(--ink) !important;
+    font-weight: 600 !important;
+  }
+  aside a:hover:not(.nav-active) {
+    background: var(--bg) !important;
+    color: var(--ink) !important;
+  }
+</style>

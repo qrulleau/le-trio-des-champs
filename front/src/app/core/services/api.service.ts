@@ -169,6 +169,10 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/account/profile`)
   }
 
+  getReservations(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/admin/reservations`)
+  }
+
   cancelReservation(id: number): Observable<any> {
     return this.http.patch(`${this.baseUrl}/user/reservations/${id}/cancel`, {})
   }
