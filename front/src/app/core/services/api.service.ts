@@ -168,4 +168,8 @@ export class ApiService {
   getMe(): Observable<any> {
     return this.http.get(`${this.baseUrl}/account/profile`)
   }
+
+  cancelReservation(id: number): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/user/reservations/${id}/cancel`, {})
+  }
 }

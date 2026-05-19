@@ -6,10 +6,12 @@ export const authGuard = () => {
   const auth = inject(AuthService)
   const router = inject(Router)
 
-  if (auth.isLoggedIn()) {
+  // On vérifie le token — suffisant pour laisser passer,
+  // le composant admin gèrera si le token est expiré
+  if (auth.getToken()) {
     return true
   }
 
-  router.navigate(['/admin/login'])
+  router.navigate(['/login'])
   return false
 }

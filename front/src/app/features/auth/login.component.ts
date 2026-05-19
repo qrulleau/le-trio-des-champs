@@ -14,19 +14,8 @@ import { ToastService } from '../../core/services/toast.service'
 })
 export class LoginComponent implements OnInit {
   tab: 'login' | 'signup' = 'login'
-
-  loginForm = {
-    email: '',
-    password: '',
-  }
-
-  signupForm = {
-    fullName: '',
-    email: '',
-    password: '',
-    passwordConfirmation: '',
-  }
-
+  loginForm = { email: '', password: '' }
+  signupForm = { fullName: '', email: '', password: '', passwordConfirmation: '' }
   error = ''
 
   private api = inject(ApiService)
@@ -36,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.isLoggedIn()) {
-      this.router.navigate(['/reservation'])
+      this.redirectAfterLogin()
     }
   }
 
@@ -45,8 +34,19 @@ export class LoginComponent implements OnInit {
     this.api.login(this.loginForm).subscribe({
       next: (data) => {
         this.auth.setToken(data.data.token)
-        this.toast.success('Connexion réussie !')
-        this.router.navigate(['/reservation'])
+        // Si le back renvoie l'user dans la réponse, on le set directement
+        if (data.data?.user) {
+          this.auth.currentUser.set(data.data.user)
+          this.toast.success('Connexion réussie !')
+          this.redirectAfterLogin()
+        } else {
+          // Sinon on charge le profil puis on redirige
+          this.auth.loadCurrentUser()
+          setTimeout(() => {
+            this.toast.success('Connexion réussie !')
+            this.redirectAfterLogin()
+          }, 300)
+        }
       },
       error: () => {
         this.error = 'Identifiants invalides.'
@@ -63,12 +63,25 @@ export class LoginComponent implements OnInit {
     this.api.signup(this.signupForm).subscribe({
       next: (data) => {
         this.auth.setToken(data.data.token)
+        if (data.data?.user) {
+          this.auth.currentUser.set(data.data.user)
+        } else {
+          this.auth.loadCurrentUser()
+        }
         this.toast.success('Compte créé avec succès !')
-        this.router.navigate(['/reservation'])
+        this.redirectAfterLogin()
       },
       error: () => {
         this.error = 'Erreur lors de la création du compte.'
       },
     })
+  }
+
+  private redirectAfterLogin() {
+    if (this.auth.isAdmin()) {
+      this.router.navigate(['/admin'])
+    } else {
+      this.router.navigate(['/reservation'])
+    }
   }
 }

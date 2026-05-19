@@ -3,14 +3,8 @@ import { authGuard } from '../../core/guards/auth.guard'
 
 export const ADMIN_ROUTES: Routes = [
   {
-    path: 'login',
-    loadComponent: () =>
-      import('./pages/login/login.component').then((m) => m.LoginComponent),
-  },
-  {
     path: '',
-    loadComponent: () =>
-      import('./admin.component').then((m) => m.AdminComponent),
+    loadComponent: () => import('./admin.component').then((m) => m.AdminComponent),
     canActivate: [authGuard],
     children: [
       {
@@ -41,7 +35,9 @@ export const ADMIN_ROUTES: Routes = [
       {
         path: 'announcement',
         loadComponent: () =>
-          import('./pages/announcement/announcement.component').then((m) => m.AnnouncementComponent),
+          import('./pages/announcement/announcement.component').then(
+            (m) => m.AnnouncementComponent
+          ),
       },
       {
         path: 'settings',
@@ -51,7 +47,9 @@ export const ADMIN_ROUTES: Routes = [
       {
         path: 'selling-places',
         loadComponent: () =>
-          import('./pages/selling-places/selling-places.component').then((m) => m.SellingPlacesComponent),
+          import('./pages/selling-places/selling-places.component').then(
+            (m) => m.SellingPlacesComponent
+          ),
       },
     ],
   },

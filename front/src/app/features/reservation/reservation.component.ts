@@ -5,23 +5,26 @@ import { RouterModule, Router } from '@angular/router'
 import { ApiService } from '../../core/services/api.service'
 import { AuthService } from '../../core/services/auth.service'
 import { ToastService } from '../../core/services/toast.service'
+import { NavbarComponent } from '../../shared/components/navbar/navbar.component'
+import { FooterComponent } from '../../shared/components/footer/footer.component'
 
 @Component({
   selector: 'app-reservation',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NavbarComponent, FooterComponent],
   templateUrl: './reservation.component.html',
 })
 export class ReservationComponent implements OnInit {
   lieux: any[] = []
   dates: any[] = []
   products: any[] = []
+  myReservations: any[] = []
   Math = Math
+  parseFloat = (val: string) => globalThis.parseFloat(val)
 
   selectedLieu: any = null
   selectedDate: any = null
   items: { productId: number; qty: number; product: any }[] = []
-
   step: 'lieu' | 'date' | 'products' | 'confirm' | 'success' = 'lieu'
 
   private api = inject(ApiService)
@@ -50,6 +53,15 @@ export class ReservationComponent implements OnInit {
     this.api.getProducts().subscribe((data) => {
       this.products = [...data]
       this.cdr.detectChanges()
+    })
+    this.api.getMyReservations().subscribe({
+      next: (data) => {
+        this.myReservations = Array.isArray(data) ? data : (data?.data ?? [])
+        this.cdr.detectChanges()
+      },
+      error: () => {
+        this.myReservations = []
+      },
     })
   }
 
@@ -94,21 +106,53 @@ export class ReservationComponent implements OnInit {
       dateId: this.selectedDate.id,
       items: this.items
         .filter((i) => i.qty > 0)
-        .map((i) => ({
-          productId: i.productId,
-          qty: i.qty,
-        })),
+        .map((i) => ({ productId: i.productId, qty: i.qty })),
     }
     this.api.createReservation(payload).subscribe({
       next: () => {
         this.step = 'success'
         this.toast.success('Réservation confirmée !')
+        this.api.getMyReservations().subscribe({
+          next: (data) => {
+            this.myReservations = Array.isArray(data) ? data : (data?.data ?? [])
+          },
+        })
         this.cdr.detectChanges()
       },
       error: () => {
         this.toast.error('Erreur lors de la réservation.')
       },
     })
+  }
+
+  cancelReservation(id: number) {
+    if (!confirm('Annuler cette réservation ?')) return
+    this.api.cancelReservation(id).subscribe({
+      next: () => {
+        this.toast.success('Réservation annulée.')
+        this.api.getMyReservations().subscribe({
+          next: (data) => {
+            this.myReservations = Array.isArray(data) ? data : (data?.data ?? [])
+            this.cdr.detectChanges()
+          },
+        })
+      },
+      error: () => {
+        this.toast.error("Erreur lors de l'annulation.")
+      },
+    })
+  }
+
+  getStatusLabel(status: string): string {
+    const map: any = { pending: 'EN ATTENTE', confirmed: 'CONFIRMÉE', cancelled: 'ANNULÉE' }
+    return map[status] ?? status
+  }
+
+  getStatusStyle(status: string): string {
+    if (status === 'confirmed') return 'background:var(--accent);color:var(--paper)'
+    if (status === 'cancelled')
+      return 'background:var(--bg-2);color:var(--ink-mute);border:1px solid var(--rule)'
+    return 'background:var(--accent-3);color:var(--ink)'
   }
 
   formatDate(dateStr: string): string {
