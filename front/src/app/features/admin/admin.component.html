@@ -1,145 +1,233 @@
 <div style="min-height: 100vh; display: flex; flex-direction: column; background: var(--bg)">
-  <header
-    style="
-      background: var(--ink);
-      color: var(--paper);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      border-bottom: 1px solid rgba(250, 246, 236, 0.1);
-    "
-  >
-    <div
-      style="
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 24px;
-        height: 56px;
-      "
-    >
-      <div style="display: flex; align-items: center; gap: 14px">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="var(--accent-3)"
-          stroke-width="1.6"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M12 22V8" />
-          <path d="M12 8 C10 8 8 6.5 8 4.5 C10 4.5 12 6 12 8 Z" />
-          <path d="M12 13 C10 13 8 11.5 8 9.5 C10 9.5 12 11 12 13 Z" />
-          <path d="M12 18 C10 18 8 16.5 8 14.5 C10 14.5 12 16 12 18 Z" />
-        </svg>
-        <span style="font-family: var(--font-display); font-size: 17px; color: var(--paper)"
-          >Le Trio des Champs</span
-        >
-        <span
-          style="
-            width: 1px;
-            height: 18px;
-            background: rgba(250, 246, 236, 0.2);
-            display: inline-block;
-          "
-        ></span>
-        <span
-          style="
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: rgba(250, 246, 236, 0.5);
-            font-weight: 600;
-          "
-          >Administration</span
-        >
-      </div>
-      <div style="display: flex; align-items: center; gap: 16px">
-        <a
-          routerLink="/"
-          style="
-            font-size: 13px;
-            color: rgba(250, 246, 236, 0.6);
-            border-bottom: 1px solid rgba(250, 246, 236, 0.2);
-            padding-bottom: 1px;
-          "
-          >Retour au site</a
-        >
-        <button
-          (click)="logout()"
-          style="
-            appearance: none;
-            background: rgba(250, 246, 236, 0.08);
-            border: 1px solid rgba(250, 246, 236, 0.15);
-            color: rgba(250, 246, 236, 0.7);
-            padding: 6px 14px;
-            border-radius: 999px;
-            font-size: 13px;
-            cursor: pointer;
-            font-family: var(--font-body);
-          "
-        >
-          Déconnexion
-        </button>
-      </div>
-    </div>
-  </header>
-
   <div style="display: flex; flex: 1">
     <aside
       style="
         width: 220px;
         flex-shrink: 0;
-        background: var(--paper);
-        border-right: 1px solid var(--rule);
-        padding: 20px 12px;
+        background: #1a110a;
+        padding: 0;
         position: sticky;
-        top: 56px;
-        height: calc(100vh - 56px);
+        top: 0;
+        height: 100vh;
         overflow-y: auto;
+        display: flex;
+        flex-direction: column;
       "
     >
-      <nav style="display: flex; flex-direction: column; gap: 2px">
-        <ng-container *ngFor="let item of menuItems">
+      <!-- Logo -->
+      <div style="padding: 20px 16px 16px; border-bottom: 1px solid rgba(250, 246, 236, 0.08)">
+        <div style="display: flex; align-items: center; gap: 10px">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--accent-3)"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22V8" />
+            <path d="M12 8 C10 8 8 6.5 8 4.5 C10 4.5 12 6 12 8 Z" />
+            <path d="M12 13 C10 13 8 11.5 8 9.5 C10 9.5 12 11 12 13 Z" />
+            <path d="M12 18 C10 18 8 16.5 8 14.5 C10 14.5 12 16 12 18 Z" />
+          </svg>
+          <span style="font-family: var(--font-display); font-size: 17px; color: var(--paper)"
+            >Le Trio</span
+          >
+        </div>
+      </div>
+
+      <!-- Nav principale -->
+      <div style="padding: 16px 10px 8px; flex: 1">
+        <div
+          style="
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(250, 246, 236, 0.3);
+            font-weight: 600;
+            padding: 0 8px;
+            margin-bottom: 6px;
+          "
+        >
+          Administration
+        </div>
+        <nav style="display: flex; flex-direction: column; gap: 1px">
+          <ng-container *ngFor="let item of menuItems">
+            <a
+              [routerLink]="item.path"
+              routerLinkActive="nav-active"
+              [routerLinkActiveOptions]="item.exact ? { exact: true } : { exact: false }"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 8px 10px;
+                border-radius: 4px;
+                font-size: 13px;
+                font-weight: 500;
+                color: rgba(250, 246, 236, 0.5);
+                text-decoration: none;
+                transition: all 0.12s;
+              "
+            >
+              <span
+                style="width: 18px; flex-shrink: 0; opacity: 0.7"
+                [innerHTML]="item.icon"
+              ></span>
+              <span>{{ item.label }}</span>
+              @if (item.badge) {
+                <span
+                  style="
+                    font-size: 11px;
+                    font-weight: 600;
+                    padding: 2px 7px;
+                    border-radius: 999px;
+                    background: rgba(250, 246, 236, 0.1);
+                    color: rgba(250, 246, 236, 0.6);
+                  "
+                  >{{ item.badge }}</span
+                >
+              }
+            </a>
+          </ng-container>
+        </nav>
+
+        <!-- Raccourcis -->
+        <div style="margin-top: 20px">
+          <div
+            style="
+              font-size: 10px;
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              color: rgba(250, 246, 236, 0.3);
+              font-weight: 600;
+              padding: 0 8px;
+              margin-bottom: 6px;
+            "
+          >
+            Raccourcis
+          </div>
           <a
-            [routerLink]="item.path"
-            routerLinkActive="nav-active"
-            [routerLinkActiveOptions]="item.exact ? { exact: true } : { exact: false }"
+            routerLink="/"
             style="
               display: flex;
               align-items: center;
-              gap: 10px;
-              padding: 9px 12px;
+              padding: 8px 10px;
               border-radius: 4px;
               font-size: 13px;
               font-weight: 500;
-              color: var(--ink-soft);
+              color: rgba(250, 246, 236, 0.5);
               text-decoration: none;
             "
           >
-            <span style="font-size: 15px; width: 20px; text-align: center">{{ item.icon }}</span>
-            <span>{{ item.label }}</span>
+            Voir le site public
           </a>
-        </ng-container>
-      </nav>
+        </div>
+      </div>
+
+      <!-- User -->
+      <div style="padding: 14px 16px; border-top: 1px solid rgba(250, 246, 236, 0.08)">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px">
+          <div
+            style="
+              width: 34px;
+              height: 34px;
+              border-radius: 999px;
+              background: var(--accent-2);
+              color: var(--paper);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-family: var(--font-display);
+              font-size: 14px;
+              font-weight: 600;
+              flex-shrink: 0;
+            "
+          >
+            {{ auth.currentUser()?.initials || 'A' }}
+          </div>
+          <div style="min-width: 0">
+            <div
+              style="
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--paper);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+              {{ auth.userName() }}
+            </div>
+            <div
+              style="
+                font-size: 11px;
+                color: rgba(250, 246, 236, 0.4);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+              {{ auth.currentUser()?.email }}
+            </div>
+          </div>
+        </div>
+        <button
+          (click)="logout()"
+          style="
+            appearance: none;
+            background: none;
+            border: none;
+            color: var(--accent-2);
+            font-size: 13px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            padding: 0;
+            font-weight: 500;
+          "
+        >
+          Deconnexion
+        </button>
+      </div>
     </aside>
 
-    <main style="flex: 1; padding: 40px; min-width: 0; overflow: auto">
-      <router-outlet />
-    </main>
+    <div style="flex: 1; display: flex; flex-direction: column; min-width: 0">
+      <!-- Topbar -->
+      <header
+        style="
+          background: var(--paper);
+          border-bottom: 1px solid var(--rule);
+          padding: 0 32px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          position: sticky;
+          top: 0;
+          z-index: 40;
+        "
+      >
+        <div style="font-size: 13px; color: var(--ink-soft); font-weight: 500">Administration</div>
+        <div style="font-size: 13px; color: var(--ink-mute)">{{ auth.userName() }}</div>
+      </header>
+
+      <main style="flex: 1; padding: 40px; overflow: auto">
+        <router-outlet />
+      </main>
+    </div>
   </div>
 </div>
 
 <style>
   a.nav-active {
-    background: var(--bg-2) !important;
-    color: var(--ink) !important;
+    background: rgba(201, 148, 60, 0.15) !important;
+    color: var(--accent-3) !important;
     font-weight: 600 !important;
   }
   aside a:hover:not(.nav-active) {
-    background: var(--bg) !important;
-    color: var(--ink) !important;
+    background: rgba(250, 246, 236, 0.06) !important;
+    color: rgba(250, 246, 236, 0.85) !important;
   }
 </style>
