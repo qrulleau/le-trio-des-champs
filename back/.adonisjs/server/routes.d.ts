@@ -59,6 +59,7 @@ export type ScannedRoutes = {
     'admin.reservations.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'user.reservations.store': { paramsTuple?: []; params?: {} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
+    'user.reservations.cancel': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   POST: {
     'auth.new_account.store': { paramsTuple?: []; params?: {} }
@@ -147,6 +148,7 @@ export type ScannedRoutes = {
     'admin.subscribers.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.distribution_dates.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'user.reservations.cancel': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   DELETE: {
     'cities.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }

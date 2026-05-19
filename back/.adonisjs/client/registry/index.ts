@@ -336,6 +336,12 @@ const routes = {
     tokens: [{"old":"/api/v1/user/reservations/my","type":0,"val":"api","end":""},{"old":"/api/v1/user/reservations/my","type":0,"val":"v1","end":""},{"old":"/api/v1/user/reservations/my","type":0,"val":"user","end":""},{"old":"/api/v1/user/reservations/my","type":0,"val":"reservations","end":""},{"old":"/api/v1/user/reservations/my","type":0,"val":"my","end":""}],
     types: placeholder as Registry['user.reservations.my_reservations']['types'],
   },
+  'user.reservations.cancel': {
+    methods: ["PATCH"],
+    pattern: '/api/v1/user/reservations/:id/cancel',
+    tokens: [{"old":"/api/v1/user/reservations/:id/cancel","type":0,"val":"api","end":""},{"old":"/api/v1/user/reservations/:id/cancel","type":0,"val":"v1","end":""},{"old":"/api/v1/user/reservations/:id/cancel","type":0,"val":"user","end":""},{"old":"/api/v1/user/reservations/:id/cancel","type":0,"val":"reservations","end":""},{"old":"/api/v1/user/reservations/:id/cancel","type":1,"val":"id","end":""},{"old":"/api/v1/user/reservations/:id/cancel","type":0,"val":"cancel","end":""}],
+    types: placeholder as Registry['user.reservations.cancel']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

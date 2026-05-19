@@ -667,4 +667,16 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['myReservations']>>>
     }
   }
+  'user.reservations.cancel': {
+    methods: ["PATCH"]
+    pattern: '/api/v1/user/reservations/:id/cancel'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['cancel']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['cancel']>>>
+    }
+  }
 }

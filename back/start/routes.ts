@@ -72,6 +72,7 @@ router
             .group(() => {
                     router.post('reservations', [ReservationsController, 'store'])
                     router.get('reservations/my', [ReservationsController, 'myReservations'])
+            router.patch('reservations/:id/cancel', [ReservationsController, 'cancel'])
                     })
         .use(middleware.auth())
             .prefix('user')

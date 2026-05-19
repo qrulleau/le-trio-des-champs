@@ -86,4 +86,14 @@ export default class ReservationsController {
       .orderBy('created_at', 'desc')
     return response.ok(reservations)
   }
+  async cancel({ params, auth, response }: HttpContext) {
+    const user = auth.getUserOrFail()
+    const reservation = await Reservation.findOrFail(params.id)
+    if (reservation.userId !== user.id) {
+      return response.forbidden({ message: 'Non autorisé' })
+    }
+    reservation.status = 'cancelled'
+    await reservation.save()
+    return response.ok(reservation)
+  }
 }

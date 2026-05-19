@@ -101,6 +101,7 @@ export interface ApiDefinition {
     reservations: {
       store: typeof routes['user.reservations.store']
       myReservations: typeof routes['user.reservations.my_reservations']
+      cancel: typeof routes['user.reservations.cancel']
     }
   }
 }
