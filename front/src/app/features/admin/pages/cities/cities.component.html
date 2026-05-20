@@ -1,124 +1,359 @@
 <div>
-  <div class="flex items-center justify-between mb-6">
-    <div>
-      <h2 class="text-2xl font-semibold">Gestion des Villes</h2>
-      <p class="text-gray-500 text-sm">Gérez les villes et leurs couleurs pour le calendrier</p>
-    </div>
-    <button
-      (click)="openForm()"
-      class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl flex items-center gap-2 transition"
+  <div style="margin-bottom: 28px">
+    <h1
+      style="
+        font-family: var(--font-display);
+        font-size: 38px;
+        line-height: 1;
+        margin: 0 0 8px;
+        color: var(--ink);
+      "
     >
-      + Ajouter une ville
-    </button>
+      Les <em style="font-style: italic; color: var(--accent-2)">villes</em> de tournée
+    </h1>
+    <p style="font-size: 15px; color: var(--ink-soft); margin: 0">
+      Les lieux où vous distribuez. Chaque ville a une couleur reprise sur le calendrier.
+    </p>
   </div>
 
-  <!-- Formulaire -->
-  @if (showForm) {
-    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-      <h3 class="font-semibold mb-4">{{ editingCity ? 'Modifier la ville' : 'Nouvelle ville' }}</h3>
-      <div class="grid md:grid-cols-2 gap-4">
-        <div class="relative">
-          <label class="text-sm text-gray-600 mb-1 block">Nom de la ville *</label>
-          <input
-            [(ngModel)]="form.name"
-            (ngModelChange)="onCitySearch($event)"
-            type="text"
-            class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-            placeholder="Plessier-sur-Bulles, Compiègne..."
-            autocomplete="off"
-          />
-          @if (suggestions.length > 0) {
-            <div
-              class="absolute z-10 w-full bg-white border rounded-xl shadow-lg mt-1 overflow-hidden"
-            >
-              @for (suggestion of suggestions; track suggestion) {
-                <button
-                  (click)="selectSuggestion(suggestion)"
-                  class="w-full text-left px-4 py-2 text-sm hover:bg-purple-50 hover:text-purple-600 transition"
-                >
-                  📍 {{ suggestion }}
-                </button>
-              }
-            </div>
-          }
-        </div>
-        <div>
-          <label class="text-sm text-gray-600 mb-1 block">Couleur *</label>
-          <div class="flex gap-2 flex-wrap mt-2">
-            @for (color of suggestedColors; track color) {
-              <button
-                (click)="form.color = color"
-                class="w-8 h-8 rounded-full border-2 transition"
-                [style.background-color]="color"
-                [class.border-gray-800]="form.color === color"
-                [class.border-transparent]="form.color !== color"
-                [title]="color"
-              ></button>
-            }
-          </div>
-        </div>
+  <!-- KPIs -->
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px">
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Villes au total
       </div>
-      <div class="flex gap-3 mt-4">
-        <button
-          (click)="submit()"
-          class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl text-sm transition"
-        >
-          {{ editingCity ? 'Modifier' : 'Ajouter' }}
-        </button>
-        <button
-          (click)="closeForm()"
-          class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-6 py-2 rounded-xl text-sm transition"
-        >
-          Annuler
-        </button>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ cities.length }}
       </div>
     </div>
-  }
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Permanences
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ permanenceCount }}
+      </div>
+    </div>
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Tournees
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ tourneeCount }}
+      </div>
+    </div>
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Dates ouvertes
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ dates.length }}
+      </div>
+    </div>
+  </div>
 
-  <!-- Liste -->
-  <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-    <h3 class="font-semibold mb-4">📍 Villes configurées ({{ cities.length }})</h3>
-    @if (cities.length === 0) {
-      <p class="text-center text-gray-400 py-8">Aucune ville pour le moment</p>
-    } @else {
-      <div class="grid md:grid-cols-3 gap-4">
-        @for (city of cities; track city.id) {
-          <div class="border rounded-xl p-4 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl" [style.background-color]="city.color"></div>
-            <div class="flex-1">
-              <p class="font-medium">{{ city.name }}</p>
-              <p class="text-gray-400 text-xs">{{ city.color }}</p>
+  <!-- Cards villes -->
+  <div
+    style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    "
+  >
+    @for (city of cities; track city.id) {
+      <div
+        style="
+          padding: 22px 24px;
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+        "
+      >
+        @if (editingId !== city.id) {
+          <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 14px">
+            <div
+              style="
+                width: 36px;
+                height: 36px;
+                border-radius: 999px;
+                flex-shrink: 0;
+                box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.15);
+              "
+              [style.background]="city.color"
+            ></div>
+            <div
+              style="
+                font-family: var(--font-display);
+                font-size: 22px;
+                color: var(--ink);
+                font-weight: 600;
+                flex: 1;
+              "
+            >
+              {{ city.name }}
             </div>
-            <div class="flex gap-2 items-center">
-              <button
-                (click)="openForm(city)"
-                class="bg-blue-50 hover:bg-blue-100 text-blue-600 p-2 rounded-xl transition"
+            <span
+              style="
+                font-size: 10px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                font-weight: 600;
+                padding: 4px 10px;
+                border-radius: 999px;
+              "
+              [style.background]="city.type === 'permanence' ? 'var(--accent)' : 'var(--accent-3)'"
+              [style.color]="city.type === 'permanence' ? 'var(--paper)' : 'var(--ink)'"
+              >{{ city.type }}</span
+            >
+          </div>
+          <div
+            style="font-size: 13px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 14px"
+          >
+            {{ city.address || 'Adresse à renseigner' }}
+          </div>
+          <div
+            style="
+              display: flex;
+              gap: 20px;
+              font-size: 12px;
+              color: var(--ink-mute);
+              padding: 12px 0;
+              border-top: 1px solid var(--rule);
+              border-bottom: 1px solid var(--rule);
+              margin-bottom: 14px;
+            "
+          >
+            <div>
+              <strong
+                style="
+                  color: var(--ink);
+                  font-family: var(--font-display);
+                  font-size: 18px;
+                  display: block;
+                  margin-bottom: 2px;
+                "
+                >{{ upcomingDatesForCity(city.id) }}</strong
               >
-                ✏️
+              date{{ upcomingDatesForCity(city.id) > 1 ? 's' : '' }} à venir
+            </div>
+            <div>
+              <strong
+                style="
+                  color: var(--ink);
+                  font-family: var(--font-display);
+                  font-size: 18px;
+                  display: block;
+                  margin-bottom: 2px;
+                "
+                >{{ reservationsForCity(city.id) }}</strong
+              >
+              réservation{{ reservationsForCity(city.id) > 1 ? 's' : '' }}
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; justify-content: flex-end">
+            <button
+              (click)="startEdit(city)"
+              style="
+                appearance: none;
+                border: 1px solid var(--rule);
+                background: transparent;
+                padding: 6px 14px;
+                border-radius: 4px;
+                font-size: 12px;
+                cursor: pointer;
+                font-family: var(--font-body);
+                color: var(--ink-soft);
+              "
+            >
+              Modifier
+            </button>
+            <button
+              (click)="delete(city.id)"
+              style="
+                appearance: none;
+                border: 1px solid var(--accent-2);
+                background: transparent;
+                padding: 6px 14px;
+                border-radius: 4px;
+                font-size: 12px;
+                cursor: pointer;
+                font-family: var(--font-body);
+                color: var(--accent-2);
+              "
+            >
+              Supprimer
+            </button>
+          </div>
+        } @else {
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <input
+              [(ngModel)]="city.name"
+              placeholder="Nom"
+              style="
+                padding: 8px 12px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 14px;
+                font-family: var(--font-display);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+              "
+            />
+            <input
+              [(ngModel)]="city.address"
+              placeholder="Adresse complète"
+              style="
+                padding: 8px 12px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 13px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+              "
+            />
+            <select
+              [(ngModel)]="city.type"
+              style="
+                padding: 8px 12px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 13px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+              "
+            >
+              <option value="permanence">Permanence régulière</option>
+              <option value="tournee">Tournée ponctuelle</option>
+            </select>
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span
+                style="
+                  font-size: 11px;
+                  letter-spacing: 0.14em;
+                  text-transform: uppercase;
+                  color: var(--ink-mute);
+                  font-weight: 600;
+                "
+                >Couleur</span
+              >
+              <div style="display: flex; gap: 6px">
+                @for (c of themeColors; track c.swatch) {
+                  <button
+                    (click)="city.color = c.swatch"
+                    style="width: 22px; height: 22px; border-radius: 999px; cursor: pointer"
+                    [style.background]="c.swatch"
+                    [style.border]="
+                      city.color === c.swatch ? '2px solid var(--ink)' : '2px solid transparent'
+                    "
+                    [title]="c.label"
+                  ></button>
+                }
+              </div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px">
+              <button
+                (click)="cancelEdit()"
+                style="
+                  appearance: none;
+                  border: 1px solid var(--rule);
+                  background: transparent;
+                  padding: 7px 14px;
+                  border-radius: 4px;
+                  font-size: 12px;
+                  cursor: pointer;
+                  font-family: var(--font-body);
+                  color: var(--ink-soft);
+                "
+              >
+                Annuler
               </button>
-              @if (cityToDelete === city.id) {
-                <div class="flex gap-1 items-center">
-                  <button
-                    (click)="delete()"
-                    class="bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-medium"
-                  >
-                    Confirmer
-                  </button>
-                  <button
-                    (click)="cancelDelete()"
-                    class="bg-gray-100 text-gray-600 px-3 py-1 rounded-lg text-xs"
-                  >
-                    Annuler
-                  </button>
-                </div>
-              } @else {
-                <button
-                  (click)="confirmDelete(city.id)"
-                  class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition"
-                >
-                  🗑️
-                </button>
-              }
+              <button
+                (click)="saveEdit(city)"
+                style="
+                  appearance: none;
+                  border: 0;
+                  background: var(--ink);
+                  color: var(--paper);
+                  padding: 7px 14px;
+                  border-radius: 4px;
+                  font-size: 12px;
+                  cursor: pointer;
+                  font-family: var(--font-body);
+                  font-weight: 600;
+                "
+              >
+                Enregistrer
+              </button>
             </div>
           </div>
         }
@@ -126,15 +361,160 @@
     }
   </div>
 
-  <!-- Info -->
-  <div class="bg-blue-50 rounded-2xl p-6">
-    <p class="font-semibold mb-2">💡 À propos des couleurs</p>
-    <ul class="text-sm text-gray-600 space-y-1">
-      <li>• Les couleurs permettent de différencier visuellement les villes dans le calendrier</li>
-      <li>• Choisissez des couleurs contrastées pour une meilleure lisibilité</li>
-      <li>
-        • Les événements dans le calendrier afficheront automatiquement la couleur de leur ville
-      </li>
-    </ul>
+  <!-- Ajouter une ville -->
+  <div
+    style="
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 20px 24px;
+    "
+  >
+    <div
+      style="
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        font-weight: 600;
+        margin-bottom: 14px;
+      "
+    >
+      Ajouter une nouvelle ville
+    </div>
+    <div
+      style="display: grid; grid-template-columns: 1fr 1fr 200px; gap: 10px; margin-bottom: 12px"
+    >
+      <div style="position: relative">
+        <input
+          [(ngModel)]="newCity.name"
+          (ngModelChange)="onCitySearch($event)"
+          placeholder="Nom de la ville (ex. Senlis)"
+          autocomplete="off"
+          style="
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: var(--font-body);
+            color: var(--ink);
+            background: var(--paper);
+            outline: none;
+            box-sizing: border-box;
+          "
+        />
+        @if (suggestions.length > 0) {
+          <div
+            style="
+              position: absolute;
+              top: 100%;
+              left: 0;
+              right: 0;
+              background: var(--paper);
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              z-index: 20;
+              box-shadow: 0 8px 24px -8px rgba(35, 25, 17, 0.2);
+            "
+          >
+            @for (s of suggestions; track s) {
+              <button
+                (click)="selectSuggestion(s)"
+                style="
+                  appearance: none;
+                  width: 100%;
+                  text-align: left;
+                  padding: 9px 14px;
+                  border: 0;
+                  background: transparent;
+                  font-size: 13px;
+                  font-family: var(--font-body);
+                  color: var(--ink);
+                  cursor: pointer;
+                  border-bottom: 1px solid var(--rule);
+                "
+              >
+                {{ s }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+      <input
+        [(ngModel)]="newCity.address"
+        placeholder="Adresse complète"
+        style="
+          padding: 10px 14px;
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          font-size: 13px;
+          font-family: var(--font-body);
+          color: var(--ink);
+          background: var(--paper);
+          outline: none;
+        "
+      />
+      <select
+        [(ngModel)]="newCity.type"
+        style="
+          padding: 10px 14px;
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          font-size: 13px;
+          font-family: var(--font-body);
+          color: var(--ink);
+          background: var(--paper);
+          outline: none;
+        "
+      >
+        <option value="permanence">Permanence régulière</option>
+        <option value="tournee">Tournée ponctuelle</option>
+      </select>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px">
+      <span
+        style="
+          font-size: 11px;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+        "
+        >Couleur</span
+      >
+      <div style="display: flex; gap: 6px">
+        @for (c of themeColors; track c.swatch) {
+          <button
+            (click)="newCity.color = c.swatch"
+            style="width: 20px; height: 20px; border-radius: 999px; cursor: pointer"
+            [style.background]="c.swatch"
+            [style.border]="
+              newCity.color === c.swatch ? '2px solid var(--ink)' : '2px solid transparent'
+            "
+            [title]="c.label"
+          ></button>
+        }
+      </div>
+      <button
+        (click)="addCity()"
+        style="
+          appearance: none;
+          padding: 10px 22px;
+          background: var(--ink);
+          color: var(--paper);
+          border: 0;
+          border-radius: 999px;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          font-family: var(--font-body);
+          white-space: nowrap;
+          margin-left: auto;
+        "
+      >
+        Ajouter la ville
+      </button>
+    </div>
   </div>
 </div>

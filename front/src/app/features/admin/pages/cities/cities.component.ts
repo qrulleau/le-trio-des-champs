@@ -14,26 +14,23 @@ import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs'
 })
 export class CitiesComponent implements OnInit {
   cities: any[] = []
-  showForm = false
-  editingCity: any = null
-  cityToDelete: number | null = null
+  dates: any[] = []
+  reservations: any[] = []
+  editingId: number | null = null
   suggestions: string[] = []
   searchSubject = new Subject<string>()
+  today = new Date().toISOString().split('T')[0]
 
-  suggestedColors = [
-    '#2d4a2f', // vert accent
-    '#b85c3a', // terra cotta
-    '#c9943c', // doré
-    '#5a4a3d', // brun
-    '#8a7868', // brun clair
-    '#ebe1cf', // beige
-    '#231911', // ink
+  themeColors = [
+    { label: 'Vert', swatch: '#2d4a2f' },
+    { label: 'Terra cotta', swatch: '#b85c3a' },
+    { label: 'Dore', swatch: '#c9943c' },
+    { label: 'Brun fonce', swatch: '#231911' },
+    { label: 'Brun', swatch: '#5a4a3d' },
+    { label: 'Brun clair', swatch: '#8a7868' },
   ]
 
-  form = {
-    name: '',
-    color: '#FF5733',
-  }
+  newCity = { name: '', address: '', type: 'tournee', color: '#2d4a2f' }
 
   private api = inject(ApiService)
   private toast = inject(ToastService)
@@ -41,7 +38,7 @@ export class CitiesComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef)
 
   ngOnInit() {
-    this.loadCities()
+    this.loadData()
     this.searchSubject
       .pipe(
         debounceTime(300),
@@ -59,80 +56,96 @@ export class CitiesComponent implements OnInit {
       })
   }
 
-  onCitySearch(value: string) {
-    this.searchSubject.next(value)
-  }
-
-  selectSuggestion(name: string) {
-    this.form.name = name
-    this.suggestions = []
-  }
-
-  loadCities() {
+  loadData() {
     this.api.getCities().subscribe((data) => {
       this.cities = [...data]
       this.cdr.detectChanges()
     })
+    this.api.getDistributionDates().subscribe((data) => {
+      this.dates = data
+      this.cdr.detectChanges()
+    })
+    this.api.getReservations().subscribe((data) => {
+      this.reservations = (data as any)?.data ?? data ?? []
+      this.cdr.detectChanges()
+    })
   }
 
-  openForm(city?: any) {
-    if (city) {
-      this.editingCity = city
-      this.form = { ...city }
-    } else {
-      this.editingCity = null
-      this.form = { name: '', color: '#FF5733' }
-    }
-    this.suggestions = []
-    this.showForm = true
+  onCitySearch(value: string) {
+    this.searchSubject.next(value)
   }
-
-  closeForm() {
-    this.showForm = false
-    this.editingCity = null
+  selectSuggestion(name: string) {
+    this.newCity.name = name
     this.suggestions = []
   }
 
-  submit() {
-    if (this.editingCity) {
-      this.api.updateCity(this.editingCity.id, this.form).subscribe({
-        next: () => {
-          this.toast.success('Ville modifiée avec succès')
-          this.loadCities()
-          this.closeForm()
-        },
-        error: () => this.toast.error('Erreur lors de la modification'),
-      })
-    } else {
-      this.api.createCity(this.form).subscribe({
-        next: () => {
-          this.toast.success('Ville ajoutée avec succès')
-          this.loadCities()
-          this.closeForm()
-        },
-        error: () => this.toast.error("Erreur lors de l'ajout"),
-      })
+  get permanenceCount() {
+    return this.cities.filter((c) => c.type === 'permanence').length
+  }
+  get tourneeCount() {
+    return this.cities.filter((c) => c.type === 'tournee').length
+  }
+
+  upcomingDatesForCity(cityId: number) {
+    return this.dates.filter((d) => d.cityId === cityId && d.date >= this.today).length
+  }
+
+  reservationsForCity(cityId: number) {
+    const dateIds = this.dates.filter((d) => d.cityId === cityId).map((d) => d.id)
+    return this.reservations.filter(
+      (r) => dateIds.includes(r.distributionDateId) && r.status !== 'cancelled'
+    ).length
+  }
+
+  addCity() {
+    if (!this.newCity.name.trim()) {
+      this.toast.warning('Renseignez au moins un nom.')
+      return
     }
+    this.api.createCity(this.newCity).subscribe({
+      next: () => {
+        this.toast.success('Ville ajoutée')
+        this.newCity = { name: '', address: '', type: 'tournee', color: '#2d4a2f' }
+        this.loadData()
+      },
+      error: () => this.toast.error("Erreur lors de l'ajout"),
+    })
   }
 
-  confirmDelete(id: number) {
-    this.cityToDelete = id
+  startEdit(city: any) {
+    this.editingId = city.id
+  }
+  cancelEdit() {
+    this.editingId = null
+    this.loadData()
   }
 
-  cancelDelete() {
-    this.cityToDelete = null
-  }
-
-  delete() {
-    if (this.cityToDelete) {
-      this.api.deleteCity(this.cityToDelete).subscribe({
-        next: () => {
-          this.toast.success('Ville supprimée avec succès')
-          this.cityToDelete = null
-          this.loadCities()
-        },
-        error: () => this.toast.error('Erreur lors de la suppression'),
+  saveEdit(city: any) {
+    this.api
+      .updateCity(city.id, {
+        name: city.name,
+        address: city.address,
+        type: city.type,
+        color: city.color,
       })
-    }
+      .subscribe({
+        next: () => {
+          this.toast.success('Ville mise à jour')
+          this.editingId = null
+          this.loadData()
+        },
+        error: () => this.toast.error('Erreur'),
+      })
+  }
+
+  delete(id: number) {
+    if (!confirm('Supprimer cette ville ? Les dates associées seront supprimées.')) return
+    this.api.deleteCity(id).subscribe({
+      next: () => {
+        this.toast.success('Ville supprimée')
+        this.loadData()
+      },
+      error: () => this.toast.error('Erreur'),
+    })
   }
 }
