@@ -1,147 +1,601 @@
 <div>
-  <div class="flex items-center justify-between mb-6">
-    <div>
-      <h2 class="text-2xl font-semibold">📅 Gestion du Calendrier</h2>
-      <p class="text-gray-500 text-sm">Gérez les dates de ventes et événements spéciaux</p>
-    </div>
+  <div style="margin-bottom: 28px">
+    <h1
+      style="
+        font-family: var(--font-display);
+        font-size: 38px;
+        line-height: 1;
+        margin: 0 0 8px;
+        color: var(--ink);
+      "
+    >
+      Le <em style="font-style: italic; color: var(--accent-2)">calendrier</em>
+    </h1>
+    <p style="font-size: 15px; color: var(--ink-soft); margin: 0">
+      Toutes les distributions, passées ou à venir.
+    </p>
   </div>
 
-  <!-- Formulaire -->
-  <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-    <h3 class="font-semibold mb-4">+ Nouvel événement</h3>
-    <div class="grid md:grid-cols-2 gap-4">
-      <div>
-        <label class="text-sm text-gray-600 mb-1 block">Titre de l'événement *</label>
-        <input
-          [(ngModel)]="form.title"
-          type="text"
-          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-          placeholder="Vente de produits, Événement spécial..."
-        />
-      </div>
-      <div>
-        <label class="text-sm text-gray-600 mb-1 block">Lieu *</label>
-        <select
-          [(ngModel)]="form.location"
-          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-        >
-          <option value="">Sélectionner une ville...</option>
-          @for (city of cities; track city.id) {
-            <option [value]="city.name">{{ city.name }}</option>
-          }
-        </select>
-      </div>
-      <div class="md:col-span-2">
-        <label class="text-sm text-gray-600 mb-1 block">Description (optionnel)</label>
-        <textarea
-          [(ngModel)]="form.description"
-          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-          rows="2"
-          placeholder="Informations supplémentaires..."
-        ></textarea>
-      </div>
-    </div>
-
-    <div class="border rounded-xl p-4 mt-4">
-      <label class="flex items-center gap-2 text-sm mb-3 cursor-pointer">
-        <input [(ngModel)]="form.isRecurring" type="checkbox" class="rounded" />
-        Événement récurrent (chaque semaine)
-      </label>
-      <div>
-        <label class="text-sm text-gray-600 mb-1 block">Date *</label>
-        <div class="flex gap-2">
-          <select
-            [(ngModel)]="formDay"
-            class="border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-          >
-            <option value="" disabled>Jour</option>
-            @for (d of days; track d) {
-              <option [value]="d">{{ d }}</option>
-            }
-          </select>
-          <select
-            [(ngModel)]="formMonth"
-            class="border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-          >
-            <option value="" disabled>Mois</option>
-            @for (m of months; track m.value) {
-              <option [value]="m.value">{{ m.label }}</option>
-            }
-          </select>
-          <select
-            [(ngModel)]="formYear"
-            class="border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-          >
-            <option value="" disabled>Année</option>
-            @for (y of years; track y) {
-              <option [value]="y">{{ y }}</option>
-            }
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex gap-3 mt-4">
-      <button
-        (click)="submit()"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl text-sm transition flex items-center gap-2"
+  <!-- KPIs -->
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px">
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
       >
-        💾 {{ editingEvent ? "Modifier l'événement" : "Ajouter l'événement" }}
-      </button>
-      @if (editingEvent) {
-        <button
-          (click)="closeForm()"
-          class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-6 py-2 rounded-xl text-sm transition"
-        >
-          Annuler
-        </button>
-      }
+        Dates totales
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ dates.length }}
+      </div>
+    </div>
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        A venir
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ upcomingCount }}
+      </div>
+    </div>
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Permanences
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ permanenceCount }}
+      </div>
+    </div>
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Tournees
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ tourneeCount }}
+      </div>
     </div>
   </div>
 
-  <!-- Liste -->
-  <div class="bg-white rounded-2xl shadow-sm p-6">
-    <h3 class="font-semibold mb-4">📅 Événements programmés ({{ events.length }})</h3>
-    @if (events.length === 0) {
-      <p class="text-center text-gray-400 py-8">Aucun événement programmé</p>
-    } @else {
-      <div class="space-y-3">
-        @for (event of events; track event.id) {
-          <div class="border rounded-xl p-4">
-            <div class="flex items-start justify-between">
-              <div>
-                <span class="bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full font-medium">
-                  📅 {{ formatDate(event.date) }}
-                </span>
-                @if (event.isRecurring) {
-                  <span class="ml-2 bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full"
-                    >🔄 Récurrent</span
-                  >
-                }
-                <p class="font-semibold mt-2">{{ event.title }}</p>
-                <p class="text-gray-500 text-sm">📍 {{ event.location }}</p>
-                @if (event.description) {
-                  <p class="text-gray-400 text-sm mt-1">{{ event.description }}</p>
-                }
-              </div>
-              <div class="flex gap-2">
-                <button
-                  (click)="openForm(event)"
-                  class="bg-blue-50 hover:bg-blue-100 text-blue-600 p-2 rounded-xl transition"
+  <!-- Toolbar -->
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    "
+  >
+    <div style="display: inline-flex; background: var(--bg-2); border-radius: 999px; padding: 4px">
+      <button
+        (click)="viewMode = 'month'"
+        style="
+          appearance: none;
+          border: 0;
+          padding: 8px 16px;
+          border-radius: 999px;
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          font-family: var(--font-body);
+          transition: all 0.15s;
+        "
+        [style.background]="viewMode === 'month' ? 'var(--paper)' : 'transparent'"
+        [style.color]="viewMode === 'month' ? 'var(--ink)' : 'var(--ink-soft)'"
+        [style.font-weight]="viewMode === 'month' ? '600' : '500'"
+      >
+        Mois
+      </button>
+      <button
+        (click)="viewMode = 'list'"
+        style="
+          appearance: none;
+          border: 0;
+          padding: 8px 16px;
+          border-radius: 999px;
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          font-family: var(--font-body);
+          transition: all 0.15s;
+        "
+        [style.background]="viewMode === 'list' ? 'var(--paper)' : 'transparent'"
+        [style.color]="viewMode === 'list' ? 'var(--ink)' : 'var(--ink-soft)'"
+        [style.font-weight]="viewMode === 'list' ? '600' : '500'"
+      >
+        Liste
+      </button>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center">
+      <button
+        (click)="prevMonth()"
+        style="
+          appearance: none;
+          border: 1px solid var(--rule);
+          background: var(--paper);
+          padding: 7px 14px;
+          border-radius: 4px;
+          font-size: 13px;
+          cursor: pointer;
+          font-family: var(--font-body);
+          color: var(--ink-soft);
+        "
+      >
+        ◂
+      </button>
+      <span
+        style="
+          font-family: var(--font-display);
+          font-size: 20px;
+          color: var(--ink);
+          min-width: 180px;
+          text-align: center;
+          text-transform: capitalize;
+        "
+        >{{ monthLabel }}</span
+      >
+      <button
+        (click)="nextMonth()"
+        style="
+          appearance: none;
+          border: 1px solid var(--rule);
+          background: var(--paper);
+          padding: 7px 14px;
+          border-radius: 4px;
+          font-size: 13px;
+          cursor: pointer;
+          font-family: var(--font-body);
+          color: var(--ink-soft);
+        "
+      >
+        ▸
+      </button>
+      <button
+        (click)="goToday()"
+        style="
+          appearance: none;
+          border: 1px solid var(--rule);
+          background: var(--paper);
+          padding: 7px 14px;
+          border-radius: 4px;
+          font-size: 13px;
+          cursor: pointer;
+          font-family: var(--font-body);
+          color: var(--ink-soft);
+          margin-left: 8px;
+        "
+      >
+        Aujourd'hui
+      </button>
+    </div>
+  </div>
+
+  <!-- Vue mois -->
+  @if (viewMode === 'month') {
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 24px;
+      "
+    >
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          background: var(--bg-2);
+          border-bottom: 1px solid var(--rule);
+        "
+      >
+        @for (d of ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']; track d) {
+          <div
+            style="
+              padding: 10px 8px;
+              font-size: 11px;
+              text-transform: uppercase;
+              letter-spacing: 0.14em;
+              color: var(--ink-mute);
+              font-weight: 600;
+              text-align: center;
+            "
+          >
+            {{ d }}
+          </div>
+        }
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, 1fr)">
+        @for (cell of calendarCells; track $index) {
+          <div
+            style="
+              min-height: 100px;
+              border-right: 1px solid var(--rule);
+              border-bottom: 1px solid var(--rule);
+              padding: 8px;
+              position: relative;
+            "
+            [style.background]="cell.current ? 'transparent' : 'var(--bg)'"
+            [style.opacity]="cell.current ? '1' : '0.5'"
+          >
+            <span
+              style="
+                display: inline-block;
+                min-width: 24px;
+                padding: 2px 6px;
+                font-family: var(--font-mono);
+                font-size: 12px;
+              "
+              [style.background]="cell.isToday ? 'var(--ink)' : 'transparent'"
+              [style.color]="cell.isToday ? 'var(--paper)' : 'var(--ink-mute)'"
+              [style.border-radius]="cell.isToday ? '999px' : '0'"
+              >{{ cell.day }}</span
+            >
+            <div style="display: flex; flex-direction: column; gap: 3px; margin-top: 4px">
+              @for (e of cell.events; track e.id) {
+                <div
+                  style="
+                    font-size: 11px;
+                    padding: 3px 7px;
+                    border-radius: 3px;
+                    color: var(--paper);
+                    font-weight: 500;
+                    line-height: 1.2;
+                    cursor: pointer;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  "
+                  [style.background]="e.city?.color || 'var(--accent)'"
+                  [title]="e.city?.name + ' · ' + e.time"
                 >
-                  ✏️
-                </button>
-                <button
-                  (click)="delete(event.id)"
-                  class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition"
-                >
-                  🗑️
-                </button>
-              </div>
+                  {{ e.city?.name || '—' }}
+                </div>
+              }
             </div>
           </div>
         }
       </div>
-    }
+    </div>
+  }
+
+  <!-- Vue liste -->
+  @if (viewMode === 'list') {
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 24px;
+      "
+    >
+      <table style="width: 100%; border-collapse: collapse">
+        <thead>
+          <tr style="background: var(--bg-2); border-bottom: 1px solid var(--rule)">
+            <th
+              style="
+                text-align: left;
+                padding: 12px 16px;
+                font-size: 11px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--ink-mute);
+                font-weight: 600;
+                width: 160px;
+              "
+            >
+              Date
+            </th>
+            <th
+              style="
+                text-align: left;
+                padding: 12px 16px;
+                font-size: 11px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--ink-mute);
+                font-weight: 600;
+              "
+            >
+              Ville
+            </th>
+            <th
+              style="
+                text-align: left;
+                padding: 12px 16px;
+                font-size: 11px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--ink-mute);
+                font-weight: 600;
+                width: 160px;
+              "
+            >
+              Horaires
+            </th>
+            <th
+              style="
+                text-align: left;
+                padding: 12px 16px;
+                font-size: 11px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--ink-mute);
+                font-weight: 600;
+                width: 100px;
+              "
+            >
+              Rés. max
+            </th>
+            <th
+              style="
+                text-align: left;
+                padding: 12px 16px;
+                font-size: 11px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--ink-mute);
+                font-weight: 600;
+              "
+            >
+              Notes
+            </th>
+            <th style="width: 80px"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (d of sortedDates; track d.id) {
+            <tr
+              style="border-bottom: 1px solid var(--rule)"
+              [style.opacity]="d.date < today ? '0.55' : '1'"
+            >
+              <td
+                style="
+                  padding: 12px 16px;
+                  font-family: var(--font-display);
+                  font-size: 16px;
+                  color: var(--ink);
+                  text-transform: capitalize;
+                "
+              >
+                {{ formatDate(d.date) }}
+              </td>
+              <td style="padding: 12px 16px">
+                <span style="display: inline-flex; align-items: center; gap: 7px">
+                  <span
+                    style="width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0"
+                    [style.background]="d.city?.color || 'var(--accent)'"
+                  ></span>
+                  <span style="font-size: 14px; color: var(--ink)">{{ d.city?.name || '—' }}</span>
+                </span>
+              </td>
+              <td style="padding: 12px 16px; font-size: 13px; color: var(--ink-soft)">
+                {{ d.time }}
+              </td>
+              <td
+                style="
+                  padding: 12px 16px;
+                  font-size: 13px;
+                  font-family: var(--font-mono);
+                  color: var(--ink-soft);
+                "
+              >
+                {{ d.capacity }}
+              </td>
+              <td style="padding: 12px 16px; font-size: 13px; color: var(--ink-soft)">
+                {{ d.notes || '—' }}
+              </td>
+              <td style="padding: 12px 16px; text-align: right">
+                <button
+                  (click)="deleteDate(d.id)"
+                  style="
+                    appearance: none;
+                    border: 0;
+                    background: transparent;
+                    font-size: 12px;
+                    color: var(--accent-2);
+                    cursor: pointer;
+                    font-family: var(--font-body);
+                    font-weight: 500;
+                  "
+                >
+                  Suppr.
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  <!-- Ajouter une date -->
+  <div
+    style="
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 20px 24px;
+    "
+  >
+    <div
+      style="
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        font-weight: 600;
+        margin-bottom: 14px;
+      "
+    >
+      Ajouter une date
+    </div>
+    <div
+      style="
+        display: grid;
+        grid-template-columns: 1fr 160px 1fr 120px;
+        gap: 10px;
+        margin-bottom: 10px;
+      "
+    >
+      <select
+        [(ngModel)]="newDate.cityId"
+        style="
+          padding: 10px 14px;
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          font-size: 13px;
+          font-family: var(--font-body);
+          color: var(--ink);
+          background: var(--paper);
+          outline: none;
+        "
+      >
+        <option value="">Choisir une ville...</option>
+        @for (city of cities; track city.id) {
+          <option [value]="city.id">{{ city.name }}</option>
+        }
+      </select>
+      <input
+        [(ngModel)]="newDate.date"
+        type="date"
+        style="
+          padding: 10px 14px;
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          font-size: 13px;
+          font-family: var(--font-body);
+          color: var(--ink);
+          background: var(--paper);
+          outline: none;
+        "
+      />
+      <input
+        [(ngModel)]="newDate.time"
+        placeholder="17h00 – 19h00"
+        style="
+          padding: 10px 14px;
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          font-size: 13px;
+          font-family: var(--font-body);
+          color: var(--ink);
+          background: var(--paper);
+          outline: none;
+        "
+      />
+      <input
+        [(ngModel)]="newDate.capacity"
+        type="number"
+        placeholder="Rés. max"
+        style="
+          padding: 10px 14px;
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          font-size: 13px;
+          font-family: var(--font-mono);
+          color: var(--ink);
+          background: var(--paper);
+          outline: none;
+        "
+      />
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px">
+      <input
+        [(ngModel)]="newDate.notes"
+        placeholder="Note interne (optionnel)"
+        style="
+          flex: 1;
+          padding: 10px 14px;
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          font-size: 13px;
+          font-family: var(--font-body);
+          color: var(--ink);
+          background: var(--paper);
+          outline: none;
+        "
+      />
+      <button
+        (click)="addDate()"
+        style="
+          appearance: none;
+          padding: 10px 22px;
+          background: var(--ink);
+          color: var(--paper);
+          border: 0;
+          border-radius: 999px;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          font-family: var(--font-body);
+          white-space: nowrap;
+        "
+      >
+        Ajouter la date
+      </button>
+    </div>
   </div>
 </div>

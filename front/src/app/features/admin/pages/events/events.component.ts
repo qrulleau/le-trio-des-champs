@@ -11,39 +11,19 @@ import { ToastService } from '../../../../core/services/toast.service'
   templateUrl: './events.component.html',
 })
 export class EventsComponent implements OnInit {
-  events: any[] = []
+  dates: any[] = []
   cities: any[] = []
+  viewMode: 'month' | 'list' = 'month'
 
-  showForm = false
-  editingEvent: any = null
+  cursor = new Date()
+  today = new Date().toISOString().split('T')[0]
 
-  formDay = ''
-  formMonth = ''
-  formYear = ''
-
-  days = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'))
-  months = [
-    { value: '01', label: 'Janvier' },
-    { value: '02', label: 'Février' },
-    { value: '03', label: 'Mars' },
-    { value: '04', label: 'Avril' },
-    { value: '05', label: 'Mai' },
-    { value: '06', label: 'Juin' },
-    { value: '07', label: 'Juillet' },
-    { value: '08', label: 'Août' },
-    { value: '09', label: 'Septembre' },
-    { value: '10', label: 'Octobre' },
-    { value: '11', label: 'Novembre' },
-    { value: '12', label: 'Décembre' },
-  ]
-  years = Array.from({ length: 5 }, (_, i) => String(new Date().getFullYear() + i))
-
-  form = {
-    title: '',
-    location: '',
-    description: '',
+  newDate = {
+    cityId: '',
     date: '',
-    isRecurring: false,
+    time: '17h00 – 19h00',
+    capacity: 80,
+    notes: '',
   }
 
   private api = inject(ApiService)
@@ -51,94 +31,114 @@ export class EventsComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef)
 
   ngOnInit() {
-    this.loadEvents()
-    this.loadCities()
+    this.cursor.setDate(1)
+    this.loadData()
   }
 
-  loadEvents() {
-    this.api.getEvents().subscribe((data) => {
-      this.events = [...data]
+  loadData() {
+    this.api.getDistributionDates().subscribe((data) => {
+      this.dates = data
       this.cdr.detectChanges()
     })
-  }
-
-  loadCities() {
     this.api.getCities().subscribe((data) => {
-      this.cities = [...data]
+      this.cities = data
       this.cdr.detectChanges()
     })
   }
 
-  openForm(event?: any) {
-    if (event) {
-      this.editingEvent = event
-      this.form = {
-        title: event.title,
-        location: event.location,
-        description: event.description || '',
-        date: event.date?.split('T')[0] || '',
-        isRecurring: event.isRecurring || false,
-      }
-      if (event.date) {
-        const parts = event.date.split('T')[0].split('-')
-        this.formYear = parts[0]
-        this.formMonth = parts[1]
-        this.formDay = parts[2]
-      }
-    } else {
-      this.editingEvent = null
-      this.form = { title: '', location: '', description: '', date: '', isRecurring: false }
-      this.formDay = ''
-      this.formMonth = ''
-      this.formYear = ''
+  get monthLabel() {
+    return this.cursor.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
+  }
+
+  get upcomingCount() {
+    return this.dates.filter((d) => d.date >= this.today).length
+  }
+  get permanenceCount() {
+    return this.dates.filter((d) => d.city?.type === 'permanence').length
+  }
+  get tourneeCount() {
+    return this.dates.filter((d) => d.city?.type === 'tournee').length
+  }
+
+  prevMonth() {
+    this.cursor = new Date(this.cursor.getFullYear(), this.cursor.getMonth() - 1, 1)
+    this.cdr.detectChanges()
+  }
+  nextMonth() {
+    this.cursor = new Date(this.cursor.getFullYear(), this.cursor.getMonth() + 1, 1)
+    this.cdr.detectChanges()
+  }
+  goToday() {
+    this.cursor = new Date()
+    this.cursor.setDate(1)
+    this.cdr.detectChanges()
+  }
+
+  get calendarCells(): any[] {
+    const year = this.cursor.getFullYear()
+    const month = this.cursor.getMonth()
+    const firstDow = (new Date(year, month, 1).getDay() + 6) % 7
+    const daysInMonth = new Date(year, month + 1, 0).getDate()
+    const prevDays = new Date(year, month, 0).getDate()
+    const cells: any[] = []
+
+    for (let i = firstDow - 1; i >= 0; i--) {
+      cells.push({ day: prevDays - i, current: false, iso: '' })
     }
-    this.showForm = true
+    for (let d = 1; d <= daysInMonth; d++) {
+      const iso = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`
+      const events = this.dates.filter((x) => x.date?.startsWith(iso))
+      cells.push({ day: d, current: true, iso, events, isToday: iso === this.today })
+    }
+    const tail = (7 - (cells.length % 7)) % 7
+    for (let i = 1; i <= tail; i++) cells.push({ day: i, current: false, iso: '' })
+    return cells
   }
 
-  closeForm() {
-    this.showForm = false
-    this.editingEvent = null
+  get sortedDates() {
+    return [...this.dates].sort((a, b) => (a.date || '').localeCompare(b.date || ''))
   }
 
-  submit() {
-    this.form.date = `${this.formYear}-${this.formMonth}-${this.formDay}`
-    if (this.editingEvent) {
-      this.api.updateEvent(this.editingEvent.id, this.form).subscribe({
-        next: () => {
-          this.toast.success('Événement modifié avec succès')
-          this.loadEvents()
-          this.closeForm()
-        },
-        error: () => this.toast.error('Erreur lors de la modification'),
+  addDate() {
+    if (!this.newDate.cityId || !this.newDate.date) {
+      this.toast.warning('Choisissez une ville et une date.')
+      return
+    }
+    this.api
+      .createDistributionDate({
+        cityId: Number(this.newDate.cityId),
+        date: this.newDate.date,
+        time: this.newDate.time,
+        capacity: this.newDate.capacity,
+        notes: this.newDate.notes,
       })
-    } else {
-      this.api.createEvent(this.form).subscribe({
+      .subscribe({
         next: () => {
-          this.toast.success('Événement ajouté avec succès')
-          this.loadEvents()
-          this.closeForm()
+          this.toast.success('Date ajoutée')
+          this.newDate = { cityId: '', date: '', time: '17h00 – 19h00', capacity: 80, notes: '' }
+          this.loadData()
         },
         error: () => this.toast.error("Erreur lors de l'ajout"),
       })
-    }
   }
 
-  delete(id: number) {
-    this.api.deleteEvent(id).subscribe({
+  deleteDate(id: number) {
+    if (!confirm('Supprimer cette date ? Les réservations associées seront supprimées.')) return
+    this.api.deleteDistributionDate(id).subscribe({
       next: () => {
-        this.toast.success('Événement supprimé')
-        this.loadEvents()
+        this.toast.success('Date supprimée')
+        this.loadData()
       },
-      error: () => this.toast.error('Erreur lors de la suppression'),
+      error: () => this.toast.error('Erreur'),
     })
   }
 
-  formatDate(date: string): string {
-    return new Date(date).toLocaleDateString('fr-FR', {
+  formatDate(dateStr: string): string {
+    if (!dateStr) return '—'
+    return new Date(dateStr).toLocaleDateString('fr-FR', {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
-      year: 'numeric',
     })
   }
 }
