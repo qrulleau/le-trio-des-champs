@@ -1,111 +1,499 @@
 <div>
-  <div class="mb-6">
-    <h2 class="text-2xl font-semibold">Coordonnées de contact</h2>
-    <p class="text-gray-500 text-sm">Gérez votre email et vos numéros de téléphone</p>
+  <div style="margin-bottom: 28px">
+    <h1
+      style="
+        font-family: var(--font-display);
+        font-size: 38px;
+        line-height: 1;
+        margin: 0 0 8px;
+        color: var(--ink);
+      "
+    >
+      Vos <em style="font-style: italic; color: var(--accent-2)">coordonnées</em>
+    </h1>
+    <p style="font-size: 15px; color: var(--ink-soft); margin: 0">
+      Ce que les visiteurs voient dans la section Contact du site.
+    </p>
   </div>
 
-  <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-    <div class="space-y-4">
-      <div>
-        <label class="text-sm text-gray-600 mb-1 block">Adresse email *</label>
-        <input
-          [(ngModel)]="form.email"
-          type="email"
-          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-          placeholder="letriodeschamps@gmail.com"
-        />
-        <p class="text-xs text-gray-400 mt-1">
-          Cette adresse sera affichée sur votre page publique
-        </p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px">
+    <!-- Colonne gauche : éditeur -->
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <!-- Bloc texte -->
+      <div
+        style="
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          padding: 24px;
+        "
+      >
+        <h2
+          style="
+            font-family: var(--font-display);
+            font-size: 20px;
+            margin: 0 0 18px;
+            color: var(--ink);
+          "
+        >
+          Bloc de texte
+        </h2>
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--ink-mute);
+                font-weight: 600;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 6px;
+              "
+            >
+              <span>Titre</span>
+              <small
+                style="
+                  text-transform: none;
+                  letter-spacing: 0;
+                  font-weight: 400;
+                  color: var(--ink-mute);
+                "
+                >Utilisez *astérisques* pour l'accent</small
+              >
+            </label>
+            <input
+              [(ngModel)]="form.headline"
+              placeholder="On vous *répond* vite."
+              style="
+                width: 100%;
+                padding: 10px 14px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 13px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+                box-sizing: border-box;
+              "
+            />
+          </div>
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--ink-mute);
+                font-weight: 600;
+                display: block;
+                margin-bottom: 6px;
+              "
+              >Sous-titre</label
+            >
+            <textarea
+              [(ngModel)]="form.lead"
+              rows="3"
+              placeholder="Une grosse commande ? Écrivez-nous."
+              style="
+                width: 100%;
+                padding: 10px 14px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 13px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+                resize: vertical;
+                box-sizing: border-box;
+              "
+            ></textarea>
+          </div>
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--ink-mute);
+                font-weight: 600;
+                display: block;
+                margin-bottom: 6px;
+              "
+              >Email de contact</label
+            >
+            <input
+              [(ngModel)]="form.email"
+              type="email"
+              placeholder="letriodeschamps@gmail.com"
+              style="
+                width: 100%;
+                padding: 10px 14px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 13px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+                box-sizing: border-box;
+              "
+            />
+          </div>
+        </div>
+        <button
+          (click)="saveSettings()"
+          style="
+            appearance: none;
+            margin-top: 16px;
+            padding: 9px 18px;
+            background: var(--ink);
+            color: var(--paper);
+            border: 0;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: var(--font-body);
+          "
+        >
+          Enregistrer le bloc texte
+        </button>
       </div>
 
-      <div>
-        <label class="text-sm text-gray-600 mb-1 block">Numéros de téléphone *</label>
-        <div class="space-y-2 mb-3">
-          @for (phone of phonesList; track $index) {
-            <div class="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-2">
-              <div class="flex items-center gap-2">
-                <span>📱</span>
-                <span class="text-sm">{{ phone }}</span>
+      <!-- Personnes à contacter -->
+      <div
+        style="
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          padding: 24px;
+        "
+      >
+        <h2
+          style="
+            font-family: var(--font-display);
+            font-size: 20px;
+            margin: 0 0 6px;
+            color: var(--ink);
+          "
+        >
+          Personnes à contacter
+        </h2>
+        <p style="font-size: 13px; color: var(--ink-soft); margin: 0 0 16px">
+          Numéros affichés sur le site, à côté du mail.
+        </p>
+
+        @for (p of people; track p.id) {
+          <div
+            style="
+              background: var(--paper);
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              padding: 16px 18px;
+              margin-bottom: 10px;
+            "
+          >
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px">
+              <div
+                style="
+                  width: 36px;
+                  height: 36px;
+                  border-radius: 999px;
+                  background: var(--accent-3);
+                  color: var(--ink);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-family: var(--font-display);
+                  font-size: 16px;
+                  font-weight: 600;
+                  flex-shrink: 0;
+                "
+              >
+                {{ (p.name || '?').charAt(0).toUpperCase() }}
+              </div>
+              <div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+                <input
+                  [(ngModel)]="p.name"
+                  (change)="updatePerson(p)"
+                  style="
+                    border: 0;
+                    background: transparent;
+                    font-family: var(--font-display);
+                    font-size: 17px;
+                    color: var(--ink);
+                    font-weight: 600;
+                    outline: none;
+                    padding: 0;
+                    width: 100%;
+                  "
+                />
+                <input
+                  [(ngModel)]="p.role"
+                  (change)="updatePerson(p)"
+                  placeholder="Rôle"
+                  style="
+                    border: 0;
+                    background: transparent;
+                    font-size: 13px;
+                    color: var(--ink-soft);
+                    outline: none;
+                    padding: 0;
+                    width: 100%;
+                  "
+                />
               </div>
               <button
-                (click)="removePhone($index)"
-                class="text-red-500 hover:text-red-700 transition"
+                (click)="deletePerson(p.id)"
+                style="
+                  appearance: none;
+                  border: 0;
+                  background: transparent;
+                  font-size: 12px;
+                  color: var(--accent-2);
+                  cursor: pointer;
+                  font-family: var(--font-body);
+                  font-weight: 500;
+                "
               >
-                🗑️
+                Suppr.
               </button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span
+                style="
+                  font-size: 11px;
+                  letter-spacing: 0.14em;
+                  text-transform: uppercase;
+                  color: var(--ink-mute);
+                  font-weight: 600;
+                  min-width: 80px;
+                "
+                >Téléphone</span
+              >
+              <input
+                [(ngModel)]="p.phone"
+                (change)="updatePerson(p)"
+                placeholder="06 …"
+                style="
+                  border: 0;
+                  background: transparent;
+                  font-family: var(--font-mono);
+                  font-size: 13px;
+                  color: var(--ink);
+                  outline: none;
+                  padding: 0;
+                  flex: 1;
+                "
+              />
+            </div>
+          </div>
+        }
+
+        <div style="padding-top: 16px; border-top: 1px dashed var(--rule); margin-top: 8px">
+          <div
+            style="
+              font-size: 11px;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+              margin-bottom: 12px;
+            "
+          >
+            Ajouter une personne
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              gap: 10px;
+              margin-bottom: 10px;
+            "
+          >
+            <input
+              [(ngModel)]="newPerson.name"
+              placeholder="Prénom (ex. Marc)"
+              style="
+                padding: 9px 12px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 13px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+              "
+            />
+            <input
+              [(ngModel)]="newPerson.role"
+              placeholder="Rôle (ex. Coordinateur)"
+              style="
+                padding: 9px 12px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 13px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+              "
+            />
+            <input
+              [(ngModel)]="newPerson.phone"
+              placeholder="06 12 34 56 78"
+              style="
+                padding: 9px 12px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 13px;
+                font-family: var(--font-mono);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+              "
+            />
+          </div>
+          <button
+            (click)="addPerson()"
+            style="
+              appearance: none;
+              padding: 9px 18px;
+              background: var(--ink);
+              color: var(--paper);
+              border: 0;
+              border-radius: 4px;
+              font-size: 13px;
+              font-weight: 600;
+              cursor: pointer;
+              font-family: var(--font-body);
+            "
+          >
+            Ajouter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonne droite : aperçu -->
+    <div>
+      <div
+        style="
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          padding: 24px;
+        "
+      >
+        <div
+          style="
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            font-weight: 600;
+            margin-bottom: 14px;
+          "
+        >
+          Aperçu côté site
+        </div>
+        <div style="background: var(--ink); color: var(--paper); border-radius: 4px; padding: 32px">
+          <div
+            style="
+              font-size: 10px;
+              letter-spacing: 0.2em;
+              text-transform: uppercase;
+              color: var(--accent-3);
+              font-weight: 600;
+              margin-bottom: 18px;
+            "
+          >
+            Une question ?
+          </div>
+          <h3
+            style="
+              font-family: var(--font-display);
+              font-size: 28px;
+              font-weight: 600;
+              margin: 0 0 12px;
+              color: var(--paper);
+            "
+          >
+            {{ previewHeadline || '—' }}
+          </h3>
+          <p
+            style="
+              color: rgba(250, 246, 236, 0.75);
+              font-size: 14px;
+              line-height: 1.55;
+              margin: 0 0 16px;
+            "
+          >
+            {{ form.lead || '—' }}
+          </p>
+          <div
+            style="
+              display: flex;
+              gap: 10px;
+              padding: 10px 0;
+              border-top: 1px solid rgba(250, 246, 236, 0.15);
+              font-size: 14px;
+            "
+          >
+            <div
+              style="
+                width: 100px;
+                color: rgba(250, 246, 236, 0.5);
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                font-size: 11px;
+                font-weight: 600;
+                padding-top: 2px;
+              "
+            >
+              Email
+            </div>
+            <div style="color: var(--paper)">{{ form.email || '—' }}</div>
+          </div>
+          @for (p of people; track p.id) {
+            <div
+              style="
+                display: flex;
+                gap: 10px;
+                padding: 10px 0;
+                border-top: 1px solid rgba(250, 246, 236, 0.15);
+                font-size: 14px;
+              "
+            >
+              <div
+                style="
+                  width: 100px;
+                  color: rgba(250, 246, 236, 0.5);
+                  text-transform: uppercase;
+                  letter-spacing: 0.12em;
+                  font-size: 11px;
+                  font-weight: 600;
+                  padding-top: 2px;
+                "
+              >
+                {{ p.role || 'Tél.' }}
+              </div>
+              <div style="color: var(--paper)">
+                {{ p.phone }}<br /><span style="color: rgba(250, 246, 236, 0.55); font-size: 12px"
+                  >— {{ p.name }}</span
+                >
+              </div>
             </div>
           }
         </div>
-        <div class="flex gap-2">
-          <input
-            [(ngModel)]="newPhone"
-            type="tel"
-            (keyup.enter)="addPhone()"
-            class="flex-1 border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-            placeholder="0612345678"
-          />
-          <button
-            (click)="addPhone()"
-            class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-4 py-2 rounded-xl text-sm transition"
-          >
-            + Ajouter
-          </button>
-        </div>
-        <p class="text-xs text-gray-400 mt-1">
-          Appuyez sur Entrée ou cliquez sur "Ajouter" pour ajouter un numéro
+        <p style="font-size: 12px; color: var(--ink-mute); margin-top: 14px; text-align: center">
+          <em>Aperçu simplifié — voir le rendu complet sur le site public.</em>
         </p>
       </div>
-
-      <div>
-        <label class="text-sm text-gray-600 mb-1 block">Instagram</label>
-        <input
-          [(ngModel)]="form.instagramUrl"
-          type="url"
-          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-          placeholder="https://www.instagram.com/letriodeschamps/"
-        />
-      </div>
-
-      <div>
-        <label class="text-sm text-gray-600 mb-1 block">Facebook</label>
-        <input
-          [(ngModel)]="form.facebookUrl"
-          type="url"
-          class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-          placeholder="https://www.facebook.com/letriodeschamps/"
-        />
-      </div>
-    </div>
-
-    <button
-      (click)="save()"
-      class="mt-6 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl text-sm transition flex items-center gap-2"
-    >
-      💾 Enregistrer les modifications
-    </button>
-  </div>
-
-  <!-- Aperçu -->
-  <div class="grid md:grid-cols-2 gap-4">
-    <div class="bg-white rounded-2xl shadow-sm p-6">
-      <div class="flex items-center gap-3 mb-3">
-        <div class="bg-purple-100 p-2 rounded-xl text-xl">✉️</div>
-        <h3 class="font-semibold">Email</h3>
-      </div>
-      <p class="text-purple-600 text-sm">{{ form.email || 'Non renseigné' }}</p>
-    </div>
-    <div class="bg-white rounded-2xl shadow-sm p-6">
-      <div class="flex items-center gap-3 mb-3">
-        <div class="bg-purple-100 p-2 rounded-xl text-xl">📱</div>
-        <h3 class="font-semibold">Téléphone</h3>
-      </div>
-      @for (phone of phonesList; track $index) {
-        <p class="text-purple-600 text-sm">{{ phone }}</p>
-      }
-      @if (phonesList.length === 0) {
-        <p class="text-gray-400 text-sm">Aucun numéro renseigné</p>
-      }
     </div>
   </div>
 </div>

@@ -643,6 +643,54 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/reservations_controller').default['destroy']>>>
     }
   }
+  'admin.contact_people.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/contact-people'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/contact_people_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/contact_people_controller').default['index']>>>
+    }
+  }
+  'admin.contact_people.store': {
+    methods: ["POST"]
+    pattern: '/api/v1/admin/contact-people'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/contact_people_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/contact_people_controller').default['store']>>>
+    }
+  }
+  'admin.contact_people.update': {
+    methods: ["PUT","PATCH"]
+    pattern: '/api/v1/admin/contact-people/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/contact_people_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/contact_people_controller').default['update']>>>
+    }
+  }
+  'admin.contact_people.destroy': {
+    methods: ["DELETE"]
+    pattern: '/api/v1/admin/contact-people/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/contact_people_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/contact_people_controller').default['destroy']>>>
+    }
+  }
   'user.reservations.store': {
     methods: ["POST"]
     pattern: '/api/v1/user/reservations'

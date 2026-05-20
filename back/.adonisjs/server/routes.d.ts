@@ -57,6 +57,10 @@ export type ScannedRoutes = {
     'admin.reservations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.contact_people.index': { paramsTuple?: []; params?: {} }
+    'admin.contact_people.store': { paramsTuple?: []; params?: {} }
+    'admin.contact_people.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.contact_people.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'user.reservations.store': { paramsTuple?: []; params?: {} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
     'user.reservations.cancel': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -75,6 +79,7 @@ export type ScannedRoutes = {
     'admin.subscribers.store': { paramsTuple?: []; params?: {} }
     'admin.distribution_dates.store': { paramsTuple?: []; params?: {} }
     'admin.reservations.store': { paramsTuple?: []; params?: {} }
+    'admin.contact_people.store': { paramsTuple?: []; params?: {} }
     'user.reservations.store': { paramsTuple?: []; params?: {} }
   }
   GET: {
@@ -100,6 +105,7 @@ export type ScannedRoutes = {
     'admin.distribution_dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.index': { paramsTuple?: []; params?: {} }
     'admin.reservations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.contact_people.index': { paramsTuple?: []; params?: {} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
@@ -125,6 +131,7 @@ export type ScannedRoutes = {
     'admin.distribution_dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.index': { paramsTuple?: []; params?: {} }
     'admin.reservations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.contact_people.index': { paramsTuple?: []; params?: {} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
   }
   PUT: {
@@ -137,6 +144,7 @@ export type ScannedRoutes = {
     'admin.subscribers.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.distribution_dates.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.contact_people.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   PATCH: {
     'cities.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -148,6 +156,7 @@ export type ScannedRoutes = {
     'admin.subscribers.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.distribution_dates.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.contact_people.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'user.reservations.cancel': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   DELETE: {
@@ -160,6 +169,7 @@ export type ScannedRoutes = {
     'admin.subscribers.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.distribution_dates.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.contact_people.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }
 declare module '@adonisjs/core/types/http' {

@@ -96,6 +96,12 @@ export interface ApiDefinition {
       update: typeof routes['admin.reservations.update']
       destroy: typeof routes['admin.reservations.destroy']
     }
+    contactPeople: {
+      index: typeof routes['admin.contact_people.index']
+      store: typeof routes['admin.contact_people.store']
+      update: typeof routes['admin.contact_people.update']
+      destroy: typeof routes['admin.contact_people.destroy']
+    }
   }
   user: {
     reservations: {

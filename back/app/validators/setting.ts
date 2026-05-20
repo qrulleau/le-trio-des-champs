@@ -6,5 +6,7 @@ export const updateSettingValidator = vine.compile(
     phones: vine.array(vine.string().trim()).optional(),
     instagramUrl: vine.string().trim().optional(),
     facebookUrl: vine.string().trim().optional(),
+    headline: vine.string().trim().optional(),
+    lead: vine.string().trim().optional(),
   })
 )

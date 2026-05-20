@@ -74,6 +74,23 @@ export class CitySchema extends BaseModel {
   declare updatedAt: DateTime
 }
 
+export class ContactPersonSchema extends BaseModel {
+  static $columns = ['createdAt', 'id', 'name', 'phone', 'role', 'updatedAt'] as const
+  $columns = ContactPersonSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare name: string
+  @column()
+  declare phone: string
+  @column()
+  declare role: string | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+}
+
 export class DateSchema extends BaseModel {
   static $columns = ['capacity', 'createdAt', 'date', 'id', 'lieuId', 'notes', 'time', 'updatedAt'] as const
   $columns = DateSchema.$columns
@@ -248,7 +265,7 @@ export class SellingPlaceSchema extends BaseModel {
 }
 
 export class SettingSchema extends BaseModel {
-  static $columns = ['createdAt', 'email', 'facebookUrl', 'id', 'instagramUrl', 'phones', 'updatedAt'] as const
+  static $columns = ['createdAt', 'email', 'facebookUrl', 'headline', 'id', 'instagramUrl', 'lead', 'phones', 'updatedAt'] as const
   $columns = SettingSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -256,10 +273,14 @@ export class SettingSchema extends BaseModel {
   declare email: string | null
   @column()
   declare facebookUrl: string | null
+  @column()
+  declare headline: string | null
   @column({ isPrimary: true })
   declare id: number
   @column()
   declare instagramUrl: string | null
+  @column()
+  declare lead: string | null
   @column()
   declare phones: string | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })

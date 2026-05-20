@@ -324,6 +324,30 @@ const routes = {
     tokens: [{"old":"/api/v1/admin/reservations/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/reservations/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/reservations/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/reservations/:id","type":0,"val":"reservations","end":""},{"old":"/api/v1/admin/reservations/:id","type":1,"val":"id","end":""}],
     types: placeholder as Registry['admin.reservations.destroy']['types'],
   },
+  'admin.contact_people.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/api/v1/admin/contact-people',
+    tokens: [{"old":"/api/v1/admin/contact-people","type":0,"val":"api","end":""},{"old":"/api/v1/admin/contact-people","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/contact-people","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/contact-people","type":0,"val":"contact-people","end":""}],
+    types: placeholder as Registry['admin.contact_people.index']['types'],
+  },
+  'admin.contact_people.store': {
+    methods: ["POST"],
+    pattern: '/api/v1/admin/contact-people',
+    tokens: [{"old":"/api/v1/admin/contact-people","type":0,"val":"api","end":""},{"old":"/api/v1/admin/contact-people","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/contact-people","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/contact-people","type":0,"val":"contact-people","end":""}],
+    types: placeholder as Registry['admin.contact_people.store']['types'],
+  },
+  'admin.contact_people.update': {
+    methods: ["PUT","PATCH"],
+    pattern: '/api/v1/admin/contact-people/:id',
+    tokens: [{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"contact-people","end":""},{"old":"/api/v1/admin/contact-people/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['admin.contact_people.update']['types'],
+  },
+  'admin.contact_people.destroy': {
+    methods: ["DELETE"],
+    pattern: '/api/v1/admin/contact-people/:id',
+    tokens: [{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"contact-people","end":""},{"old":"/api/v1/admin/contact-people/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['admin.contact_people.destroy']['types'],
+  },
   'user.reservations.store': {
     methods: ["POST"],
     pattern: '/api/v1/user/reservations',

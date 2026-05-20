@@ -185,6 +185,22 @@ export class ApiService {
     return this.http.delete(`${this.baseUrl}/admin/reservations/${id}`)
   }
 
+  getContactPeople(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/admin/contact-people`)
+  }
+
+  createContactPerson(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/admin/contact-people`, data)
+  }
+
+  updateContactPerson(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/admin/contact-people/${id}`, data)
+  }
+
+  deleteContactPerson(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/admin/contact-people/${id}`)
+  }
+
   cancelReservation(id: number): Observable<any> {
     return this.http.patch(`${this.baseUrl}/user/reservations/${id}/cancel`, {})
   }

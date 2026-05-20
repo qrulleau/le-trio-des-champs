@@ -12,51 +12,44 @@ import { ToastService } from '../../../../core/services/toast.service'
 })
 export class SettingsComponent implements OnInit {
   settings: any = null
+  people: any[] = []
   newPhone = ''
 
   form = {
+    headline: '',
+    lead: '',
     email: '',
     phones: [] as string[],
-    instagramUrl: '',
-    facebookUrl: '',
   }
+
+  newPerson = { name: '', role: '', phone: '' }
 
   private api = inject(ApiService)
   private toast = inject(ToastService)
   private cdr = inject(ChangeDetectorRef)
 
   ngOnInit() {
-    this.loadSettings()
+    this.loadData()
   }
 
-  loadSettings() {
+  loadData() {
     this.api.getSettings().subscribe((data) => {
       if (data) {
         this.settings = data
-        let phones = []
-        if (data.phones) {
-          phones = typeof data.phones === 'string' ? JSON.parse(data.phones) : data.phones
-        }
         this.form = {
+          headline: data.headline || '',
+          lead: data.lead || '',
           email: data.email || '',
-          phones: phones,
-          instagramUrl: data.instagramUrl || '',
-          facebookUrl: data.facebookUrl || '',
+          phones:
+            typeof data.phones === 'string' ? JSON.parse(data.phones || '[]') : data.phones || [],
         }
         this.cdr.detectChanges()
       }
     })
-  }
-
-  addPhone() {
-    if (this.newPhone.trim()) {
-      this.form.phones = [...this.form.phones, this.newPhone.trim()]
-      this.newPhone = ''
-    }
-  }
-
-  removePhone(index: number) {
-    this.form.phones = this.form.phones.filter((_, i) => i !== index)
+    this.api.getContactPeople().subscribe((data) => {
+      this.people = Array.isArray(data) ? data : ((data as any)?.data ?? [])
+      this.cdr.detectChanges()
+    })
   }
 
   get phonesList(): string[] {
@@ -71,25 +64,67 @@ export class SettingsComponent implements OnInit {
     return this.form.phones
   }
 
-  save() {
-    if (this.settings) {
-      this.api.updateSettings(this.settings.id, this.form).subscribe({
-        next: (response) => {
-          this.settings = response
-          this.toast.success('Coordonnées enregistrées avec succès')
-          this.cdr.detectChanges()
-        },
-        error: () => this.toast.error("Erreur lors de l'enregistrement"),
-      })
-    } else {
-      this.api.createSettings(this.form).subscribe({
-        next: (response) => {
-          this.settings = response
-          this.toast.success('Coordonnées enregistrées avec succès')
-          this.cdr.detectChanges()
-        },
-        error: () => this.toast.error("Erreur lors de l'enregistrement"),
-      })
+  addPhone() {
+    if (this.newPhone.trim()) {
+      this.form.phones = [...this.form.phones, this.newPhone.trim()]
+      this.newPhone = ''
     }
+  }
+
+  removePhone(index: number) {
+    this.form.phones = this.form.phones.filter((_, i) => i !== index)
+  }
+
+  saveSettings() {
+    const action = this.settings
+      ? this.api.updateSettings(this.settings.id, this.form)
+      : this.api.createSettings(this.form)
+    action.subscribe({
+      next: (response) => {
+        this.settings = response
+        this.toast.success('Enregistré')
+        this.cdr.detectChanges()
+      },
+      error: () => this.toast.error("Erreur lors de l'enregistrement"),
+    })
+  }
+
+  addPerson() {
+    if (!this.newPerson.name.trim() || !this.newPerson.phone.trim()) {
+      this.toast.warning('Nom et téléphone requis.')
+      return
+    }
+    this.api.createContactPerson(this.newPerson).subscribe({
+      next: () => {
+        this.toast.success('Personne ajoutée')
+        this.newPerson = { name: '', role: '', phone: '' }
+        this.loadData()
+      },
+      error: () => this.toast.error('Erreur'),
+    })
+  }
+
+  updatePerson(person: any) {
+    this.api
+      .updateContactPerson(person.id, { name: person.name, role: person.role, phone: person.phone })
+      .subscribe({
+        next: () => this.toast.success('Mis à jour'),
+        error: () => this.toast.error('Erreur'),
+      })
+  }
+
+  deletePerson(id: number) {
+    if (!confirm('Retirer cette personne ?')) return
+    this.api.deleteContactPerson(id).subscribe({
+      next: () => {
+        this.toast.success('Supprimé')
+        this.loadData()
+      },
+      error: () => this.toast.error('Erreur'),
+    })
+  }
+
+  get previewHeadline(): string {
+    return this.form.headline.replace(/\*([^*]+)\*/g, '$1')
   }
 }

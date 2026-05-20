@@ -21,6 +21,7 @@ const AnnouncementsController = () => import('#controllers/announcements_control
 const SettingsController = () => import('#controllers/settings_controller')
 const DistributionDatesController = () => import('#controllers/distribution_dates_controller')
 const ReservationsController = () => import('#controllers/reservations_controller')
+const ContactPeopleController = () => import('#controllers/contact_people_controller')
 
 router
 .group(() => {
@@ -62,6 +63,7 @@ router
                 router.resource('subscribers', SubscribersController).apiOnly()
                 router.resource('distribution-dates', DistributionDatesController).apiOnly()
                 router.resource('reservations', ReservationsController).apiOnly()
+                router.resource('contact-people', ContactPeopleController).apiOnly().except(['show'])
                 })
         .use(middleware.auth())
             .prefix('admin')
