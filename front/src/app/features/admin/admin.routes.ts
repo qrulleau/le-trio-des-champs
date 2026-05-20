@@ -45,6 +45,13 @@ export const ADMIN_ROUTES: Routes = [
           import('./pages/settings/settings.component').then((m) => m.SettingsComponent),
       },
       {
+        path: 'reservations',
+        loadComponent: () =>
+          import('./pages/reservations/reservations.component').then(
+            (m) => m.ReservationsComponent
+          ),
+      },
+      {
         path: 'selling-places',
         loadComponent: () =>
           import('./pages/selling-places/selling-places.component').then(

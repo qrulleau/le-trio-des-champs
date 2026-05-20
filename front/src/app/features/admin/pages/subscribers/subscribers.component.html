@@ -1,105 +1,404 @@
 <div>
-  <div class="flex items-center justify-between mb-6">
-    <div>
-      <h2 class="text-2xl font-semibold">🔔 Gestion des Abonnés</h2>
-      <p class="text-gray-500 text-sm">Gérez les personnes inscrites aux notifications par ville</p>
+  <div style="margin-bottom: 28px">
+    <h1
+      style="
+        font-family: var(--font-display);
+        font-size: 38px;
+        line-height: 1;
+        margin: 0 0 8px;
+        color: var(--ink);
+      "
+    >
+      Les <em style="font-style: italic; color: var(--accent-2)">abonnés</em> SMS
+    </h1>
+    <p style="font-size: 15px; color: var(--ink-soft); margin: 0">
+      Les personnes prévenues avant chaque distribution. Pas de spam, pas de partage.
+    </p>
+  </div>
+
+  <!-- KPIs -->
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px">
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Abonnés actifs
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ activeCount }}
+      </div>
+      <div style="font-size: 12px; color: var(--ink-mute); margin-top: 4px">
+        {{ subscribers.length }} au total
+      </div>
+    </div>
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        30 derniers jours
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        + {{ recentCount }}
+      </div>
+    </div>
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Villes suivies
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ cities.length }}
+      </div>
+    </div>
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Désinscrits
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink-mute)">
+        {{ subscribers.length - activeCount }}
+      </div>
     </div>
   </div>
 
-  <!-- Stats + Filtres -->
-  <div class="grid md:grid-cols-3 gap-4 mb-6">
-    <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-4">
-      <div class="bg-blue-100 p-3 rounded-xl text-2xl">👥</div>
-      <div>
-        <p class="text-gray-500 text-sm">Total abonnés</p>
-        <p class="text-3xl font-semibold">{{ subscribers.length }}</p>
-      </div>
-    </div>
-    <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-4">
-      <div class="bg-green-100 p-3 rounded-xl text-2xl">🔍</div>
-      <div>
-        <p class="text-gray-500 text-sm">Résultats filtrés</p>
-        <p class="text-3xl font-semibold">{{ filteredSubscribers.length }}</p>
-      </div>
-    </div>
-    <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-4">
-      <div class="flex-1">
-        <label class="text-sm text-gray-600 mb-1 block">Filtrer par ville</label>
-        <select
-          [(ngModel)]="selectedCity"
-          (ngModelChange)="applyFilter()"
-          class="w-full border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-        >
-          <option value="">Toutes les villes</option>
-          @for (city of cities; track city) {
-            <option [value]="city">{{ city }}</option>
-          }
-        </select>
-      </div>
+  <!-- Toolbar -->
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    "
+  >
+    <input
+      [(ngModel)]="search"
+      type="search"
+      placeholder="Rechercher un numéro…"
+      style="
+        padding: 9px 14px;
+        border: 1px solid var(--rule);
+        border-radius: 999px;
+        background: var(--paper);
+        font-size: 14px;
+        color: var(--ink);
+        width: 260px;
+        font-family: var(--font-body);
+        outline: none;
+      "
+    />
+    <div style="display: flex; gap: 10px">
+      <button
+        (click)="exportCSV()"
+        style="
+          appearance: none;
+          border: 1px solid var(--rule);
+          background: var(--paper);
+          padding: 8px 16px;
+          border-radius: 4px;
+          font-size: 13px;
+          cursor: pointer;
+          font-family: var(--font-body);
+          color: var(--ink-soft);
+        "
+      >
+        Exporter en CSV
+      </button>
+      <button
+        (click)="copyNumbers()"
+        style="
+          appearance: none;
+          border: 1px solid var(--rule);
+          background: var(--paper);
+          padding: 8px 16px;
+          border-radius: 4px;
+          font-size: 13px;
+          cursor: pointer;
+          font-family: var(--font-body);
+          color: var(--ink-soft);
+        "
+      >
+        Copier les numéros actifs
+      </button>
     </div>
   </div>
 
-  <!-- Tableau -->
-  <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
-    <table class="w-full">
-      <thead class="bg-gray-50 border-b">
-        <tr>
-          <th class="text-left px-6 py-3 text-sm font-semibold text-gray-600">Téléphone</th>
-          <th class="text-left px-6 py-3 text-sm font-semibold text-gray-600">Villes</th>
-          <th class="text-left px-6 py-3 text-sm font-semibold text-gray-600">
-            Date d'inscription
+  <!-- Table -->
+  <div
+    style="
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+    "
+  >
+    <table style="width: 100%; border-collapse: collapse">
+      <thead>
+        <tr style="background: var(--bg-2); border-bottom: 1px solid var(--rule)">
+          <th
+            style="
+              text-align: left;
+              padding: 12px 16px;
+              font-size: 11px;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+              width: 180px;
+            "
+          >
+            Téléphone
           </th>
-          <th class="text-right px-6 py-3 text-sm font-semibold text-gray-600">Actions</th>
+          <th
+            style="
+              text-align: left;
+              padding: 12px 16px;
+              font-size: 11px;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+            "
+          >
+            Villes suivies
+          </th>
+          <th
+            style="
+              text-align: left;
+              padding: 12px 16px;
+              font-size: 11px;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+              width: 140px;
+            "
+          >
+            Inscrit·e le
+          </th>
+          <th
+            style="
+              text-align: left;
+              padding: 12px 16px;
+              font-size: 11px;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              color: var(--ink-mute);
+              font-weight: 600;
+              width: 110px;
+            "
+          >
+            Statut
+          </th>
+          <th style="width: 80px"></th>
         </tr>
       </thead>
-      <tbody class="divide-y">
-        @if (paginatedSubscribers.length === 0) {
+      <tbody>
+        @if (filtered.length === 0) {
           <tr>
-            <td colspan="4" class="text-center text-gray-400 py-12">Aucun abonné pour le moment</td>
+            <td
+              colspan="5"
+              style="padding: 40px; text-align: center; color: var(--ink-mute); font-size: 14px"
+            >
+              Aucun abonné{{ search ? ' correspondant' : '' }}.
+            </td>
           </tr>
-        } @else {
-          @for (subscriber of paginatedSubscribers; track subscriber.id) {
-            <tr class="hover:bg-gray-50 transition">
-              <td class="px-6 py-4 text-sm font-medium">{{ subscriber.phone }}</td>
-              <td class="px-6 py-4 text-sm text-gray-500">{{ getCityNames(subscriber) }}</td>
-              <td class="px-6 py-4 text-sm text-gray-500">
-                {{ subscriber.createdAt | date: 'd MMM yyyy' }}
-              </td>
-              <td class="px-6 py-4 text-right">
-                <button
-                  (click)="delete(subscriber.id)"
-                  class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition"
+        }
+        @for (s of filtered; track s.id) {
+          <tr style="border-bottom: 1px solid var(--rule)">
+            <td style="padding: 12px 16px">
+              <strong style="font-family: var(--font-mono); font-size: 13px; color: var(--ink)">{{
+                s.phone
+              }}</strong>
+            </td>
+            <td style="padding: 12px 16px">
+              <div style="display: flex; flex-wrap: wrap; gap: 4px">
+                @for (c of getCityChips(s); track c.id || c.name) {
+                  <span
+                    style="
+                      display: inline-block;
+                      padding: 2px 8px;
+                      border-radius: 999px;
+                      font-size: 11px;
+                      font-weight: 600;
+                      color: var(--paper);
+                    "
+                    [style.background]="c.color || 'var(--ink-mute)'"
+                    >{{ c.name }}</span
+                  >
+                }
+              </div>
+            </td>
+            <td style="padding: 12px 16px; font-size: 13px; color: var(--ink-soft)">
+              {{ s.createdAt | date: 'dd/MM/yyyy' }}
+            </td>
+            <td style="padding: 12px 16px">
+              <label style="display: inline-flex; gap: 6px; align-items: center; cursor: pointer">
+                <input type="checkbox" [checked]="s.active !== false" (change)="toggleActive(s)" />
+                <span
+                  style="
+                    font-size: 11px;
+                    font-weight: 600;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                  "
+                  [style.color]="s.active !== false ? 'var(--accent)' : 'var(--ink-mute)'"
+                  >{{ s.active !== false ? 'actif' : 'désinscrit' }}</span
                 >
-                  🗑️
-                </button>
-              </td>
-            </tr>
-          }
+              </label>
+            </td>
+            <td style="padding: 12px 16px; text-align: right">
+              <button
+                (click)="delete(s.id)"
+                style="
+                  appearance: none;
+                  border: 0;
+                  background: transparent;
+                  font-size: 12px;
+                  color: var(--accent-2);
+                  cursor: pointer;
+                  font-family: var(--font-body);
+                  font-weight: 500;
+                "
+              >
+                Suppr.
+              </button>
+            </td>
+          </tr>
         }
       </tbody>
     </table>
 
-    <!-- Pagination -->
-    @if (totalPages > 1) {
-      <div class="flex items-center justify-between px-6 py-4 border-t">
-        <p class="text-sm text-gray-500">Page {{ currentPage }} sur {{ totalPages }}</p>
-        <div class="flex gap-2">
-          <button
-            (click)="currentPage = currentPage - 1"
-            [disabled]="currentPage === 1"
-            class="px-3 py-1 rounded-lg text-sm border disabled:opacity-40 hover:bg-gray-50 transition"
-          >
-            ← Précédent
-          </button>
-          <button
-            (click)="currentPage = currentPage + 1"
-            [disabled]="currentPage === totalPages"
-            class="px-3 py-1 rounded-lg text-sm border disabled:opacity-40 hover:bg-gray-50 transition"
-          >
-            Suivant →
-          </button>
+    <!-- Ajouter manuellement -->
+    <div style="padding: 20px 24px; border-top: 1px dashed var(--rule)">
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 14px;
+        "
+      >
+        Ajouter manuellement un abonné
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; margin-bottom: 12px">
+        <input
+          [(ngModel)]="newPhone"
+          placeholder="+33 6 12 34 56 78"
+          style="
+            padding: 10px 14px;
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--ink);
+            background: var(--paper);
+            outline: none;
+          "
+        />
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+          @for (city of cities; track city.id) {
+            <button
+              (click)="toggleNewCity(city.id)"
+              style="
+                appearance: none;
+                padding: 8px 14px;
+                border-radius: 999px;
+                font-size: 13px;
+                font-weight: 500;
+                cursor: pointer;
+                font-family: var(--font-body);
+                transition: all 0.15s;
+              "
+              [style.background]="newCityIds.includes(city.id) ? 'var(--accent)' : 'transparent'"
+              [style.color]="newCityIds.includes(city.id) ? 'var(--paper)' : 'var(--ink)'"
+              [style.border]="
+                newCityIds.includes(city.id) ? '1px solid var(--accent)' : '1px solid var(--rule)'
+              "
+            >
+              {{ city.name }}
+            </button>
+          }
         </div>
       </div>
-    }
+      <button
+        (click)="addSubscriber()"
+        style="
+          appearance: none;
+          padding: 10px 22px;
+          background: var(--ink);
+          color: var(--paper);
+          border: 0;
+          border-radius: 999px;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          font-family: var(--font-body);
+        "
+      >
+        Ajouter
+      </button>
+    </div>
   </div>
 </div>

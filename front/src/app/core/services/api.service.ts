@@ -89,6 +89,10 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/subscribers`, data)
   }
 
+  updateSubscriber(id: number, data: any): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/admin/subscribers/${id}`, data)
+  }
+
   deleteSubscriber(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/admin/subscribers/${id}`)
   }
@@ -171,6 +175,14 @@ export class ApiService {
 
   getReservations(): Observable<any> {
     return this.http.get(`${this.baseUrl}/admin/reservations`)
+  }
+
+  updateReservation(id: number, data: any): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/admin/reservations/${id}`, data)
+  }
+
+  deleteReservation(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/admin/reservations/${id}`)
   }
 
   cancelReservation(id: number): Observable<any> {

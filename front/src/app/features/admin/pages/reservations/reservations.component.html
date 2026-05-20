@@ -1,0 +1,331 @@
+<div>
+  <div style="margin-bottom: 28px">
+    <h1
+      style="
+        font-family: var(--font-display);
+        font-size: 38px;
+        line-height: 1;
+        margin: 0 0 8px;
+        color: var(--ink);
+      "
+    >
+      Le poste de <em style="font-style: italic; color: var(--accent-2)">commandement</em>
+    </h1>
+    <p style="font-size: 15px; color: var(--ink-soft); margin: 0">
+      Toutes les réservations. Confirmez, annulez, exportez.
+    </p>
+  </div>
+
+  <!-- KPIs -->
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px">
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Total
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ reservations.length }}
+      </div>
+    </div>
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        En attente
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--accent-2)">
+        {{ pendingCount }}
+      </div>
+      <div style="font-size: 12px; color: var(--ink-mute); margin-top: 4px">à confirmer</div>
+    </div>
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Confirmées
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--accent)">
+        {{ confirmedCount }}
+      </div>
+    </div>
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 20px 22px;
+      "
+    >
+      <div
+        style="
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-mute);
+          font-weight: 600;
+          margin-bottom: 8px;
+        "
+      >
+        Volume estimé
+      </div>
+      <div style="font-family: var(--font-display); font-size: 32px; color: var(--ink)">
+        {{ totalRevenue }} &euro;
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtres + export -->
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    "
+  >
+    <div style="display: flex; gap: 8px; flex-wrap: wrap">
+      @for (
+        f of [
+          ['all', 'Toutes'],
+          ['pending', 'En attente'],
+          ['confirmed', 'Confirmées'],
+          ['cancelled', 'Annulées'],
+        ];
+        track f[0]
+      ) {
+        <button
+          (click)="filter = $any(f[0])"
+          style="
+            appearance: none;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: all 0.15s;
+          "
+          [style.background]="filter === f[0] ? 'var(--ink)' : 'var(--paper)'"
+          [style.color]="filter === f[0] ? 'var(--paper)' : 'var(--ink-soft)'"
+          [style.border]="filter === f[0] ? '1px solid var(--ink)' : '1px solid var(--rule)'"
+        >
+          {{ f[1] }}
+        </button>
+      }
+    </div>
+    <button
+      (click)="exportCSV()"
+      style="
+        appearance: none;
+        border: 1px solid var(--rule);
+        background: var(--paper);
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 13px;
+        cursor: pointer;
+        font-family: var(--font-body);
+        color: var(--ink-soft);
+      "
+    >
+      Exporter en CSV
+    </button>
+  </div>
+
+  <!-- Liste -->
+  <div
+    style="
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+    "
+  >
+    @if (filtered.length === 0) {
+      <div style="padding: 48px; text-align: center; color: var(--ink-mute); font-size: 14px">
+        Aucune réservation dans cette catégorie.
+      </div>
+    }
+    @for (r of filtered; track r.id) {
+      <div
+        style="
+          padding: 18px 22px;
+          border-bottom: 1px solid var(--rule);
+          display: grid;
+          grid-template-columns: 1.3fr 1.2fr 1fr auto auto;
+          gap: 24px;
+          align-items: center;
+        "
+      >
+        <!-- Client -->
+        <div>
+          <div
+            style="
+              font-family: var(--font-display);
+              font-size: 18px;
+              color: var(--ink);
+              margin-bottom: 4px;
+            "
+          >
+            {{ r.user?.fullName || '—' }}
+          </div>
+          <div style="font-size: 12px; color: var(--ink-mute)">
+            {{ r.user?.email || '—' }}{{ r.user?.phone ? ' · ' + r.user.phone : '' }}
+          </div>
+          <div style="font-size: 13px; color: var(--ink-soft); margin-top: 4px">
+            @for (it of r.items; track it.id) {
+              {{ it.product?.name }} × {{ it.qty }}{{ !$last ? ' · ' : '' }}
+            }
+          </div>
+        </div>
+
+        <!-- Date + lieu -->
+        <div>
+          <div
+            style="
+              font-size: 14px;
+              color: var(--ink);
+              font-weight: 500;
+              text-transform: capitalize;
+              margin-bottom: 4px;
+            "
+          >
+            {{ formatDate(r.distributionDate?.date) }}
+          </div>
+          <div style="display: inline-flex; align-items: center; gap: 6px">
+            <span
+              style="width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0"
+              [style.background]="r.distributionDate?.city?.color || 'var(--accent)'"
+            ></span>
+            <span style="font-size: 12px; color: var(--ink-soft)">{{
+              r.distributionDate?.city?.name || '—'
+            }}</span>
+            <span style="font-size: 12px; color: var(--ink-mute)"
+              >· {{ r.distributionDate?.time || '' }}</span
+            >
+          </div>
+        </div>
+
+        <!-- Temps -->
+        <div style="font-size: 12px; color: var(--ink-mute)">{{ timeAgo(r.createdAt) }}</div>
+
+        <!-- Total -->
+        <div style="font-family: var(--font-display); font-size: 22px; color: var(--ink)">
+          {{ r.total }} &euro;
+        </div>
+
+        <!-- Actions -->
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap">
+          <span
+            style="
+              display: inline-flex;
+              align-items: center;
+              padding: 5px 11px;
+              border-radius: 999px;
+              font-size: 11px;
+              font-weight: 600;
+              letter-spacing: 0.08em;
+              text-transform: uppercase;
+            "
+            [style]="getStatusStyle(r.status)"
+            >{{ getStatusLabel(r.status) }}</span
+          >
+          @if (r.status === 'pending') {
+            <button
+              (click)="confirm(r.id)"
+              style="
+                appearance: none;
+                border: 1px solid var(--rule);
+                background: transparent;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: 12px;
+                cursor: pointer;
+                font-family: var(--font-body);
+                color: var(--ink-soft);
+              "
+            >
+              Confirmer
+            </button>
+          }
+          @if (r.status !== 'cancelled') {
+            <button
+              (click)="cancel(r.id)"
+              style="
+                appearance: none;
+                border: 1px solid var(--rule);
+                background: transparent;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: 12px;
+                cursor: pointer;
+                font-family: var(--font-body);
+                color: var(--accent-2);
+              "
+            >
+              Annuler
+            </button>
+          }
+          <button
+            (click)="delete(r.id)"
+            style="
+              appearance: none;
+              border: 0;
+              background: transparent;
+              font-size: 13px;
+              color: var(--ink-mute);
+              cursor: pointer;
+              padding: 5px;
+            "
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
