@@ -759,7 +759,6 @@
       </p>
     </div>
 
-    :
     <ul style="list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule)">
       @if (events.length === 0) {
         <li
@@ -921,6 +920,364 @@
       </button>
     </div>
   </div>
+</section>
+
+<!-- ── RÉSERVATION CTA ── -->
+<section id="reservation" style="background: var(--bg-2); padding: 120px 0">
+  <div class="wrap">
+    <div
+      class="reservation-grid"
+      style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 72px; align-items: center"
+    >
+      <!-- Gauche : bon de réservation décoratif -->
+      <div style="position: relative">
+        <span
+          style="
+            position: absolute;
+            top: -12px;
+            right: 40px;
+            width: 14px;
+            height: 14px;
+            border-radius: 999px;
+            background: var(--accent);
+            z-index: 2;
+            box-shadow:
+              0 2px 4px rgba(0, 0, 0, 0.18),
+              inset 0 -2px 0 rgba(0, 0, 0, 0.18);
+          "
+        ></span>
+        <div
+          style="
+            background: var(--paper);
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            padding: 32px 32px 28px;
+            box-shadow: 0 24px 60px -30px rgba(35, 25, 17, 0.35);
+            transform: rotate(-0.5deg);
+          "
+        >
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: baseline;
+              margin-bottom: 4px;
+            "
+          >
+            <div style="font-family: var(--font-display); font-size: 22px; color: var(--ink)">
+              Bon de réservation
+            </div>
+            <div style="font-family: var(--font-script); font-size: 22px; color: var(--accent-2)">
+              n° 0034
+            </div>
+          </div>
+          <div
+            style="
+              font-size: 12px;
+              color: var(--ink-mute);
+              letter-spacing: 0.08em;
+              text-transform: uppercase;
+              margin-bottom: 20px;
+            "
+          >
+            Aperçu
+          </div>
+          <hr style="border: 0; border-top: 1px dashed var(--rule); margin: 0 0 18px" />
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: baseline;
+              gap: 14px;
+              margin-bottom: 8px;
+            "
+          >
+            <span
+              style="
+                font-size: 11px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--ink-mute);
+                font-weight: 600;
+              "
+              >Lieu</span
+            >
+            <span style="font-family: var(--font-display); font-size: 18px; color: var(--ink)"
+              >Plessier-sur-Bulles</span
+            >
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: baseline;
+              gap: 14px;
+              margin-bottom: 18px;
+            "
+          >
+            <span
+              style="
+                font-size: 11px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--ink-mute);
+                font-weight: 600;
+              "
+              >Date</span
+            >
+            <span style="font-family: var(--font-display); font-size: 18px; color: var(--ink)"
+              >Lundi 18 mai · 17h–19h</span
+            >
+          </div>
+          <hr style="border: 0; border-top: 1px dashed var(--rule); margin: 0 0 14px" />
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr auto auto;
+              gap: 14px;
+              align-items: baseline;
+              padding: 8px 0;
+            "
+          >
+            <span style="font-family: var(--font-display); font-size: 17px; color: var(--ink)"
+              >Oeufs frais</span
+            >
+            <span style="font-size: 12px; color: var(--ink-mute); font-family: var(--font-mono)"
+              >1 x 30</span
+            >
+            <span style="font-family: var(--font-display); font-size: 17px; color: var(--accent-2)"
+              >7,00 EUR</span
+            >
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr auto auto;
+              gap: 14px;
+              align-items: baseline;
+              padding: 8px 0;
+            "
+          >
+            <span style="font-family: var(--font-display); font-size: 17px; color: var(--ink)"
+              >Oignons jaunes</span
+            >
+            <span style="font-size: 12px; color: var(--ink-mute); font-family: var(--font-mono)"
+              >2 x 5kg</span
+            >
+            <span style="font-family: var(--font-display); font-size: 17px; color: var(--accent-2)"
+              >6,00 EUR</span
+            >
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr auto auto;
+              gap: 14px;
+              align-items: baseline;
+              padding: 8px 0;
+            "
+          >
+            <span style="font-family: var(--font-display); font-size: 17px; color: var(--ink)"
+              >Pommes de terre</span
+            >
+            <span style="font-size: 12px; color: var(--ink-mute); font-family: var(--font-mono)"
+              >1 x 10kg</span
+            >
+            <span style="font-family: var(--font-display); font-size: 17px; color: var(--accent-2)"
+              >4,00 EUR</span
+            >
+          </div>
+          <hr style="border: 0; border-top: 1px dashed var(--rule); margin: 14px 0" />
+          <div style="display: flex; justify-content: space-between; align-items: baseline">
+            <span
+              style="
+                font-size: 12px;
+                color: var(--ink-mute);
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                font-weight: 600;
+              "
+              >A payer sur place</span
+            >
+            <span style="font-family: var(--font-display); font-size: 28px; color: var(--ink)"
+              >17,00 EUR</span
+            >
+          </div>
+          <div style="margin-top: 22px; display: flex; justify-content: flex-end">
+            <div
+              style="
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 8px 16px;
+                border: 2px solid var(--accent);
+                color: var(--accent);
+                border-radius: 4px;
+                transform: rotate(-4deg);
+                font-family: var(--font-display);
+                font-size: 16px;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                font-style: italic;
+              "
+            >
+              Confirme
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Droite : texte explicatif -->
+      <div>
+        <div class="eyebrow" style="margin-bottom: 18px">Reservez a l'avance</div>
+        <h2 class="h-section">
+          On vous met<br />
+          <em style="font-style: italic; color: var(--accent-2)">de cote</em>.
+        </h2>
+        <p class="lead" style="margin-top: 24px">
+          Pas envie de venir et de tout trouver vendu ? Reservez vos oeufs, oignons et pommes de
+          terre en ligne - on les met de cote pour le jour de votre choix.
+        </p>
+        <ul
+          style="
+            list-style: none;
+            margin: 36px 0 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+          "
+        >
+          <li
+            style="display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: baseline"
+          >
+            <span
+              style="
+                font-family: var(--font-mono);
+                font-size: 14px;
+                color: var(--accent-2);
+                font-weight: 600;
+              "
+              >01</span
+            >
+            <span>
+              <strong
+                style="
+                  color: var(--ink);
+                  font-weight: 600;
+                  display: block;
+                  font-size: 16px;
+                  margin-bottom: 2px;
+                "
+                >Choisissez le lieu</strong
+              >
+              <span style="color: var(--ink-soft); font-size: 14px; line-height: 1.5"
+                >Plessier, Compiegne, Villers-Saint-Paul...</span
+              >
+            </span>
+          </li>
+          <li
+            style="display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: baseline"
+          >
+            <span
+              style="
+                font-family: var(--font-mono);
+                font-size: 14px;
+                color: var(--accent-2);
+                font-weight: 600;
+              "
+              >02</span
+            >
+            <span>
+              <strong
+                style="
+                  color: var(--ink);
+                  font-weight: 600;
+                  display: block;
+                  font-size: 16px;
+                  margin-bottom: 2px;
+                "
+                >Choisissez la date</strong
+              >
+              <span style="color: var(--ink-soft); font-size: 14px; line-height: 1.5"
+                >Parmi celles disponibles pres de chez vous.</span
+              >
+            </span>
+          </li>
+          <li
+            style="display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: baseline"
+          >
+            <span
+              style="
+                font-family: var(--font-mono);
+                font-size: 14px;
+                color: var(--accent-2);
+                font-weight: 600;
+              "
+              >03</span
+            >
+            <span>
+              <strong
+                style="
+                  color: var(--ink);
+                  font-weight: 600;
+                  display: block;
+                  font-size: 16px;
+                  margin-bottom: 2px;
+                "
+                >Choisissez vos produits</strong
+              >
+              <span style="color: var(--ink-soft); font-size: 14px; line-height: 1.5"
+                >On les prepare. Vous payez sur place.</span
+              >
+            </span>
+          </li>
+        </ul>
+        <div
+          style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center"
+        >
+          <a
+            routerLink="/reservation"
+            style="
+              display: inline-flex;
+              align-items: center;
+              gap: 10px;
+              padding: 14px 22px;
+              border-radius: 999px;
+              font-weight: 600;
+              font-size: 15px;
+              background: var(--ink);
+              color: var(--paper);
+              text-decoration: none;
+            "
+          >
+            Reserver mes produits
+          </a>
+          <a
+            routerLink="/login"
+            style="
+              font-size: 14px;
+              color: var(--ink-soft);
+              border-bottom: 1px solid var(--ink-mute);
+              padding-bottom: 2px;
+            "
+          >
+            Deja un compte ? Se connecter
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .reservation-grid {
+    }
+    @media (max-width: 880px) {
+      .reservation-grid {
+        grid-template-columns: 1fr !important;
+        gap: 48px !important;
+      }
+    }
+  </style>
 </section>
 
 <!-- ── SMS INSCRIPTION ── -->

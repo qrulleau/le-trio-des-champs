@@ -7,6 +7,7 @@ export const controllers = {
   AccessTokens: () => import('#controllers/access_tokens_controller'),
   Announcements: () => import('#controllers/announcements_controller'),
   Cities: () => import('#controllers/cities_controller'),
+  ContactPeople: () => import('#controllers/contact_people_controller'),
   Dates: () => import('#controllers/dates_controller'),
   DistributionDates: () => import('#controllers/distribution_dates_controller'),
   Events: () => import('#controllers/events_controller'),
@@ -18,5 +19,4 @@ export const controllers = {
   SellingPlaces: () => import('#controllers/selling_places_controller'),
   Settings: () => import('#controllers/settings_controller'),
   Subscribers: () => import('#controllers/subscribers_controller'),
-  ContactPeople: () => import('#controllers/contact_people_controller'),
 }
