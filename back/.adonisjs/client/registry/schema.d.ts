@@ -43,6 +43,30 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/profile_controller').default['show']>>>
     }
   }
+  'profile.profile.update': {
+    methods: ["PUT"]
+    pattern: '/api/v1/account/profile'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/profile_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/profile_controller').default['update']>>>
+    }
+  }
+  'profile.profile.change_password': {
+    methods: ["PUT"]
+    pattern: '/api/v1/account/password'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/profile_controller').default['changePassword']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/profile_controller').default['changePassword']>>>
+    }
+  }
   'profile.access_tokens.destroy': {
     methods: ["POST"]
     pattern: '/api/v1/account/logout'

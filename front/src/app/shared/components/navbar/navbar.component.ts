@@ -63,7 +63,7 @@ import { AuthService } from '../../../core/services/auth.service'
               ></span>
               {{ auth.userName() }}
             </span>
-            <a routerLink="/reservation" style="color:var(--ink);font-weight:600">Mon compte</a>
+            <a routerLink="/account" style="color:var(--ink);font-weight:600">Mon compte</a>
             <button
               (click)="logout()"
               style="appearance:none;background:none;border:none;padding:0;font-family:var(--font-body);font-size:13px;color:var(--ink-mute);cursor:pointer;font-weight:500"

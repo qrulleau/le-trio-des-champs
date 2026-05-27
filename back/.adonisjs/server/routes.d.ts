@@ -7,6 +7,8 @@ export type ScannedRoutes = {
     'auth.new_account.store': { paramsTuple?: []; params?: {} }
     'auth.access_tokens.store': { paramsTuple?: []; params?: {} }
     'profile.profile.show': { paramsTuple?: []; params?: {} }
+    'profile.profile.update': { paramsTuple?: []; params?: {} }
+    'profile.profile.change_password': { paramsTuple?: []; params?: {} }
     'profile.access_tokens.destroy': { paramsTuple?: []; params?: {} }
     'cities.index': { paramsTuple?: []; params?: {} }
     'cities.store': { paramsTuple?: []; params?: {} }
@@ -135,6 +137,8 @@ export type ScannedRoutes = {
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
   }
   PUT: {
+    'profile.profile.update': { paramsTuple?: []; params?: {} }
+    'profile.profile.change_password': { paramsTuple?: []; params?: {} }
     'cities.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'products.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'selling_places.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }

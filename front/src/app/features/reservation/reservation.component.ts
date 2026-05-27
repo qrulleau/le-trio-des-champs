@@ -89,6 +89,10 @@ export class ReservationComponent implements OnInit {
     }, 0)
   }
 
+  getAvailableStock(item: any): number {
+    return item.product.stockPerDate || 0
+  }
+
   hasItems(): boolean {
     return this.items.some((i) => i.qty > 0)
   }
@@ -153,6 +157,11 @@ export class ReservationComponent implements OnInit {
     if (status === 'cancelled')
       return 'background:var(--bg-2);color:var(--ink-mute);border:1px solid var(--rule)'
     return 'background:var(--accent-3);color:var(--ink)'
+  }
+
+  getPriceAmount(price: string): string {
+    const match = price.match(/^[\d,.]+ ?€/)
+    return match ? match[0] : price
   }
 
   formatDate(dateStr: string): string {

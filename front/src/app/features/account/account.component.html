@@ -1,0 +1,555 @@
+<app-navbar />
+
+<!-- Hero -->
+<section style="padding: 56px 0 36px; border-bottom: 1px solid var(--rule); background: var(--bg)">
+  <div class="wrap" style="display: flex; align-items: center; gap: 22px; flex-wrap: wrap">
+    <div
+      style="
+        width: 72px;
+        height: 72px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--paper);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: 32px;
+        font-weight: 600;
+        flex-shrink: 0;
+      "
+    >
+      {{ auth.currentUser()?.initials || '?' }}
+    </div>
+    <div>
+      <div class="eyebrow" style="margin-bottom: 10px">Mon compte</div>
+      <h1
+        style="
+          font-family: var(--font-display);
+          font-size: clamp(36px, 4.4vw, 52px);
+          margin: 0;
+          line-height: 1;
+        "
+      >
+        Bonjour <em style="font-style: italic; color: var(--accent-2)">{{ auth.userName() }}</em>
+      </h1>
+      <div style="color: var(--ink-soft); font-size: 14px; margin-top: 6px">
+        {{ auth.currentUser()?.email }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Main -->
+<main style="padding: 48px 0 80px; background: var(--bg)">
+  <div class="wrap">
+    <!-- Grille 2 colonnes : infos + mdp -->
+    <div
+      style="
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        align-items: start;
+        margin-bottom: 24px;
+      "
+    >
+      <!-- Mes informations -->
+      <div
+        style="
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          padding: 28px;
+        "
+      >
+        <h2
+          style="
+            font-family: var(--font-display);
+            font-size: 24px;
+            margin: 0 0 6px;
+            color: var(--ink);
+          "
+        >
+          Mes informations
+        </h2>
+        <p style="font-size: 13px; color: var(--ink-soft); margin: 0 0 20px">
+          Vos coordonnées personnelles. Vous pouvez les modifier à tout moment.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px">
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--ink-soft);
+                font-weight: 600;
+                display: block;
+                margin-bottom: 8px;
+              "
+              >Nom complet</label
+            >
+            <input
+              [(ngModel)]="profileForm.fullName"
+              type="text"
+              autocomplete="name"
+              style="
+                width: 100%;
+                padding: 12px 14px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 15px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+                box-sizing: border-box;
+              "
+            />
+          </div>
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--ink-soft);
+                font-weight: 600;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 8px;
+              "
+            >
+              <span>Email</span
+              ><small
+                style="
+                  font-weight: 400;
+                  text-transform: none;
+                  letter-spacing: 0;
+                  color: var(--ink-mute);
+                "
+                >Sert à se connecter</small
+              >
+            </label>
+            <input
+              [(ngModel)]="profileForm.email"
+              type="email"
+              autocomplete="email"
+              style="
+                width: 100%;
+                padding: 12px 14px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 15px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+                box-sizing: border-box;
+              "
+            />
+          </div>
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--ink-soft);
+                font-weight: 600;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 8px;
+              "
+            >
+              <span>Téléphone</span
+              ><small
+                style="
+                  font-weight: 400;
+                  text-transform: none;
+                  letter-spacing: 0;
+                  color: var(--ink-mute);
+                "
+                >Pour les rappels SMS</small
+              >
+            </label>
+            <div
+              style="
+                display: flex;
+                align-items: stretch;
+                background: var(--bg);
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                overflow: hidden;
+              "
+            >
+              <span
+                style="
+                  padding: 0 14px;
+                  display: flex;
+                  align-items: center;
+                  font-family: var(--font-mono);
+                  color: var(--ink-soft);
+                  font-size: 14px;
+                  border-right: 1px solid var(--rule);
+                "
+                >+33</span
+              >
+              <input
+                [(ngModel)]="profileForm.phone"
+                type="tel"
+                autocomplete="tel"
+                placeholder="6 12 34 56 78"
+                style="
+                  border: 0;
+                  background: transparent;
+                  padding: 12px 14px;
+                  font-size: 15px;
+                  flex: 1;
+                  outline: none;
+                  font-family: var(--font-body);
+                  color: var(--ink);
+                "
+              />
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end">
+          <button
+            (click)="saveProfile()"
+            style="
+              appearance: none;
+              padding: 11px 22px;
+              background: var(--ink);
+              color: var(--paper);
+              border: 0;
+              border-radius: 999px;
+              font-size: 14px;
+              font-weight: 600;
+              cursor: pointer;
+              font-family: var(--font-body);
+            "
+          >
+            Enregistrer les modifications
+          </button>
+        </div>
+      </div>
+
+      <!-- Mot de passe -->
+      <div
+        style="
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          padding: 28px;
+        "
+      >
+        <h2
+          style="
+            font-family: var(--font-display);
+            font-size: 24px;
+            margin: 0 0 6px;
+            color: var(--ink);
+          "
+        >
+          Changer mon mot de passe
+        </h2>
+        <p style="font-size: 13px; color: var(--ink-soft); margin: 0 0 20px">
+          Choisissez quelque chose de simple à retenir mais difficile à deviner.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px">
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--ink-soft);
+                font-weight: 600;
+                display: block;
+                margin-bottom: 8px;
+              "
+              >Mot de passe actuel</label
+            >
+            <input
+              [(ngModel)]="passwordForm.currentPassword"
+              type="password"
+              autocomplete="current-password"
+              style="
+                width: 100%;
+                padding: 12px 14px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 15px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+                box-sizing: border-box;
+              "
+            />
+          </div>
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--ink-soft);
+                font-weight: 600;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 8px;
+              "
+            >
+              <span>Nouveau mot de passe</span
+              ><small
+                style="
+                  font-weight: 400;
+                  text-transform: none;
+                  letter-spacing: 0;
+                  color: var(--ink-mute);
+                "
+                >4 caractères minimum</small
+              >
+            </label>
+            <input
+              [(ngModel)]="passwordForm.newPassword"
+              type="password"
+              autocomplete="new-password"
+              style="
+                width: 100%;
+                padding: 12px 14px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 15px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+                box-sizing: border-box;
+              "
+            />
+          </div>
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--ink-soft);
+                font-weight: 600;
+                display: block;
+                margin-bottom: 8px;
+              "
+              >Confirmation</label
+            >
+            <input
+              [(ngModel)]="passwordForm.confirmPassword"
+              type="password"
+              autocomplete="new-password"
+              style="
+                width: 100%;
+                padding: 12px 14px;
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                font-size: 15px;
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--bg);
+                outline: none;
+                box-sizing: border-box;
+              "
+            />
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end">
+          <button
+            (click)="changePassword()"
+            style="
+              appearance: none;
+              padding: 11px 22px;
+              background: var(--ink);
+              color: var(--paper);
+              border: 0;
+              border-radius: 999px;
+              font-size: 14px;
+              font-weight: 600;
+              cursor: pointer;
+              font-family: var(--font-body);
+            "
+          >
+            Mettre à jour
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mes réservations (pleine largeur) -->
+    <div
+      style="
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 28px;
+        margin-bottom: 16px;
+      "
+    >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-bottom: 6px;
+        "
+      >
+        <h2 style="font-family: var(--font-display); font-size: 24px; margin: 0; color: var(--ink)">
+          Mes réservations
+        </h2>
+        <a
+          routerLink="/reservation"
+          style="
+            font-size: 13px;
+            color: var(--accent-2);
+            border-bottom: 1px solid currentColor;
+            padding-bottom: 1px;
+          "
+          >Faire une nouvelle réservation →</a
+        >
+      </div>
+      <p style="font-size: 13px; color: var(--ink-soft); margin: 0 0 20px">
+        Toutes vos commandes en cours et passées.
+      </p>
+
+      @if (reservations.length === 0) {
+        <div style="text-align: center; padding: 32px 0; color: var(--ink-mute)">
+          <div
+            style="
+              font-family: var(--font-script);
+              color: var(--accent-2);
+              font-size: 22px;
+              margin-bottom: 8px;
+            "
+          >
+            aucune réservation pour le moment
+          </div>
+        </div>
+      }
+
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        @for (r of reservations; track r.id) {
+          <div style="padding: 18px 22px; border: 1px solid var(--rule); border-radius: 4px">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+                margin-bottom: 8px;
+              "
+            >
+              <div
+                style="
+                  font-family: var(--font-display);
+                  font-size: 18px;
+                  color: var(--ink);
+                  text-transform: capitalize;
+                "
+              >
+                {{ formatDate(r.distributionDate?.date) }}
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px">
+                <span
+                  style="
+                    display: inline-flex;
+                    padding: 4px 10px;
+                    border-radius: 999px;
+                    font-size: 11px;
+                    font-weight: 600;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                  "
+                  [style]="getStatusStyle(r)"
+                  >{{ getStatusLabel(r) }}</span
+                >
+                <span style="font-family: var(--font-display); font-size: 20px; color: var(--ink)"
+                  >{{ r.total }} €</span
+                >
+                @if (isUpcoming(r)) {
+                  <button
+                    (click)="cancelReservation(r.id)"
+                    style="
+                      appearance: none;
+                      background: none;
+                      border: none;
+                      font-size: 13px;
+                      color: var(--ink-mute);
+                      cursor: pointer;
+                      font-family: var(--font-body);
+                    "
+                  >
+                    Annuler
+                  </button>
+                }
+              </div>
+            </div>
+            <div style="font-size: 12px; color: var(--ink-soft)">
+              {{ r.distributionDate?.city?.name }} · {{ r.distributionDate?.time }}
+            </div>
+            <div style="font-size: 13px; color: var(--ink-soft); margin-top: 4px">
+              @for (item of r.items; track item.id) {
+                {{ item.product?.name }} × {{ item.qty }}{{ !$last ? ' · ' : '' }}
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Danger zone -->
+    <div
+      style="
+        padding: 20px 24px;
+        border: 1px dashed var(--accent-2);
+        border-radius: 4px;
+        background: rgba(184, 92, 58, 0.04);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      "
+    >
+      <div>
+        <div style="font-family: var(--font-display); font-size: 18px; color: var(--ink)">
+          Supprimer mon compte
+        </div>
+        <div style="font-size: 13px; color: var(--ink-soft); margin-top: 4px">
+          Vos données personnelles, vos réservations et vos abonnements SMS seront effacés. Cette
+          action est irréversible.
+        </div>
+      </div>
+      <button
+        style="
+          appearance: none;
+          background: transparent;
+          color: var(--accent-2);
+          border: 1px solid var(--accent-2);
+          padding: 10px 18px;
+          border-radius: 999px;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          font-family: var(--font-body);
+        "
+      >
+        Supprimer mon compte
+      </button>
+    </div>
+  </div>
+</main>
+
+<app-footer />

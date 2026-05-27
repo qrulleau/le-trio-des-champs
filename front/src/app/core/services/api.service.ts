@@ -169,6 +169,14 @@ export class ApiService {
   }
 
   // Account
+  updateProfile(data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/account/profile`, data)
+  }
+
+  changePassword(data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/account/password`, data)
+  }
+
   getMe(): Observable<any> {
     return this.http.get(`${this.baseUrl}/account/profile`)
   }
