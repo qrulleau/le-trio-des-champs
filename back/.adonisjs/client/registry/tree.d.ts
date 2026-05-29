@@ -104,6 +104,10 @@ export interface ApiDefinition {
       update: typeof routes['admin.contact_people.update']
       destroy: typeof routes['admin.contact_people.destroy']
     }
+    dateProductStocks: {
+      index: typeof routes['admin.date_product_stocks.index']
+      upsert: typeof routes['admin.date_product_stocks.upsert']
+    }
     productImages: {
       store: typeof routes['admin.product_images.store']
       destroy: typeof routes['admin.product_images.destroy']

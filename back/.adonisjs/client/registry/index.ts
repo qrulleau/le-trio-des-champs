@@ -360,6 +360,18 @@ const routes = {
     tokens: [{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"contact-people","end":""},{"old":"/api/v1/admin/contact-people/:id","type":1,"val":"id","end":""}],
     types: placeholder as Registry['admin.contact_people.destroy']['types'],
   },
+  'admin.date_product_stocks.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/api/v1/admin/distribution-dates/:dateId/stocks',
+    tokens: [{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":0,"val":"api","end":""},{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":0,"val":"distribution-dates","end":""},{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":1,"val":"dateId","end":""},{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":0,"val":"stocks","end":""}],
+    types: placeholder as Registry['admin.date_product_stocks.index']['types'],
+  },
+  'admin.date_product_stocks.upsert': {
+    methods: ["PUT"],
+    pattern: '/api/v1/admin/distribution-dates/:dateId/stocks',
+    tokens: [{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":0,"val":"api","end":""},{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":0,"val":"distribution-dates","end":""},{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":1,"val":"dateId","end":""},{"old":"/api/v1/admin/distribution-dates/:dateId/stocks","type":0,"val":"stocks","end":""}],
+    types: placeholder as Registry['admin.date_product_stocks.upsert']['types'],
+  },
   'admin.product_images.store': {
     methods: ["POST"],
     pattern: '/api/v1/admin/products/:id/image',

@@ -22,6 +22,7 @@ const SettingsController = () => import('#controllers/settings_controller')
 const DistributionDatesController = () => import('#controllers/distribution_dates_controller')
 const ReservationsController = () => import('#controllers/reservations_controller')
 const ContactPeopleController = () => import('#controllers/contact_people_controller')
+const DateProductStocksController = () => import('#controllers/date_product_stocks_controller')
 const ProductImagesController = () => import('#controllers/product_images_controller')
 
 router
@@ -67,6 +68,8 @@ router
                 router.resource('distribution-dates', DistributionDatesController).apiOnly()
                 router.resource('reservations', ReservationsController).apiOnly()
                 router.resource('contact-people', ContactPeopleController).apiOnly().except(['show'])
+                router.get('distribution-dates/:dateId/stocks', [DateProductStocksController, 'index'])
+                router.put('distribution-dates/:dateId/stocks', [DateProductStocksController, 'upsert'])
                 router.post('products/:id/image', [ProductImagesController, 'store'])
                 router.delete('products/:id/image', [ProductImagesController, 'destroy'])
                 })

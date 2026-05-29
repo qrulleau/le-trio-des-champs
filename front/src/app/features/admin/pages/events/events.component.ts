@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { ApiService } from '../../../../core/services/api.service'
@@ -13,18 +13,15 @@ import { ToastService } from '../../../../core/services/toast.service'
 export class EventsComponent implements OnInit {
   dates: any[] = []
   cities: any[] = []
+  products: any[] = []
   viewMode: 'month' | 'list' = 'month'
+  openStockDateId: number | null = null
+  stockData: Record<number, any[]> = {}
 
   cursor = new Date()
   today = new Date().toISOString().split('T')[0]
 
-  newDate = {
-    cityId: '',
-    date: '',
-    time: '17h00 – 19h00',
-    capacity: 80,
-    notes: '',
-  }
+  newDate = { cityId: '', date: '', time: '17h00 – 19h00', capacity: 80, notes: '' }
 
   private api = inject(ApiService)
   private toast = inject(ToastService)
@@ -44,6 +41,10 @@ export class EventsComponent implements OnInit {
       this.cities = data
       this.cdr.detectChanges()
     })
+    this.api.getProducts().subscribe((data) => {
+      this.products = data
+      this.cdr.detectChanges()
+    })
   }
 
   get monthLabel() {
@@ -52,12 +53,6 @@ export class EventsComponent implements OnInit {
 
   get upcomingCount() {
     return this.dates.filter((d) => d.date >= this.today).length
-  }
-  get permanenceCount() {
-    return this.dates.filter((d) => d.city?.type === 'permanence').length
-  }
-  get tourneeCount() {
-    return this.dates.filter((d) => d.city?.type === 'tournee').length
   }
 
   prevMonth() {
@@ -81,14 +76,17 @@ export class EventsComponent implements OnInit {
     const daysInMonth = new Date(year, month + 1, 0).getDate()
     const prevDays = new Date(year, month, 0).getDate()
     const cells: any[] = []
-
-    for (let i = firstDow - 1; i >= 0; i--) {
+    for (let i = firstDow - 1; i >= 0; i--)
       cells.push({ day: prevDays - i, current: false, iso: '' })
-    }
     for (let d = 1; d <= daysInMonth; d++) {
       const iso = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`
-      const events = this.dates.filter((x) => x.date?.startsWith(iso))
-      cells.push({ day: d, current: true, iso, events, isToday: iso === this.today })
+      cells.push({
+        day: d,
+        current: true,
+        iso,
+        events: this.dates.filter((x) => x.date?.startsWith(iso)),
+        isToday: iso === this.today,
+      })
     }
     const tail = (7 - (cells.length % 7)) % 7
     for (let i = 1; i <= tail; i++) cells.push({ day: i, current: false, iso: '' })
@@ -97,6 +95,47 @@ export class EventsComponent implements OnInit {
 
   get sortedDates() {
     return [...this.dates].sort((a, b) => (a.date || '').localeCompare(b.date || ''))
+  }
+
+  toggleStock(dateId: number) {
+    if (this.openStockDateId === dateId) {
+      this.openStockDateId = null
+      return
+    }
+    this.openStockDateId = dateId
+    if (!this.stockData[dateId]) {
+      this.api.getDateStocks(dateId).subscribe((data) => {
+        this.stockData[dateId] = data
+        this.cdr.detectChanges()
+      })
+    }
+  }
+
+  updateStock(dateId: number, productId: number, value: number) {
+    this.api.updateDateStock(dateId, productId, value).subscribe({
+      next: () => this.toast.success('Stock mis à jour'),
+      error: () => this.toast.error('Erreur'),
+    })
+  }
+
+  getReservedForProduct(dateId: number, productId: number): number {
+    const date = this.dates.find((d) => d.id === dateId)
+    if (!date?.reservations) return 0
+    return date.reservations
+      .filter((r: any) => r.status !== 'cancelled')
+      .reduce((sum: number, r: any) => {
+        const item = (r.items || []).find((i: any) => i.productId === productId)
+        return sum + (item?.qty || 0)
+      }, 0)
+  }
+
+  goToDate(dateId: number) {
+    this.viewMode = 'list'
+    setTimeout(() => {
+      this.toggleStock(dateId)
+      const el = document.getElementById('date-row-' + dateId)
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }, 50)
   }
 
   addDate() {
@@ -123,7 +162,7 @@ export class EventsComponent implements OnInit {
   }
 
   deleteDate(id: number) {
-    if (!confirm('Supprimer cette date ? Les réservations associées seront supprimées.')) return
+    if (!confirm('Supprimer cette date ?')) return
     this.api.deleteDistributionDate(id).subscribe({
       next: () => {
         this.toast.success('Date supprimée')

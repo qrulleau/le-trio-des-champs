@@ -715,6 +715,30 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/contact_people_controller').default['destroy']>>>
     }
   }
+  'admin.date_product_stocks.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/distribution-dates/:dateId/stocks'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { dateId: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/date_product_stocks_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/date_product_stocks_controller').default['index']>>>
+    }
+  }
+  'admin.date_product_stocks.upsert': {
+    methods: ["PUT"]
+    pattern: '/api/v1/admin/distribution-dates/:dateId/stocks'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { dateId: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/date_product_stocks_controller').default['upsert']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/date_product_stocks_controller').default['upsert']>>>
+    }
+  }
   'admin.product_images.store': {
     methods: ["POST"]
     pattern: '/api/v1/admin/products/:id/image'

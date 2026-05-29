@@ -63,6 +63,8 @@ export type ScannedRoutes = {
     'admin.contact_people.store': { paramsTuple?: []; params?: {} }
     'admin.contact_people.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.contact_people.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.date_product_stocks.index': { paramsTuple: [ParamValue]; params: {'dateId': ParamValue} }
+    'admin.date_product_stocks.upsert': { paramsTuple: [ParamValue]; params: {'dateId': ParamValue} }
     'admin.product_images.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.product_images.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'user.reservations.store': { paramsTuple?: []; params?: {} }
@@ -111,6 +113,7 @@ export type ScannedRoutes = {
     'admin.reservations.index': { paramsTuple?: []; params?: {} }
     'admin.reservations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.contact_people.index': { paramsTuple?: []; params?: {} }
+    'admin.date_product_stocks.index': { paramsTuple: [ParamValue]; params: {'dateId': ParamValue} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
@@ -137,6 +140,7 @@ export type ScannedRoutes = {
     'admin.reservations.index': { paramsTuple?: []; params?: {} }
     'admin.reservations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.contact_people.index': { paramsTuple?: []; params?: {} }
+    'admin.date_product_stocks.index': { paramsTuple: [ParamValue]; params: {'dateId': ParamValue} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
   }
   PUT: {
@@ -152,6 +156,7 @@ export type ScannedRoutes = {
     'admin.distribution_dates.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.contact_people.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.date_product_stocks.upsert': { paramsTuple: [ParamValue]; params: {'dateId': ParamValue} }
   }
   PATCH: {
     'cities.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }

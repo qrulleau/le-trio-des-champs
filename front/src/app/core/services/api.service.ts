@@ -213,6 +213,17 @@ export class ApiService {
     return this.http.patch(`${this.baseUrl}/user/reservations/${id}/cancel`, {})
   }
 
+  getDateStocks(dateId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/admin/distribution-dates/${dateId}/stocks`)
+  }
+
+  updateDateStock(dateId: number, productId: number, stock: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/admin/distribution-dates/${dateId}/stocks`, {
+      productId,
+      stock,
+    })
+  }
+
   uploadProductImage(id: number, file: File): Observable<any> {
     const formData = new FormData()
     formData.append('image', file)
