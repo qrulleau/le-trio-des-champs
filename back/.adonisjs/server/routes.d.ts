@@ -63,6 +63,8 @@ export type ScannedRoutes = {
     'admin.contact_people.store': { paramsTuple?: []; params?: {} }
     'admin.contact_people.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.contact_people.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.product_images.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.product_images.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'user.reservations.store': { paramsTuple?: []; params?: {} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
     'user.reservations.cancel': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -82,6 +84,7 @@ export type ScannedRoutes = {
     'admin.distribution_dates.store': { paramsTuple?: []; params?: {} }
     'admin.reservations.store': { paramsTuple?: []; params?: {} }
     'admin.contact_people.store': { paramsTuple?: []; params?: {} }
+    'admin.product_images.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'user.reservations.store': { paramsTuple?: []; params?: {} }
   }
   GET: {
@@ -174,6 +177,7 @@ export type ScannedRoutes = {
     'admin.distribution_dates.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.contact_people.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.product_images.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }
 declare module '@adonisjs/core/types/http' {

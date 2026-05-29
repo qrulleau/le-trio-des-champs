@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { ApiService } from '../../core/services/api.service'
 import { ToastService } from '../../core/services/toast.service'
+import { environment } from '../../../environments/environment'
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component'
 import { FooterComponent } from '../../shared/components/footer/footer.component'
 
@@ -14,6 +15,7 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
+  baseUrl = environment.apiUrl.replace('/api/v1', '')
   products: any[] = []
   events: any[] = []
   sellingPlaces: any[] = []

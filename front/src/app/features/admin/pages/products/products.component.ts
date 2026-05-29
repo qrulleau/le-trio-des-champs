@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { ApiService } from '../../../../core/services/api.service'
 import { ToastService } from '../../../../core/services/toast.service'
+import { environment } from '../../../../../environments/environment'
 
 @Component({
   selector: 'app-products',
@@ -12,7 +13,7 @@ import { ToastService } from '../../../../core/services/toast.service'
 })
 export class ProductsComponent implements OnInit {
   products: any[] = []
-  showAddRow = false
+  baseUrl = environment.apiUrl.replace('/api/v1', '')
 
   newProduct = {
     name: '',
@@ -46,7 +47,6 @@ export class ProductsComponent implements OnInit {
       next: () => {
         this.toast.success('Produit ajouté')
         this.newProduct = { name: '', unit: '', price: '', stockPerDate: 0, description: '' }
-        this.showAddRow = false
         this.loadProducts()
       },
       error: () => this.toast.error("Erreur lors de l'ajout"),
@@ -54,9 +54,34 @@ export class ProductsComponent implements OnInit {
   }
 
   updateField(product: any, field: string, value: any) {
-    const patch: any = { [field]: value }
-    this.api.updateProduct(product.id, patch).subscribe({
+    this.api.updateProduct(product.id, { [field]: value }).subscribe({
       next: () => this.toast.success('Modifié'),
+      error: () => this.toast.error('Erreur'),
+    })
+  }
+
+  onImageSelected(product: any, event: Event) {
+    const input = event.target as HTMLInputElement
+    const file = input.files?.[0]
+    if (!file) return
+    this.api.uploadProductImage(product.id, file).subscribe({
+      next: (data) => {
+        product.imageUrl = data.imageUrl
+        this.toast.success('Photo mise à jour')
+        this.cdr.detectChanges()
+      },
+      error: () => this.toast.error("Erreur lors de l'upload"),
+    })
+  }
+
+  removeImage(product: any) {
+    if (!confirm('Retirer la photo de ce produit ?')) return
+    this.api.deleteProductImage(product.id).subscribe({
+      next: () => {
+        product.imageUrl = null
+        this.toast.success('Photo retirée')
+        this.cdr.detectChanges()
+      },
       error: () => this.toast.error('Erreur'),
     })
   }

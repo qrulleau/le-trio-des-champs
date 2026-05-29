@@ -715,6 +715,30 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/contact_people_controller').default['destroy']>>>
     }
   }
+  'admin.product_images.store': {
+    methods: ["POST"]
+    pattern: '/api/v1/admin/products/:id/image'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/product_images_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/product_images_controller').default['store']>>>
+    }
+  }
+  'admin.product_images.destroy': {
+    methods: ["DELETE"]
+    pattern: '/api/v1/admin/products/:id/image'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/product_images_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/product_images_controller').default['destroy']>>>
+    }
+  }
   'user.reservations.store': {
     methods: ["POST"]
     pattern: '/api/v1/user/reservations'

@@ -212,4 +212,14 @@ export class ApiService {
   cancelReservation(id: number): Observable<any> {
     return this.http.patch(`${this.baseUrl}/user/reservations/${id}/cancel`, {})
   }
+
+  uploadProductImage(id: number, file: File): Observable<any> {
+    const formData = new FormData()
+    formData.append('image', file)
+    return this.http.post(`${this.baseUrl}/admin/products/${id}/image`, formData)
+  }
+
+  deleteProductImage(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/admin/products/${id}/image`)
+  }
 }

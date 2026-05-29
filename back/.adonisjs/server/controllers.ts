@@ -19,4 +19,5 @@ export const controllers = {
   SellingPlaces: () => import('#controllers/selling_places_controller'),
   Settings: () => import('#controllers/settings_controller'),
   Subscribers: () => import('#controllers/subscribers_controller'),
+  ProductImages: () => import('#controllers/product_images_controller'),
 }

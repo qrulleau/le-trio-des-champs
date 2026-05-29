@@ -360,6 +360,18 @@ const routes = {
     tokens: [{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"api","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/contact-people/:id","type":0,"val":"contact-people","end":""},{"old":"/api/v1/admin/contact-people/:id","type":1,"val":"id","end":""}],
     types: placeholder as Registry['admin.contact_people.destroy']['types'],
   },
+  'admin.product_images.store': {
+    methods: ["POST"],
+    pattern: '/api/v1/admin/products/:id/image',
+    tokens: [{"old":"/api/v1/admin/products/:id/image","type":0,"val":"api","end":""},{"old":"/api/v1/admin/products/:id/image","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/products/:id/image","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/products/:id/image","type":0,"val":"products","end":""},{"old":"/api/v1/admin/products/:id/image","type":1,"val":"id","end":""},{"old":"/api/v1/admin/products/:id/image","type":0,"val":"image","end":""}],
+    types: placeholder as Registry['admin.product_images.store']['types'],
+  },
+  'admin.product_images.destroy': {
+    methods: ["DELETE"],
+    pattern: '/api/v1/admin/products/:id/image',
+    tokens: [{"old":"/api/v1/admin/products/:id/image","type":0,"val":"api","end":""},{"old":"/api/v1/admin/products/:id/image","type":0,"val":"v1","end":""},{"old":"/api/v1/admin/products/:id/image","type":0,"val":"admin","end":""},{"old":"/api/v1/admin/products/:id/image","type":0,"val":"products","end":""},{"old":"/api/v1/admin/products/:id/image","type":1,"val":"id","end":""},{"old":"/api/v1/admin/products/:id/image","type":0,"val":"image","end":""}],
+    types: placeholder as Registry['admin.product_images.destroy']['types'],
+  },
   'user.reservations.store': {
     methods: ["POST"],
     pattern: '/api/v1/user/reservations',
