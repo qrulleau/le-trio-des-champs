@@ -7,10 +7,24 @@
     min-height: 72vh;
     display: flex;
     align-items: flex-end;
-    background: var(--ink);
     overflow: hidden;
+    background: var(--ink);
   "
 >
+  @if (img('prod-hero')) {
+    <img
+      [src]="baseUrl + img('prod-hero')"
+      alt=""
+      style="
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      "
+    />
+  }
   <div
     style="
       position: absolute;
@@ -30,18 +44,20 @@
         margin-bottom: 10px;
       "
     >
-      les visages derrière le trio
+      {{ c('prod.hero.script', 'les visages derriere le trio') }}
     </div>
     <h1
       class="h-display"
       style="font-size: clamp(40px, 6vw, 76px); color: var(--paper); margin: 0 0 22px"
-    >
-      Faites connaissance avec <em style="font-style: italic; color: var(--accent-3)">MT'</em>
-    </h1>
+      [innerHTML]="renderRich(c('prod.hero.title', 'Faites connaissance avec *MT\''))"
+    ></h1>
     <p class="lead" style="color: rgba(250, 246, 236, 0.82); max-width: 60ch">
-      Producteur de fruits et légumes bio dans l'Oise, MT' est le cœur du collectif Le Trio des
-      Champs. Derrière chaque filet d'oignons et chaque cageot de pommes de terre, il y a une ferme,
-      des saisons, et des mains qui travaillent la terre à moins de 50 km de chez vous.
+      {{
+        c(
+          'prod.hero.lead',
+          "Producteur de fruits et legumes bio dans l'Oise, MT' est le coeur du collectif Le Trio des Champs. Derriere chaque filet d'oignons et chaque cageot de pommes de terre, il y a une ferme, des saisons, et des mains qui travaillent la terre a moins de 50 km de chez vous."
+        )
+      }}
     </p>
     <div style="display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap">
       <a
@@ -56,8 +72,9 @@
           font-size: 15px;
           background: var(--accent-3);
           color: var(--ink);
+          text-decoration: none;
         "
-        >Découvrir la ferme</a
+        >{{ c('prod.hero.cta1', 'Decouvrir la ferme') }}</a
       >
       <a
         routerLink="/"
@@ -73,8 +90,9 @@
           background: transparent;
           color: var(--paper);
           border: 1px solid rgba(250, 246, 236, 0.4);
+          text-decoration: none;
         "
-        >Nous rencontrer</a
+        >{{ c('prod.hero.cta2', 'Nous rencontrer') }}</a
       >
     </div>
   </div>
@@ -101,43 +119,84 @@
             transform: rotate(-2deg);
           "
         >
-          bio &amp; local depuis toujours
+          {{ c('prod.story.stamp', 'bio & local depuis toujours') }}
         </div>
         <div
           style="
             aspect-ratio: 4/5;
+            border-radius: 4px;
+            overflow: hidden;
             background: var(--bg-2);
             border: 1px solid var(--rule);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-mute);
-            font-size: 13px;
-            text-align: center;
-            padding: 20px;
           "
         >
-          Portrait de MT' / la ferme
+          @if (img('prod-portrait')) {
+            <img
+              [src]="baseUrl + img('prod-portrait')"
+              alt="Portrait MT'"
+              style="width: 100%; height: 100%; object-fit: cover; display: block"
+            />
+          } @else {
+            <div
+              style="
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--ink-mute);
+                font-size: 13px;
+                text-align: center;
+                padding: 20px;
+              "
+            >
+              Portrait de MT' / la ferme
+            </div>
+          }
         </div>
+        @if (c('prod.story.caption')) {
+          <div
+            style="
+              font-family: var(--font-script);
+              font-size: 16px;
+              color: var(--ink-mute);
+              margin-top: 10px;
+            "
+          >
+            {{ c('prod.story.caption') }}
+          </div>
+        }
       </div>
       <div>
-        <div class="eyebrow">Notre histoire</div>
-        <h2 class="h-section" style="margin-top: 14px">
-          Une ferme bio,<br /><em style="font-style: italic; color: var(--accent-2)"
-            >de père en gestes.</em
-          >
-        </h2>
+        <div class="eyebrow">{{ c('prod.story.eyebrow', 'Notre histoire') }}</div>
+        <h2
+          class="h-section"
+          style="margin-top: 14px"
+          [innerHTML]="
+            renderRich(
+              c(
+                'prod.story.title',
+                'Une ferme bio,
+*de pere en gestes*.'
+              )
+            )
+          "
+        ></h2>
         <p class="lead" style="margin-top: 22px">
-          MT' cultive des fruits et légumes biologiques dans l'Oise depuis [année / génération à
-          compléter]. Tout est parti d'une conviction simple : une nourriture saine ne devrait pas
-          coûter une fortune, et chacun devrait pouvoir savoir d'où vient ce qu'il met dans son
-          assiette.
+          {{
+            c(
+              'prod.story.body1',
+              "MT' cultive des fruits et legumes biologiques dans l'Oise. Tout est parti d'une conviction simple : une nourriture saine ne devrait pas couter une fortune, et chacun devrait pouvoir savoir d'ou vient ce qu'il met dans son assiette."
+            )
+          }}
         </p>
         <p class="lead" style="margin-top: 16px">
-          Plutôt que de tout confier à des grossistes, MT' a choisi la vente directe. Avec quelques
-          fermes voisines, le collectif Le Trio des Champs est né : on récolte, on charge le camion,
-          et on vous retrouve sur les marchés et permanences de Picardie.
+          {{
+            c(
+              'prod.story.body2',
+              "Plutot que de tout confier a des grossistes, MT' a choisi la vente directe. Avec quelques fermes voisines, le collectif Le Trio des Champs est ne : on recolte, on charge le camion, et on vous retrouve sur les marches et permanences de Picardie."
+            )
+          }}
         </p>
         <div
           style="
@@ -147,7 +206,7 @@
             margin-top: 24px;
           "
         >
-          — MT'
+          {{ c('prod.story.sign', "— MT'") }}
         </div>
       </div>
     </div>
@@ -164,218 +223,73 @@
       </h2>
     </div>
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px">
-      <div
-        style="
-          background: var(--paper);
-          border: 1px solid var(--rule);
-          border-radius: 4px;
-          overflow: hidden;
-        "
-      >
+      @for (pr of practices; track pr.key) {
         <div
           style="
-            aspect-ratio: 4/3;
-            background: var(--bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-mute);
-            font-size: 12px;
-            text-align: center;
-            padding: 16px;
-            position: relative;
+            background: var(--paper);
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            overflow: hidden;
           "
         >
-          Photo : sol, culture bio
-          <span
-            style="
-              position: absolute;
-              bottom: -18px;
-              left: 20px;
-              width: 44px;
-              height: 44px;
-              border-radius: 999px;
-              background: var(--accent);
-              color: var(--paper);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            "
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 48 48"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M8 40 C8 22 20 8 40 8 C40 28 28 40 8 40 Z" />
-              <path d="M8 40 L30 18" />
-            </svg>
-          </span>
-        </div>
-        <div style="padding: 32px 24px 24px">
-          <h3
-            style="
-              font-family: var(--font-display);
-              font-size: 21px;
-              margin: 0 0 10px;
-              color: var(--ink);
-            "
-          >
-            Cultivé en bio
-          </h3>
-          <p style="font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin: 0">
-            Pas de pesticides de synthèse. Des sols vivants, nourris naturellement, pour des légumes
-            qui ont du goût. [Certification à préciser]
-          </p>
-        </div>
-      </div>
-      <div
-        style="
-          background: var(--paper);
-          border: 1px solid var(--rule);
-          border-radius: 4px;
-          overflow: hidden;
-        "
-      >
-        <div
-          style="
-            aspect-ratio: 4/3;
-            background: var(--bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-mute);
-            font-size: 12px;
-            text-align: center;
-            padding: 16px;
-            position: relative;
-          "
-        >
-          Photo : le camion sur la route
-          <span
-            style="
-              position: absolute;
-              bottom: -18px;
-              left: 20px;
-              width: 44px;
-              height: 44px;
-              border-radius: 999px;
-              background: var(--accent);
-              color: var(--paper);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            "
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 48 48"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M24 44 C24 44 38 31 38 19 C38 11 32 5 24 5 C16 5 10 11 10 19 C10 31 24 44 24 44 Z"
+          <div style="aspect-ratio: 4/3; background: var(--bg); position: relative">
+            @if (img(pr.key)) {
+              <img
+                [src]="baseUrl + img(pr.key)"
+                [alt]="pr.title"
+                style="width: 100%; height: 100%; object-fit: cover; display: block"
               />
-              <circle cx="24" cy="19" r="5" />
-            </svg>
-          </span>
-        </div>
-        <div style="padding: 32px 24px 24px">
-          <h3
-            style="
-              font-family: var(--font-display);
-              font-size: 21px;
-              margin: 0 0 10px;
-              color: var(--ink);
-            "
-          >
-            À 50 km de votre assiette
-          </h3>
-          <p style="font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin: 0">
-            Nos champs sont dans l'Oise. Entre la récolte et l'étal, il n'y a que la route du camion
-            — et le moins d'intermédiaires possible.
-          </p>
-        </div>
-      </div>
-      <div
-        style="
-          background: var(--paper);
-          border: 1px solid var(--rule);
-          border-radius: 4px;
-          overflow: hidden;
-        "
-      >
-        <div
-          style="
-            aspect-ratio: 4/3;
-            background: var(--bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-mute);
-            font-size: 12px;
-            text-align: center;
-            padding: 16px;
-            position: relative;
-          "
-        >
-          Photo : saison, cagettes datées
-          <span
-            style="
-              position: absolute;
-              bottom: -18px;
-              left: 20px;
-              width: 44px;
-              height: 44px;
-              border-radius: 999px;
-              background: var(--accent);
-              color: var(--paper);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            "
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 48 48"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+            } @else {
+              <div
+                style="
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--ink-mute);
+                  font-size: 12px;
+                  text-align: center;
+                  padding: 16px;
+                "
+              >
+                {{ pr.placeholder }}
+              </div>
+            }
+            <span
+              style="
+                position: absolute;
+                bottom: -18px;
+                left: 20px;
+                width: 44px;
+                height: 44px;
+                border-radius: 999px;
+                background: var(--accent);
+                color: var(--paper);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+              [innerHTML]="pr.icon"
+            ></span>
+          </div>
+          <div style="padding: 32px 24px 24px">
+            <h3
+              style="
+                font-family: var(--font-display);
+                font-size: 21px;
+                margin: 0 0 10px;
+                color: var(--ink);
+              "
             >
-              <rect x="8" y="11" width="32" height="30" rx="3" />
-              <path d="M8 19 h32 M16 6 v8 M32 6 v8" />
-            </svg>
-          </span>
+              {{ pr.title }}
+            </h3>
+            <p style="font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin: 0">
+              {{ pr.body }}
+            </p>
+          </div>
         </div>
-        <div style="padding: 32px 24px 24px">
-          <h3
-            style="
-              font-family: var(--font-display);
-              font-size: 21px;
-              margin: 0 0 10px;
-              color: var(--ink);
-            "
-          >
-            Au rythme des saisons
-          </h3>
-          <p style="font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin: 0">
-            On récolte ce qui est prêt. Les pommes de terre se conservent et se gardent bien ; le
-            reste arrive frais, quand c'est le moment.
-          </p>
-        </div>
-      </div>
+      }
     </div>
   </div>
 </section>
@@ -400,13 +314,18 @@
         max-width: 26ch;
         margin: 0 auto 24px;
       "
-    >
-      « On ne vend pas seulement des légumes. On vend
-      <em style="color: var(--accent-3)">le travail d'une saison</em>, à un prix que tout le monde
-      peut payer. »
-    </div>
+      [innerHTML]="
+        renderRich(
+          c(
+            'prod.band.quote',
+            '&laquo; On ne vend pas seulement des legumes. On vend *le travail d\'une saison*, a un prix que tout le monde peut payer. &raquo;'
+          ),
+          'var(--accent-3)'
+        )
+      "
+    ></div>
     <div style="font-family: var(--font-script); font-size: 18px; color: var(--accent-3)">
-      l'esprit du Trio des Champs
+      {{ c('prod.band.by', "l'esprit du Trio des Champs") }}
     </div>
   </div>
 </section>
@@ -436,182 +355,79 @@
       </p>
     </div>
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px">
-      <div
-        style="
-          position: relative;
-          aspect-ratio: 3/4;
-          border-radius: 4px;
-          overflow: hidden;
-          background: var(--bg-2);
-        "
-      >
+      @for (crop of crops; track crop.key) {
         <div
           style="
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-mute);
-            font-size: 12px;
-            text-align: center;
-            padding: 14px;
+            position: relative;
+            aspect-ratio: 3/4;
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--bg-2);
           "
         >
-          Pommes de terre
+          @if (img(crop.key)) {
+            <img
+              [src]="baseUrl + img(crop.key)"
+              [alt]="crop.name"
+              style="
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+              "
+            />
+          } @else {
+            <div
+              style="
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--ink-mute);
+                font-size: 12px;
+                text-align: center;
+                padding: 14px;
+              "
+            >
+              {{ crop.name }}
+            </div>
+          }
+          <div
+            style="
+              position: absolute;
+              inset: 0;
+              background: linear-gradient(180deg, transparent 40%, rgba(35, 25, 17, 0.75) 100%);
+            "
+          ></div>
+          @if (crop.tag) {
+            <span
+              style="
+                position: absolute;
+                top: 14px;
+                left: 14px;
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                padding: 4px 10px;
+                border-radius: 999px;
+              "
+              [style.background]="crop.tagBg"
+              [style.color]="crop.tagColor"
+              >{{ crop.tag }}</span
+            >
+          }
+          <div
+            style="position: absolute; bottom: 16px; left: 16px; right: 16px; color: var(--paper)"
+          >
+            <div style="font-family: var(--font-display); font-size: 19px">{{ crop.name }}</div>
+            <div style="font-size: 12px; opacity: 0.85">{{ crop.sub }}</div>
+          </div>
         </div>
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 40%, rgba(35, 25, 17, 0.75) 100%);
-          "
-        ></div>
-        <span
-          style="
-            position: absolute;
-            top: 14px;
-            left: 14px;
-            background: var(--accent-2);
-            color: var(--paper);
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 999px;
-          "
-          >le best-seller</span
-        >
-        <div style="position: absolute; bottom: 16px; left: 16px; right: 16px; color: var(--paper)">
-          <div style="font-family: var(--font-display); font-size: 19px">Pommes de terre</div>
-          <div style="font-size: 12px; opacity: 0.85">de plein champ · longue conservation</div>
-        </div>
-      </div>
-      <div
-        style="
-          position: relative;
-          aspect-ratio: 3/4;
-          border-radius: 4px;
-          overflow: hidden;
-          background: var(--bg-2);
-        "
-      >
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-mute);
-            font-size: 12px;
-            text-align: center;
-            padding: 14px;
-          "
-        >
-          Oignons jaunes
-        </div>
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 40%, rgba(35, 25, 17, 0.75) 100%);
-          "
-        ></div>
-        <div style="position: absolute; bottom: 16px; left: 16px; right: 16px; color: var(--paper)">
-          <div style="font-family: var(--font-display); font-size: 19px">Oignons jaunes</div>
-          <div style="font-size: 12px; opacity: 0.85">doux &amp; fermes</div>
-        </div>
-      </div>
-      <div
-        style="
-          position: relative;
-          aspect-ratio: 3/4;
-          border-radius: 4px;
-          overflow: hidden;
-          background: var(--bg-2);
-        "
-      >
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-mute);
-            font-size: 12px;
-            text-align: center;
-            padding: 14px;
-          "
-        >
-          Oignons rouges
-        </div>
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 40%, rgba(35, 25, 17, 0.75) 100%);
-          "
-        ></div>
-        <div style="position: absolute; bottom: 16px; left: 16px; right: 16px; color: var(--paper)">
-          <div style="font-family: var(--font-display); font-size: 19px">Oignons rouges</div>
-          <div style="font-size: 12px; opacity: 0.85">saveur prononcée</div>
-        </div>
-      </div>
-      <div
-        style="
-          position: relative;
-          aspect-ratio: 3/4;
-          border-radius: 4px;
-          overflow: hidden;
-          background: var(--bg-2);
-        "
-      >
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-mute);
-            font-size: 12px;
-            text-align: center;
-            padding: 14px;
-          "
-        >
-          Œufs fermiers
-        </div>
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 40%, rgba(35, 25, 17, 0.75) 100%);
-          "
-        ></div>
-        <span
-          style="
-            position: absolute;
-            top: 14px;
-            left: 14px;
-            background: var(--paper);
-            color: var(--ink);
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 999px;
-          "
-          >en tournée</span
-        >
-        <div style="position: absolute; bottom: 16px; left: 16px; right: 16px; color: var(--paper)">
-          <div style="font-family: var(--font-display); font-size: 19px">Œufs fermiers</div>
-          <div style="font-size: 12px; opacity: 0.85">plein air</div>
-        </div>
-      </div>
+      }
     </div>
   </div>
 </section>
@@ -630,20 +446,30 @@
         overflow: hidden;
       "
     >
-      <div
-        style="
-          aspect-ratio: 1;
-          background: var(--bg);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--ink-mute);
-          font-size: 12px;
-          text-align: center;
-          padding: 20px;
-        "
-      >
-        Photo : oignons rouges / poignée de main
+      <div style="aspect-ratio: 1; background: var(--bg); position: relative">
+        @if (img('prod-note')) {
+          <img
+            [src]="baseUrl + img('prod-note')"
+            alt=""
+            style="width: 100%; height: 100%; object-fit: cover; display: block"
+          />
+        } @else {
+          <div
+            style="
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: var(--ink-mute);
+              font-size: 12px;
+              text-align: center;
+              padding: 20px;
+            "
+          >
+            Photo : oignons rouges / poignée de main
+          </div>
+        }
       </div>
       <div style="padding: 48px 44px; display: flex; gap: 20px; align-items: flex-start">
         <div
@@ -707,157 +533,75 @@
       </h2>
     </div>
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px">
-      <div
-        style="
-          position: relative;
-          border-radius: 4px;
-          overflow: hidden;
-          aspect-ratio: 3/4;
-          background: var(--bg-2);
-        "
-      >
+      @for (member of team; track member.key) {
         <div
           style="
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-mute);
-            font-size: 12px;
-            text-align: center;
-            padding: 16px;
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            background: var(--bg-2);
           "
         >
-          Photo membre 1
-        </div>
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 30%, rgba(35, 25, 17, 0.88) 100%);
-          "
-        ></div>
-        <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; color: var(--paper)">
-          <div style="font-family: var(--font-display); font-size: 22px">MT'</div>
+          @if (img(member.key)) {
+            <img
+              [src]="baseUrl + img(member.key)"
+              [alt]="member.name"
+              style="
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+              "
+            />
+          } @else {
+            <div
+              style="
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--ink-mute);
+                font-size: 12px;
+                text-align: center;
+                padding: 16px;
+              "
+            >
+              {{ member.placeholder }}
+            </div>
+          }
           <div
             style="
-              font-size: 12px;
-              color: var(--accent-3);
-              margin: 2px 0 8px;
-              text-transform: uppercase;
-              letter-spacing: 0.08em;
-              font-weight: 600;
+              position: absolute;
+              inset: 0;
+              background: linear-gradient(180deg, transparent 30%, rgba(35, 25, 17, 0.88) 100%);
             "
-          >
-            Producteur bio · fondateur
-          </div>
-          <p style="font-size: 13px; opacity: 0.85; line-height: 1.5; margin: 0">
-            Fruits et légumes biologiques dans l'Oise. La tête et les mains derrière le Trio. [Bio à
-            compléter]
-          </p>
-        </div>
-      </div>
-      <div
-        style="
-          position: relative;
-          border-radius: 4px;
-          overflow: hidden;
-          aspect-ratio: 3/4;
-          background: var(--bg-2);
-        "
-      >
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-mute);
-            font-size: 12px;
-            text-align: center;
-            padding: 16px;
-          "
-        >
-          Photo membre 2
-        </div>
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 30%, rgba(35, 25, 17, 0.88) 100%);
-          "
-        ></div>
-        <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; color: var(--paper)">
-          <div style="font-family: var(--font-display); font-size: 22px">[Prénom]</div>
+          ></div>
           <div
-            style="
-              font-size: 12px;
-              color: var(--accent-3);
-              margin: 2px 0 8px;
-              text-transform: uppercase;
-              letter-spacing: 0.08em;
-              font-weight: 600;
-            "
+            style="position: absolute; bottom: 20px; left: 20px; right: 20px; color: var(--paper)"
           >
-            Producteur · [spécialité]
+            <div style="font-family: var(--font-display); font-size: 22px">{{ member.name }}</div>
+            <div
+              style="
+                font-size: 12px;
+                color: var(--accent-3);
+                margin: 2px 0 8px;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                font-weight: 600;
+              "
+            >
+              {{ member.role }}
+            </div>
+            <p style="font-size: 13px; opacity: 0.85; line-height: 1.5; margin: 0">
+              {{ member.bio }}
+            </p>
           </div>
-          <p style="font-size: 13px; opacity: 0.85; line-height: 1.5; margin: 0">
-            [Quelques mots : ce qu'il cultive, depuis quand, son rôle dans les tournées…]
-          </p>
         </div>
-      </div>
-      <div
-        style="
-          position: relative;
-          border-radius: 4px;
-          overflow: hidden;
-          aspect-ratio: 3/4;
-          background: var(--bg-2);
-        "
-      >
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink-mute);
-            font-size: 12px;
-            text-align: center;
-            padding: 16px;
-          "
-        >
-          Photo membre 3
-        </div>
-        <div
-          style="
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 30%, rgba(35, 25, 17, 0.88) 100%);
-          "
-        ></div>
-        <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; color: var(--paper)">
-          <div style="font-family: var(--font-display); font-size: 22px">[Prénom]</div>
-          <div
-            style="
-              font-size: 12px;
-              color: var(--accent-3);
-              margin: 2px 0 8px;
-              text-transform: uppercase;
-              letter-spacing: 0.08em;
-              font-weight: 600;
-            "
-          >
-            Producteur · [spécialité]
-          </div>
-          <p style="font-size: 13px; opacity: 0.85; line-height: 1.5; margin: 0">
-            [Quelques mots : ce qu'il cultive, depuis quand, son rôle dans les tournées…]
-          </p>
-        </div>
-      </div>
+      }
     </div>
   </div>
 </section>
@@ -889,6 +633,7 @@
           font-size: 15px;
           background: var(--ink);
           color: var(--paper);
+          text-decoration: none;
         "
         >Voir les prochaines dates</a
       >
@@ -905,6 +650,7 @@
           background: transparent;
           color: var(--ink);
           border: 1px solid var(--ink);
+          text-decoration: none;
         "
         >Réserver mes produits</a
       >
