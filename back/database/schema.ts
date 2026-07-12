@@ -91,6 +91,23 @@ export class ContactPersonSchema extends BaseModel {
   declare updatedAt: DateTime
 }
 
+export class DateProductStockSchema extends BaseModel {
+  static $columns = ['createdAt', 'distributionDateId', 'id', 'productId', 'stock', 'updatedAt'] as const
+  $columns = DateProductStockSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare distributionDateId: number
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare productId: number
+  @column()
+  declare stock: number | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+}
+
 export class DateSchema extends BaseModel {
   static $columns = ['capacity', 'createdAt', 'date', 'id', 'lieuId', 'notes', 'time', 'updatedAt'] as const
   $columns = DateSchema.$columns
@@ -176,7 +193,7 @@ export class LieuxSchema extends BaseModel {
 }
 
 export class ProductSchema extends BaseModel {
-  static $columns = ['createdAt', 'description', 'id', 'imageUrl', 'name', 'price', 'stockPerDate', 'unit', 'updatedAt'] as const
+  static $columns = ['createdAt', 'description', 'id', 'imageUrl', 'name', 'price', 'unit', 'updatedAt'] as const
   $columns = ProductSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -190,8 +207,6 @@ export class ProductSchema extends BaseModel {
   declare name: string
   @column()
   declare price: string
-  @column()
-  declare stockPerDate: number | null
   @column()
   declare unit: string | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
@@ -285,6 +300,55 @@ export class SettingSchema extends BaseModel {
   declare phones: string | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+}
+
+export class SiteContentSchema extends BaseModel {
+  static $columns = ['contentKey', 'createdAt', 'id', 'updatedAt', 'value'] as const
+  $columns = SiteContentSchema.$columns
+  @column()
+  declare contentKey: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+  @column()
+  declare value: string | null
+}
+
+export class SiteGallerySchema extends BaseModel {
+  static $columns = ['caption', 'createdAt', 'id', 'position', 'updatedAt', 'url'] as const
+  $columns = SiteGallerySchema.$columns
+  @column()
+  declare caption: string | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare position: number | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+  @column()
+  declare url: string | null
+}
+
+export class SiteImageSchema extends BaseModel {
+  static $columns = ['alt', 'createdAt', 'id', 'slotKey', 'updatedAt', 'url'] as const
+  $columns = SiteImageSchema.$columns
+  @column()
+  declare alt: string | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare slotKey: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+  @column()
+  declare url: string | null
 }
 
 export class SubscriberCitySchema extends BaseModel {

@@ -40,6 +40,16 @@ export const ADMIN_ROUTES: Routes = [
           ),
       },
       {
+        path: 'medias',
+        loadComponent: () =>
+          import('./pages/medias/medias.component').then((m) => m.MediasComponent),
+      },
+      {
+        path: 'textes',
+        loadComponent: () =>
+          import('./pages/textes/textes.component').then((m) => m.TextesComponent),
+      },
+      {
         path: 'settings',
         loadComponent: () =>
           import('./pages/settings/settings.component').then((m) => m.SettingsComponent),

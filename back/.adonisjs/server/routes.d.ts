@@ -33,6 +33,9 @@ export type ScannedRoutes = {
     'distribution_dates.index': { paramsTuple?: []; params?: {} }
     'distribution_dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'subscribers.public.store': { paramsTuple?: []; params?: {} }
+    'site_images.index': { paramsTuple?: []; params?: {} }
+    'site_contents.index': { paramsTuple?: []; params?: {} }
+    'site_gallery.index': { paramsTuple?: []; params?: {} }
     'announcements.public.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.store': { paramsTuple?: []; params?: {} }
@@ -67,6 +70,16 @@ export type ScannedRoutes = {
     'admin.date_product_stocks.upsert': { paramsTuple: [ParamValue]; params: {'dateId': ParamValue} }
     'admin.product_images.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.product_images.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.site_images.index': { paramsTuple?: []; params?: {} }
+    'admin.site_images.store': { paramsTuple: [ParamValue]; params: {'slotKey': ParamValue} }
+    'admin.site_images.destroy': { paramsTuple: [ParamValue]; params: {'slotKey': ParamValue} }
+    'admin.site_contents.index': { paramsTuple?: []; params?: {} }
+    'admin.site_contents.upsert': { paramsTuple?: []; params?: {} }
+    'admin.site_contents.bulk_upsert': { paramsTuple?: []; params?: {} }
+    'admin.site_gallery.index': { paramsTuple?: []; params?: {} }
+    'admin.site_gallery.store': { paramsTuple?: []; params?: {} }
+    'admin.site_gallery.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.site_gallery.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'user.reservations.store': { paramsTuple?: []; params?: {} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
     'user.reservations.cancel': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -87,6 +100,10 @@ export type ScannedRoutes = {
     'admin.reservations.store': { paramsTuple?: []; params?: {} }
     'admin.contact_people.store': { paramsTuple?: []; params?: {} }
     'admin.product_images.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.site_images.store': { paramsTuple: [ParamValue]; params: {'slotKey': ParamValue} }
+    'admin.site_contents.upsert': { paramsTuple?: []; params?: {} }
+    'admin.site_contents.bulk_upsert': { paramsTuple?: []; params?: {} }
+    'admin.site_gallery.store': { paramsTuple?: []; params?: {} }
     'user.reservations.store': { paramsTuple?: []; params?: {} }
   }
   GET: {
@@ -101,6 +118,9 @@ export type ScannedRoutes = {
     'events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'distribution_dates.index': { paramsTuple?: []; params?: {} }
     'distribution_dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'site_images.index': { paramsTuple?: []; params?: {} }
+    'site_contents.index': { paramsTuple?: []; params?: {} }
+    'site_gallery.index': { paramsTuple?: []; params?: {} }
     'announcements.public.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -114,6 +134,9 @@ export type ScannedRoutes = {
     'admin.reservations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.contact_people.index': { paramsTuple?: []; params?: {} }
     'admin.date_product_stocks.index': { paramsTuple: [ParamValue]; params: {'dateId': ParamValue} }
+    'admin.site_images.index': { paramsTuple?: []; params?: {} }
+    'admin.site_contents.index': { paramsTuple?: []; params?: {} }
+    'admin.site_gallery.index': { paramsTuple?: []; params?: {} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
@@ -128,6 +151,9 @@ export type ScannedRoutes = {
     'events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'distribution_dates.index': { paramsTuple?: []; params?: {} }
     'distribution_dates.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'site_images.index': { paramsTuple?: []; params?: {} }
+    'site_contents.index': { paramsTuple?: []; params?: {} }
+    'site_gallery.index': { paramsTuple?: []; params?: {} }
     'announcements.public.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.index': { paramsTuple?: []; params?: {} }
     'admin.announcements.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -141,6 +167,9 @@ export type ScannedRoutes = {
     'admin.reservations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.contact_people.index': { paramsTuple?: []; params?: {} }
     'admin.date_product_stocks.index': { paramsTuple: [ParamValue]; params: {'dateId': ParamValue} }
+    'admin.site_images.index': { paramsTuple?: []; params?: {} }
+    'admin.site_contents.index': { paramsTuple?: []; params?: {} }
+    'admin.site_gallery.index': { paramsTuple?: []; params?: {} }
     'user.reservations.my_reservations': { paramsTuple?: []; params?: {} }
   }
   PUT: {
@@ -169,6 +198,7 @@ export type ScannedRoutes = {
     'admin.distribution_dates.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.reservations.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.contact_people.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.site_gallery.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'user.reservations.cancel': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   DELETE: {
@@ -183,6 +213,8 @@ export type ScannedRoutes = {
     'admin.reservations.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.contact_people.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin.product_images.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.site_images.destroy': { paramsTuple: [ParamValue]; params: {'slotKey': ParamValue} }
+    'admin.site_gallery.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }
 declare module '@adonisjs/core/types/http' {

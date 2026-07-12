@@ -42,6 +42,7 @@ import { AuthService } from '../../../core/services/auth.service'
           class="topbar-right"
           style="display:flex;align-items:center;gap:22px;font-size:13px;color:var(--ink-soft);font-weight:500"
         >
+          <a routerLink="/producteurs" class="topbar-link">Producteurs</a>
           <a href="#produits" class="topbar-link">Produits</a>
           <a href="#dates" class="topbar-link">Dates</a>
           <a href="#alertes" class="topbar-link">Alertes SMS</a>

@@ -233,4 +233,48 @@ export class ApiService {
   deleteProductImage(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/admin/products/${id}/image`)
   }
+
+  getSiteImages(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/admin/site-images`)
+  }
+
+  uploadSiteImage(slotKey: string, file: File): Observable<any> {
+    const formData = new FormData()
+    formData.append('image', file)
+    return this.http.post(`${this.baseUrl}/admin/site-images/${slotKey}`, formData)
+  }
+
+  deleteSiteImage(slotKey: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/admin/site-images/${slotKey}`)
+  }
+
+  getSiteContents(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/admin/site-contents`)
+  }
+
+  updateSiteContent(key: string, value: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/admin/site-contents`, { key, value })
+  }
+
+  bulkUpdateSiteContents(entries: { key: string; value: string }[]): Observable<any> {
+    return this.http.post(`${this.baseUrl}/admin/site-contents/bulk`, { entries })
+  }
+  getSiteGallery(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/site-gallery`)
+  }
+
+  addGalleryItem(file: File, caption: string): Observable<any> {
+    const formData = new FormData()
+    formData.append('image', file)
+    formData.append('caption', caption)
+    return this.http.post(`${this.baseUrl}/admin/site-gallery`, formData)
+  }
+
+  updateGalleryItem(id: number, data: any): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/admin/site-gallery/${id}`, data)
+  }
+
+  deleteGalleryItem(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/admin/site-gallery/${id}`)
+  }
 }

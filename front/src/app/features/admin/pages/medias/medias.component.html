@@ -1,0 +1,878 @@
+<div>
+  <div style="margin-bottom: 28px">
+    <h1
+      style="
+        font-family: var(--font-display);
+        font-size: 38px;
+        line-height: 1;
+        margin: 0 0 8px;
+        color: var(--ink);
+      "
+    >
+      Images <em style="font-style: italic; color: var(--accent-2)">du site</em>
+    </h1>
+    <p style="font-size: 15px; color: var(--ink-soft); margin: 0">
+      Toutes les photos du site, rangées comme sur les pages. Cliquez un emplacement pour uploader —
+      la photo se met en place automatiquement.
+    </p>
+  </div>
+
+  <!-- Intro -->
+  <div
+    style="
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 18px 22px;
+      margin-bottom: 32px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    "
+  >
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--accent)"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      style="flex-shrink: 0; margin-top: 2px"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 8v4" />
+      <path d="M12 16h.01" />
+    </svg>
+    <p style="margin: 0; font-size: 14px; color: var(--ink-soft); line-height: 1.6">
+      Chaque emplacement correspond <strong style="color: var(--ink)">exactement</strong> à un
+      endroit du site public. Une photo uploadée ici apparaît immédiatement sur la page concernée.
+    </p>
+  </div>
+
+  <!-- ZONE Accueil -->
+  <section style="margin-bottom: 40px">
+    <div
+      style="
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding-bottom: 14px;
+        margin-bottom: 22px;
+        border-bottom: 1px solid var(--rule);
+      "
+    >
+      <h2
+        style="
+          font-family: var(--font-display);
+          font-size: 26px;
+          font-weight: 600;
+          color: var(--ink);
+          margin: 0;
+          line-height: 1;
+        "
+      >
+        Accueil
+      </h2>
+      <span
+        style="
+          font-size: 11px;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          font-weight: 600;
+          color: var(--accent);
+          padding: 4px 10px;
+          border-radius: 999px;
+          background: rgba(45, 74, 47, 0.1);
+        "
+        >Le Trio des Champs</span
+      >
+    </div>
+    <div
+      style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px"
+    >
+      <!-- Hero wide -->
+      <div style="grid-column: 1 / -1">
+        <label
+          style="
+            display: block;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--bg-2);
+            border: 1px solid var(--rule);
+            position: relative;
+          "
+          class="photo-cell"
+        >
+          @if (images['hero-photo']) {
+            <img
+              [src]="baseUrl + images['hero-photo']"
+              alt="Hero"
+              style="width: 100%; height: 100%; object-fit: cover; display: block"
+            />
+          } @else {
+            <div
+              style="
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                color: var(--ink-mute);
+                text-align: center;
+                padding: 16px;
+              "
+            >
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="9" cy="9" r="2" />
+                <path d="M21 15l-5-5L5 21" />
+              </svg>
+              <span style="font-size: 12px">Grande image immersive en haut de page</span>
+            </div>
+          }
+          <div
+            class="photo-overlay"
+            style="
+              position: absolute;
+              inset: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: rgba(35, 25, 17, 0.55);
+              color: var(--paper);
+              font-size: 13px;
+              font-weight: 600;
+              opacity: 0;
+              transition: opacity 0.15s;
+            "
+          >
+            {{ images['hero-photo'] ? 'Changer' : 'Ajouter' }}
+          </div>
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected('hero-photo', $event)"
+            style="display: none"
+          />
+        </label>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 10px;
+          "
+        >
+          <div>
+            <div style="font-size: 13px; font-weight: 600; color: var(--ink)">Photo du hero</div>
+            <div style="font-size: 11px; color: var(--ink-mute); margin-top: 2px">
+              16:9 — Choisissez un visuel large et lumineux
+            </div>
+          </div>
+          @if (images['hero-photo']) {
+            <button
+              (click)="removeImage('hero-photo')"
+              style="
+                appearance: none;
+                border: 0;
+                background: transparent;
+                font-size: 11px;
+                color: var(--accent-2);
+                cursor: pointer;
+                font-family: var(--font-body);
+                text-decoration: underline;
+              "
+            >
+              retirer
+            </button>
+          }
+        </div>
+      </div>
+      <!-- Values wide -->
+      <div style="grid-column: 1 / -1">
+        <label
+          style="
+            display: block;
+            width: 100%;
+            aspect-ratio: 21/9;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--bg-2);
+            border: 1px solid var(--rule);
+            position: relative;
+          "
+          class="photo-cell"
+        >
+          @if (images['values-photo']) {
+            <img
+              [src]="baseUrl + images['values-photo']"
+              alt="Values"
+              style="width: 100%; height: 100%; object-fit: cover; display: block"
+            />
+          } @else {
+            <div
+              style="
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                color: var(--ink-mute);
+                text-align: center;
+                padding: 16px;
+              "
+            >
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="9" cy="9" r="2" />
+                <path d="M21 15l-5-5L5 21" />
+              </svg>
+              <span style="font-size: 12px">Photo d'ambiance bande Nos engagements (parallax)</span>
+            </div>
+          }
+          <div
+            class="photo-overlay"
+            style="
+              position: absolute;
+              inset: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: rgba(35, 25, 17, 0.55);
+              color: var(--paper);
+              font-size: 13px;
+              font-weight: 600;
+              opacity: 0;
+              transition: opacity 0.15s;
+            "
+          >
+            {{ images['values-photo'] ? 'Changer' : 'Ajouter' }}
+          </div>
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected('values-photo', $event)"
+            style="display: none"
+          />
+        </label>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 10px;
+          "
+        >
+          <div>
+            <div style="font-size: 13px; font-weight: 600; color: var(--ink)">
+              Bande « Nos engagements »
+            </div>
+            <div style="font-size: 11px; color: var(--ink-mute); margin-top: 2px">
+              21:9 — Photo derrière les 3 promesses, en parallax
+            </div>
+          </div>
+          @if (images['values-photo']) {
+            <button
+              (click)="removeImage('values-photo')"
+              style="
+                appearance: none;
+                border: 0;
+                background: transparent;
+                font-size: 11px;
+                color: var(--accent-2);
+                cursor: pointer;
+                font-family: var(--font-body);
+                text-decoration: underline;
+              "
+            >
+              retirer
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZONE Partagé -->
+  <section style="margin-bottom: 40px">
+    <div
+      style="
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding-bottom: 14px;
+        margin-bottom: 22px;
+        border-bottom: 1px solid var(--rule);
+      "
+    >
+      <h2
+        style="
+          font-family: var(--font-display);
+          font-size: 26px;
+          font-weight: 600;
+          color: var(--ink);
+          margin: 0;
+          line-height: 1;
+        "
+      >
+        Partagé
+      </h2>
+      <span
+        style="
+          font-size: 11px;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          font-weight: 600;
+          color: var(--accent);
+          padding: 4px 10px;
+          border-radius: 999px;
+          background: rgba(45, 74, 47, 0.1);
+        "
+        >Accueil & Producteurs</span
+      >
+    </div>
+    <div
+      style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px"
+    >
+      @for (slot of sharedSlots; track slot.key) {
+        <div>
+          <label
+            style="
+              display: block;
+              width: 100%;
+              border-radius: 4px;
+              overflow: hidden;
+              cursor: pointer;
+              background: var(--bg-2);
+              border: 1px solid var(--rule);
+              position: relative;
+            "
+            class="photo-cell"
+            [style.aspect-ratio]="slot.ratio"
+          >
+            @if (images[slot.key]) {
+              <img
+                [src]="baseUrl + images[slot.key]"
+                [alt]="slot.label"
+                style="width: 100%; height: 100%; object-fit: cover; display: block"
+              />
+            } @else {
+              <div
+                style="
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 8px;
+                  color: var(--ink-mute);
+                  text-align: center;
+                  padding: 16px;
+                "
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <circle cx="9" cy="9" r="2" />
+                  <path d="M21 15l-5-5L5 21" />
+                </svg>
+                <span style="font-size: 11px">{{ slot.hint }}</span>
+              </div>
+            }
+            <div
+              class="photo-overlay"
+              style="
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(35, 25, 17, 0.55);
+                color: var(--paper);
+                font-size: 13px;
+                font-weight: 600;
+                opacity: 0;
+                transition: opacity 0.15s;
+              "
+            >
+              {{ images[slot.key] ? 'Changer' : 'Ajouter' }}
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected(slot.key, $event)"
+              style="display: none"
+            />
+          </label>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: baseline;
+              margin-top: 10px;
+            "
+          >
+            <div>
+              <div style="font-size: 13px; font-weight: 600; color: var(--ink)">
+                {{ slot.label }}
+              </div>
+              <div style="font-size: 11px; color: var(--ink-mute); margin-top: 2px">
+                {{ slot.ratio.replace('/', ':') }}
+              </div>
+            </div>
+            @if (images[slot.key]) {
+              <button
+                (click)="removeImage(slot.key)"
+                style="
+                  appearance: none;
+                  border: 0;
+                  background: transparent;
+                  font-size: 11px;
+                  color: var(--accent-2);
+                  cursor: pointer;
+                  font-family: var(--font-body);
+                  text-decoration: underline;
+                "
+              >
+                retirer
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ZONE Producteurs -->
+  <section style="margin-bottom: 40px">
+    <div
+      style="
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding-bottom: 14px;
+        margin-bottom: 22px;
+        border-bottom: 1px solid var(--rule);
+      "
+    >
+      <h2
+        style="
+          font-family: var(--font-display);
+          font-size: 26px;
+          font-weight: 600;
+          color: var(--ink);
+          margin: 0;
+          line-height: 1;
+        "
+      >
+        Producteurs
+      </h2>
+      <span
+        style="
+          font-size: 11px;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          font-weight: 600;
+          color: var(--accent);
+          padding: 4px 10px;
+          border-radius: 999px;
+          background: rgba(45, 74, 47, 0.1);
+        "
+        >Producteurs</span
+      >
+    </div>
+    <div
+      style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px"
+    >
+      @for (slot of producteursSlots; track slot.key) {
+        <div [style.grid-column]="slot.wide ? '1 / -1' : 'auto'">
+          <label
+            style="
+              display: block;
+              width: 100%;
+              border-radius: 4px;
+              overflow: hidden;
+              cursor: pointer;
+              background: var(--bg-2);
+              border: 1px solid var(--rule);
+              position: relative;
+            "
+            class="photo-cell"
+            [style.aspect-ratio]="slot.ratio"
+          >
+            @if (images[slot.key]) {
+              <img
+                [src]="baseUrl + images[slot.key]"
+                [alt]="slot.label"
+                style="width: 100%; height: 100%; object-fit: cover; display: block"
+              />
+            } @else {
+              <div
+                style="
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 8px;
+                  color: var(--ink-mute);
+                  text-align: center;
+                  padding: 16px;
+                "
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <circle cx="9" cy="9" r="2" />
+                  <path d="M21 15l-5-5L5 21" />
+                </svg>
+                <span style="font-size: 11px">{{ slot.hint || slot.label }}</span>
+              </div>
+            }
+            <div
+              class="photo-overlay"
+              style="
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(35, 25, 17, 0.55);
+                color: var(--paper);
+                font-size: 13px;
+                font-weight: 600;
+                opacity: 0;
+                transition: opacity 0.15s;
+              "
+            >
+              {{ images[slot.key] ? 'Changer' : 'Ajouter' }}
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected(slot.key, $event)"
+              style="display: none"
+            />
+          </label>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: baseline;
+              margin-top: 10px;
+            "
+          >
+            <div>
+              <div style="font-size: 13px; font-weight: 600; color: var(--ink)">
+                {{ slot.label }}
+              </div>
+              <div style="font-size: 11px; color: var(--ink-mute); margin-top: 2px">
+                {{ slot.ratio.replace('/', ':') }}
+              </div>
+            </div>
+            @if (images[slot.key]) {
+              <button
+                (click)="removeImage(slot.key)"
+                style="
+                  appearance: none;
+                  border: 0;
+                  background: transparent;
+                  font-size: 11px;
+                  color: var(--accent-2);
+                  cursor: pointer;
+                  font-family: var(--font-body);
+                  text-decoration: underline;
+                "
+              >
+                retirer
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ZONE Galerie défilante -->
+  <section style="margin-bottom: 40px">
+    <div
+      style="
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding-bottom: 14px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid var(--rule);
+      "
+    >
+      <h2
+        style="
+          font-family: var(--font-display);
+          font-size: 26px;
+          font-weight: 600;
+          color: var(--ink);
+          margin: 0;
+          line-height: 1;
+        "
+      >
+        Galerie défilante
+      </h2>
+      <span
+        style="
+          font-size: 11px;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          font-weight: 600;
+          color: var(--accent);
+          padding: 4px 10px;
+          border-radius: 999px;
+          background: rgba(45, 74, 47, 0.1);
+        "
+        >Accueil & Producteurs</span
+      >
+      <span style="margin-left: auto; font-size: 13px; color: var(--ink-mute)"
+        ><strong style="font-family: var(--font-display); color: var(--ink)">{{
+          gallery.length
+        }}</strong>
+        photo{{ gallery.length > 1 ? 's' : '' }}</span
+      >
+    </div>
+    <p style="font-size: 13px; color: var(--ink-soft); margin: 0 0 20px">
+      Le bandeau de photos qui défile en continu. Ajoutez ou retirez des photos, et modifiez la
+      légende.
+    </p>
+    <div
+      style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px"
+    >
+      @for (item of gallery; track item.id) {
+        <div
+          style="
+            background: var(--paper);
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            padding: 12px;
+          "
+        >
+          <div
+            style="
+              position: relative;
+              width: 100%;
+              aspect-ratio: 4/3;
+              border-radius: 4px;
+              overflow: hidden;
+              background: var(--bg-2);
+              border: 1px solid var(--rule);
+            "
+          >
+            @if (item.url) {
+              <img
+                [src]="baseUrl + item.url"
+                [alt]="item.caption"
+                style="width: 100%; height: 100%; object-fit: cover; display: block"
+              />
+            } @else {
+              <div
+                style="
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--ink-mute);
+                "
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <circle cx="9" cy="9" r="2" />
+                  <path d="M21 15l-5-5L5 21" />
+                </svg>
+              </div>
+            }
+          </div>
+          <input
+            type="text"
+            [value]="item.caption || ''"
+            placeholder="Légende (ex : la récolte)"
+            (change)="updateCaption(item.id, $any($event.target).value)"
+            style="
+              width: 100%;
+              margin-top: 10px;
+              border: 1px solid var(--rule);
+              border-radius: 4px;
+              padding: 8px 10px;
+              font-family: var(--font-body);
+              font-size: 13px;
+              color: var(--ink);
+              background: var(--bg);
+              outline: none;
+              box-sizing: border-box;
+            "
+          />
+          <div style="font-size: 11px; color: var(--ink-mute); margin-top: 4px">
+            Légende affichée sous la photo
+          </div>
+          <div style="display: flex; gap: 6px; margin-top: 10px">
+            <button
+              (click)="moveItem(item.id, -1)"
+              style="
+                appearance: none;
+                border: 1px solid var(--rule);
+                background: var(--bg);
+                border-radius: 4px;
+                padding: 6px 10px;
+                font-size: 12px;
+                color: var(--ink-soft);
+                cursor: pointer;
+                font-family: var(--font-body);
+              "
+            >
+              ←
+            </button>
+            <button
+              (click)="moveItem(item.id, 1)"
+              style="
+                appearance: none;
+                border: 1px solid var(--rule);
+                background: var(--bg);
+                border-radius: 4px;
+                padding: 6px 10px;
+                font-size: 12px;
+                color: var(--ink-soft);
+                cursor: pointer;
+                font-family: var(--font-body);
+              "
+            >
+              →
+            </button>
+            <button
+              (click)="deleteGalleryItem(item.id)"
+              style="
+                appearance: none;
+                border: 1px solid var(--rule);
+                background: var(--bg);
+                border-radius: 4px;
+                padding: 6px 10px;
+                font-size: 12px;
+                color: var(--accent-2);
+                cursor: pointer;
+                font-family: var(--font-body);
+                margin-left: auto;
+              "
+            >
+              Supprimer
+            </button>
+          </div>
+        </div>
+      }
+      <!-- Bouton ajouter -->
+      <label
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 180px;
+          border: 1.5px dashed var(--rule);
+          border-radius: 4px;
+          background: transparent;
+          color: var(--accent);
+          font-family: var(--font-body);
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          gap: 8px;
+          transition: all 0.15s;
+        "
+        class="gal-add"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+        Ajouter une photo
+        <input
+          type="file"
+          accept="image/*"
+          (change)="addGalleryItem($event)"
+          style="display: none"
+        />
+      </label>
+    </div>
+  </section>
+</div>
+
+<style>
+  .photo-cell:hover .photo-overlay {
+    opacity: 1 !important;
+  }
+  .gal-add:hover {
+    border-color: var(--accent);
+    background: rgba(45, 74, 47, 0.06) !important;
+  }
+</style>

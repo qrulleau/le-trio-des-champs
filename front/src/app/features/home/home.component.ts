@@ -1,4 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  inject,
+  HostListener,
+  ElementRef,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
@@ -7,6 +14,7 @@ import { ToastService } from '../../core/services/toast.service'
 import { environment } from '../../../environments/environment'
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component'
 import { FooterComponent } from '../../shared/components/footer/footer.component'
+import { forkJoin } from 'rxjs'
 
 @Component({
   selector: 'app-home',
@@ -21,36 +29,59 @@ export class HomeComponent implements OnInit {
   sellingPlaces: any[] = []
   cities: any[] = []
   announcement: any = null
+  siteImages: Record<string, string | null> = {}
+  siteContents: Record<string, string | null> = {}
+  gallery: any[] = []
+
+  parallaxOffset = 0
+  valuesRef: HTMLElement | null = null
 
   currentMonth = new Date().getMonth() + 1
   currentYear = new Date().getFullYear()
 
-  subscribeForm = {
-    phone: '',
-    cityIds: [] as number[],
-  }
+  subscribeForm = { phone: '', cityIds: [] as number[] }
   subscribeSuccess = false
   subscribeError = ''
 
   private api = inject(ApiService)
   private toast = inject(ToastService)
   private cdr = inject(ChangeDetectorRef)
+  private el = inject(ElementRef)
 
   ngOnInit() {
     this.loadData()
   }
 
+  @HostListener('window:scroll')
+  onScroll() {
+    if (!this.valuesRef) {
+      this.valuesRef = this.el.nativeElement.querySelector('.values-parallax-section')
+    }
+    if (this.valuesRef) {
+      const rect = this.valuesRef.getBoundingClientRect()
+      const windowH = window.innerHeight
+      if (rect.top < windowH && rect.bottom > 0) {
+        const progress = (windowH - rect.top) / (windowH + rect.height)
+        this.parallaxOffset = Math.round(progress * 120 - 60)
+      }
+    }
+  }
+
   loadData() {
-    this.api.getProducts().subscribe((data) => {
-      this.products = [...data]
-      this.cdr.detectChanges()
-    })
-    this.api.getSellingPlaces().subscribe((data) => {
-      this.sellingPlaces = [...data]
-      this.cdr.detectChanges()
-    })
-    this.api.getCities().subscribe((data) => {
-      this.cities = [...data]
+    forkJoin({
+      products: this.api.getProducts(),
+      sellingPlaces: this.api.getSellingPlaces(),
+      cities: this.api.getCities(),
+      siteImages: this.api.getSiteImages(),
+      siteContents: this.api.getSiteContents(),
+      gallery: this.api.getSiteGallery(),
+    }).subscribe(({ products, sellingPlaces, cities, siteImages, siteContents, gallery }) => {
+      this.products = [...products]
+      this.sellingPlaces = [...sellingPlaces]
+      this.cities = [...cities]
+      this.siteImages = siteImages ?? {}
+      this.siteContents = siteContents ?? {}
+      this.gallery = gallery ?? []
       this.cdr.detectChanges()
     })
     this.api.getEvents(this.currentMonth, this.currentYear).subscribe((data) => {
@@ -61,6 +92,22 @@ export class HomeComponent implements OnInit {
       this.announcement = data
       this.cdr.detectChanges()
     })
+  }
+
+  c(key: string, fallback = ''): string {
+    return this.siteContents[key] ?? fallback
+  }
+
+  img(key: string): string | null {
+    return this.siteImages[key] ?? null
+  }
+
+  renderRich(text: string, emColor = 'var(--accent-2)'): string {
+    if (!text) return ''
+    return text
+      .split('\n')
+      .join('<br>')
+      .replace(/\*([^*]+)\*/g, '<em style="font-style:italic;color:var(--accent-2)">$1</em>')
   }
 
   toggleCity(cityId: number) {
@@ -126,11 +173,11 @@ export class HomeComponent implements OnInit {
   }
 
   getPriceAmount(price: string): string {
-    const match = price.match(/^[\d,.]+ ?€/)
+    const match = price?.match(/^[\d,.]+ ?€/)
     return match ? match[0] : price
   }
 
   getPriceUnit(price: string): string {
-    return price.replace(/^[\d,.]+ ?€ ?/, '').trim()
+    return price?.replace(/^[\d,.]+ ?€ ?/, '').trim() ?? ''
   }
 }

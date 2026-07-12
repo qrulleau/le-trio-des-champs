@@ -20,5 +20,8 @@ export const controllers = {
   Reservations: () => import('#controllers/reservations_controller'),
   SellingPlaces: () => import('#controllers/selling_places_controller'),
   Settings: () => import('#controllers/settings_controller'),
+  SiteContents: () => import('#controllers/site_contents_controller'),
+  SiteGallery: () => import('#controllers/site_gallery_controller'),
+  SiteImages: () => import('#controllers/site_images_controller'),
   Subscribers: () => import('#controllers/subscribers_controller'),
 }

@@ -57,6 +57,15 @@ export interface ApiDefinition {
       store: typeof routes['subscribers.public.store']
     }
   }
+  siteImages: {
+    index: typeof routes['site_images.index']
+  }
+  siteContents: {
+    index: typeof routes['site_contents.index']
+  }
+  siteGallery: {
+    index: typeof routes['site_gallery.index']
+  }
   announcements: {
     public: {
       index: typeof routes['announcements.public.index']
@@ -111,6 +120,22 @@ export interface ApiDefinition {
     productImages: {
       store: typeof routes['admin.product_images.store']
       destroy: typeof routes['admin.product_images.destroy']
+    }
+    siteImages: {
+      index: typeof routes['admin.site_images.index']
+      store: typeof routes['admin.site_images.store']
+      destroy: typeof routes['admin.site_images.destroy']
+    }
+    siteContents: {
+      index: typeof routes['admin.site_contents.index']
+      upsert: typeof routes['admin.site_contents.upsert']
+      bulkUpsert: typeof routes['admin.site_contents.bulk_upsert']
+    }
+    siteGallery: {
+      index: typeof routes['admin.site_gallery.index']
+      store: typeof routes['admin.site_gallery.store']
+      update: typeof routes['admin.site_gallery.update']
+      destroy: typeof routes['admin.site_gallery.destroy']
     }
   }
   user: {

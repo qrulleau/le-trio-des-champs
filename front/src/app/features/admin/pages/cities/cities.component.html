@@ -197,9 +197,9 @@
                   display: block;
                   margin-bottom: 2px;
                 "
-                >{{ upcomingDatesForCity(city.id) }}</strong
+                >{{ upcomingMap[city.id] || 0 }}</strong
               >
-              date{{ upcomingDatesForCity(city.id) > 1 ? 's' : '' }} à venir
+              date{{ upcomingMap[city.id] || 0 > 1 ? 's' : '' }} à venir
             </div>
             <div>
               <strong
@@ -210,9 +210,9 @@
                   display: block;
                   margin-bottom: 2px;
                 "
-                >{{ reservationsForCity(city.id) }}</strong
+                >{{ reservationsMap[city.id] || 0 }}</strong
               >
-              réservation{{ reservationsForCity(city.id) > 1 ? 's' : '' }}
+              réservation{{ reservationsMap[city.id] || 0 > 1 ? 's' : '' }}
             </div>
           </div>
           <div style="display: flex; gap: 8px; justify-content: flex-end">

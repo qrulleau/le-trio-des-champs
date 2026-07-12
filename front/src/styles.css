@@ -217,3 +217,24 @@ a,
     order: 3;
   }
 }
+
+/* Photo marquee */
+.marquee-track {
+  animation: ttc-marquee 46s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes ttc-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

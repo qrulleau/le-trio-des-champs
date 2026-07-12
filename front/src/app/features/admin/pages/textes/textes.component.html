@@ -1,0 +1,175 @@
+<div>
+  <div style="margin-bottom: 28px">
+    <h1
+      style="
+        font-family: var(--font-display);
+        font-size: 38px;
+        line-height: 1;
+        margin: 0 0 8px;
+        color: var(--ink);
+      "
+    >
+      Textes <em style="font-style: italic; color: var(--accent-2)">du site</em>
+    </h1>
+    <p style="font-size: 15px; color: var(--ink-soft); margin: 0">
+      Modifiez les textes affichés sur la home et la page Producteurs. Enregistrement automatique à
+      chaque champ quitté.
+    </p>
+  </div>
+
+  <div
+    style="
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    "
+  >
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--accent)"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      style="flex-shrink: 0; margin-top: 2px"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 8v4" />
+      <path d="M12 16h.01" />
+    </svg>
+    <p style="margin: 0; font-size: 14px; color: var(--ink-soft); line-height: 1.6">
+      Entourez un mot d'astérisques
+      <code
+        style="
+          font-family: var(--font-mono);
+          font-size: 12px;
+          background: var(--bg-2);
+          padding: 1px 6px;
+          border-radius: 4px;
+          color: var(--accent-2);
+        "
+        >*comme ceci*</code
+      >
+      pour le mettre en italique coloré.
+    </p>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 32px">
+    @for (group of groups; track group.title) {
+      <div
+        style="
+          background: var(--paper);
+          border: 1px solid var(--rule);
+          border-radius: 4px;
+          overflow: hidden;
+        "
+      >
+        <div
+          style="
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--rule);
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            background: var(--bg-2);
+          "
+        >
+          <h2
+            style="font-family: var(--font-display); font-size: 22px; margin: 0; color: var(--ink)"
+          >
+            {{ group.title }}
+          </h2>
+          <span
+            style="
+              font-size: 11px;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              font-weight: 600;
+              color: var(--accent);
+              padding: 3px 10px;
+              border-radius: 999px;
+              background: rgba(45, 74, 47, 0.1);
+            "
+            >{{ group.where }}</span
+          >
+        </div>
+        <div style="padding: 22px 24px; display: flex; flex-direction: column; gap: 16px">
+          @for (field of group.fields; track field.key) {
+            <div>
+              <label
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: baseline;
+                  font-size: 12px;
+                  font-weight: 600;
+                  color: var(--ink-soft);
+                  letter-spacing: 0.02em;
+                  margin-bottom: 6px;
+                "
+              >
+                <span>{{ field.label }}</span>
+                <span style="display: flex; gap: 8px; align-items: center">
+                  @if (field.rich) {
+                    <span style="font-weight: 400; font-style: italic; color: var(--ink-mute)"
+                      >*mot* = italique coloré</span
+                    >
+                  }
+                  @if (saving[field.key]) {
+                    <span style="font-size: 11px; color: var(--accent)">Enregistrement…</span>
+                  }
+                </span>
+              </label>
+              @if (field.type === 'area') {
+                <textarea
+                  [value]="getValue(field.key)"
+                  (blur)="onBlur(field.key, $any($event.target).value)"
+                  rows="3"
+                  style="
+                    width: 100%;
+                    border: 1px solid var(--rule);
+                    border-radius: 4px;
+                    padding: 10px 13px;
+                    font-family: var(--font-body);
+                    font-size: 14px;
+                    color: var(--ink);
+                    background: var(--bg);
+                    line-height: 1.5;
+                    resize: vertical;
+                    outline: none;
+                    box-sizing: border-box;
+                  "
+                ></textarea>
+              } @else {
+                <input
+                  type="text"
+                  [value]="getValue(field.key)"
+                  (blur)="onBlur(field.key, $any($event.target).value)"
+                  style="
+                    width: 100%;
+                    border: 1px solid var(--rule);
+                    border-radius: 4px;
+                    padding: 10px 13px;
+                    font-family: var(--font-body);
+                    font-size: 14px;
+                    color: var(--ink);
+                    background: var(--bg);
+                    outline: none;
+                    box-sizing: border-box;
+                  "
+                />
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

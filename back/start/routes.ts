@@ -24,6 +24,9 @@ const ReservationsController = () => import('#controllers/reservations_controlle
 const ContactPeopleController = () => import('#controllers/contact_people_controller')
 const DateProductStocksController = () => import('#controllers/date_product_stocks_controller')
 const ProductImagesController = () => import('#controllers/product_images_controller')
+const SiteImagesController = () => import('#controllers/site_images_controller')
+const SiteContentsController = () => import('#controllers/site_contents_controller')
+const SiteGalleryController = () => import('#controllers/site_gallery_controller')
 
 router
 .group(() => {
@@ -56,6 +59,9 @@ router
         router.post('subscribers', [SubscribersController, 'store'])
         .as('subscribers.public.store')
         .use(subscriberThrottle)
+        router.get('site-images', [SiteImagesController, 'index'])
+        router.get('site-contents', [SiteContentsController, 'index'])
+        router.get('site-gallery', [SiteGalleryController, 'index'])
         router.get('announcements', [AnnouncementsController, 'index'])
         .as('announcements.public.index')
 
@@ -72,6 +78,16 @@ router
                 router.put('distribution-dates/:dateId/stocks', [DateProductStocksController, 'upsert'])
                 router.post('products/:id/image', [ProductImagesController, 'store'])
                 router.delete('products/:id/image', [ProductImagesController, 'destroy'])
+                router.get('site-images', [SiteImagesController, 'index'])
+                router.post('site-images/:slotKey', [SiteImagesController, 'store'])
+                router.delete('site-images/:slotKey', [SiteImagesController, 'destroy'])
+                router.get('site-contents', [SiteContentsController, 'index'])
+                router.post('site-contents', [SiteContentsController, 'upsert'])
+                router.post('site-contents/bulk', [SiteContentsController, 'bulkUpsert'])
+                router.get('site-gallery', [SiteGalleryController, 'index'])
+                router.post('site-gallery', [SiteGalleryController, 'store'])
+                router.patch('site-gallery/:id', [SiteGalleryController, 'update'])
+                router.delete('site-gallery/:id', [SiteGalleryController, 'destroy'])
                 })
         .use(middleware.auth())
             .prefix('admin')

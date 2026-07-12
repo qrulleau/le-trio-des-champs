@@ -355,6 +355,42 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/subscribers_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
+  'site_images.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/site-images'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_images_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_images_controller').default['index']>>>
+    }
+  }
+  'site_contents.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/site-contents'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_contents_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_contents_controller').default['index']>>>
+    }
+  }
+  'site_gallery.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/site-gallery'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_gallery_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_gallery_controller').default['index']>>>
+    }
+  }
   'announcements.public.index': {
     methods: ["GET","HEAD"]
     pattern: '/api/v1/announcements'
@@ -761,6 +797,126 @@ export interface Registry {
       query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/product_images_controller').default['destroy']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/product_images_controller').default['destroy']>>>
+    }
+  }
+  'admin.site_images.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/site-images'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_images_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_images_controller').default['index']>>>
+    }
+  }
+  'admin.site_images.store': {
+    methods: ["POST"]
+    pattern: '/api/v1/admin/site-images/:slotKey'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { slotKey: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_images_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_images_controller').default['store']>>>
+    }
+  }
+  'admin.site_images.destroy': {
+    methods: ["DELETE"]
+    pattern: '/api/v1/admin/site-images/:slotKey'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { slotKey: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_images_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_images_controller').default['destroy']>>>
+    }
+  }
+  'admin.site_contents.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/site-contents'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_contents_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_contents_controller').default['index']>>>
+    }
+  }
+  'admin.site_contents.upsert': {
+    methods: ["POST"]
+    pattern: '/api/v1/admin/site-contents'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_contents_controller').default['upsert']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_contents_controller').default['upsert']>>>
+    }
+  }
+  'admin.site_contents.bulk_upsert': {
+    methods: ["POST"]
+    pattern: '/api/v1/admin/site-contents/bulk'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_contents_controller').default['bulkUpsert']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_contents_controller').default['bulkUpsert']>>>
+    }
+  }
+  'admin.site_gallery.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/v1/admin/site-gallery'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_gallery_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_gallery_controller').default['index']>>>
+    }
+  }
+  'admin.site_gallery.store': {
+    methods: ["POST"]
+    pattern: '/api/v1/admin/site-gallery'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_gallery_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_gallery_controller').default['store']>>>
+    }
+  }
+  'admin.site_gallery.update': {
+    methods: ["PATCH"]
+    pattern: '/api/v1/admin/site-gallery/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_gallery_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_gallery_controller').default['update']>>>
+    }
+  }
+  'admin.site_gallery.destroy': {
+    methods: ["DELETE"]
+    pattern: '/api/v1/admin/site-gallery/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/site_gallery_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/site_gallery_controller').default['destroy']>>>
     }
   }
   'user.reservations.store': {

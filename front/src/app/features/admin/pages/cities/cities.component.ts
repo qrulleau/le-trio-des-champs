@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'
+import { Component, OnInit, ChangeDetectorRef, inject, NgZone } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { HttpClient } from '@angular/common/http'
 import { ApiService } from '../../../../core/services/api.service'
 import { ToastService } from '../../../../core/services/toast.service'
-import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs'
+import { debounceTime, distinctUntilChanged, forkJoin, Subject, switchMap } from 'rxjs'
 
 @Component({
   selector: 'app-cities',
@@ -20,6 +20,8 @@ export class CitiesComponent implements OnInit {
   suggestions: string[] = []
   searchSubject = new Subject<string>()
   today = new Date().toISOString().split('T')[0]
+  upcomingMap: Record<number, number> = {}
+  reservationsMap: Record<number, number> = {}
 
   themeColors = [
     { label: 'Vert', swatch: '#2d4a2f' },
@@ -36,6 +38,7 @@ export class CitiesComponent implements OnInit {
   private toast = inject(ToastService)
   private http = inject(HttpClient)
   private cdr = inject(ChangeDetectorRef)
+  private zone = inject(NgZone)
 
   ngOnInit() {
     this.loadData()
@@ -52,22 +55,35 @@ export class CitiesComponent implements OnInit {
       )
       .subscribe((results) => {
         this.suggestions = results.map((r) => r.nom)
-        this.cdr.detectChanges()
+        this.cdr.markForCheck()
       })
   }
 
   loadData() {
-    this.api.getCities().subscribe((data) => {
-      this.cities = [...data]
+    forkJoin({
+      cities: this.api.getCities(),
+      dates: this.api.getDistributionDates(),
+      reservations: this.api.getReservations(),
+    }).subscribe(({ cities, dates, reservations }) => {
+      this.cities = [...cities]
+      this.dates = dates
+      this.reservations = (reservations as any)?.data ?? reservations ?? []
+      this.buildMaps()
       this.cdr.detectChanges()
     })
-    this.api.getDistributionDates().subscribe((data) => {
-      this.dates = data
-      this.cdr.detectChanges()
-    })
-    this.api.getReservations().subscribe((data) => {
-      this.reservations = (data as any)?.data ?? data ?? []
-      this.cdr.detectChanges()
+  }
+
+  buildMaps() {
+    this.upcomingMap = {}
+    this.reservationsMap = {}
+    this.cities.forEach((c) => {
+      this.upcomingMap[c.id] = this.dates.filter(
+        (d) => d.cityId === c.id && d.date >= this.today
+      ).length
+      const dateIds = this.dates.filter((d) => d.cityId === c.id).map((d) => d.id)
+      this.reservationsMap[c.id] = this.reservations.filter(
+        (r) => dateIds.includes(r.distributionDateId) && r.status !== 'cancelled'
+      ).length
     })
   }
 
@@ -86,17 +102,6 @@ export class CitiesComponent implements OnInit {
     return this.cities.filter((c) => c.type === 'tournee').length
   }
 
-  upcomingDatesForCity(cityId: number) {
-    return this.dates.filter((d) => d.cityId === cityId && d.date >= this.today).length
-  }
-
-  reservationsForCity(cityId: number) {
-    const dateIds = this.dates.filter((d) => d.cityId === cityId).map((d) => d.id)
-    return this.reservations.filter(
-      (r) => dateIds.includes(r.distributionDateId) && r.status !== 'cancelled'
-    ).length
-  }
-
   addCity() {
     if (!this.newCity.name.trim()) {
       this.toast.warning('Renseignez au moins un nom.')
@@ -106,7 +111,7 @@ export class CitiesComponent implements OnInit {
       next: () => {
         this.toast.success('Ville ajoutée')
         this.newCity = { name: '', address: '', type: 'tournee', color: '#2d4a2f' }
-        this.loadData()
+        setTimeout(() => this.loadData(), 0)
       },
       error: () => this.toast.error("Erreur lors de l'ajout"),
     })
@@ -117,7 +122,7 @@ export class CitiesComponent implements OnInit {
   }
   cancelEdit() {
     this.editingId = null
-    this.loadData()
+    setTimeout(() => this.loadData(), 0)
   }
 
   saveEdit(city: any) {
@@ -130,9 +135,8 @@ export class CitiesComponent implements OnInit {
       })
       .subscribe({
         next: () => {
-          this.toast.success('Ville mise à jour')
           this.editingId = null
-          this.loadData()
+          this.cdr.detectChanges()
         },
         error: () => this.toast.error('Erreur'),
       })
@@ -143,7 +147,7 @@ export class CitiesComponent implements OnInit {
     this.api.deleteCity(id).subscribe({
       next: () => {
         this.toast.success('Ville supprimée')
-        this.loadData()
+        setTimeout(() => this.loadData(), 0)
       },
       error: () => this.toast.error('Erreur'),
     })
