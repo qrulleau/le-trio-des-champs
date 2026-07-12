@@ -16,6 +16,8 @@ services:
       - "3333:3333"
     env_file:
       - ./back/.env
+    volumes:
+      - uploads_data:/app/public/uploads
     depends_on:
       - db
 
@@ -30,3 +32,4 @@ services:
 
 volumes:
   postgres_data:
+  uploads_data:
